@@ -74,6 +74,7 @@ const mappingDVs = dvContainers.map((el, i) => {
           id="screen-clickable"
           data-skcomponent="skbutton"
           data-skbuttonvalue="signOnPWReset"
+          data-skbuttontype="next-form"
           href=""
         >
           <div
