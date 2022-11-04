@@ -74,6 +74,7 @@ const mappingDVs = dvContainers.map((el, i) => {
           id="screen-clickable"
           data-skcomponent="skbutton"
           data-skbuttonvalue="signOnPWReset"
+          data-skbuttontype="next-form"
           href=""
         >
           <div
@@ -127,6 +128,75 @@ const mappingDVs = dvContainers.map((el, i) => {
     </motion.div>
   );
 });
+
+// const form = (
+//   <div className="form">
+//     <div
+//       data-skcomponent="skerror"
+//       className="feedback feedback--error sk-alert sk-alert-danger has-text-danger has-background-danger-light"
+//       data-id="feedback"
+//       data-skvisibility=""
+//     ></div>
+//     <form className="form" id="usernamePasswordForm" data-id="usernamePasswordForm">
+//       <div className="field float-label">
+//         <input
+//           className="text-input float-label__input"
+//           data-id="username-input"
+//           id="username"
+//           name="username"
+//           type="text"
+//           value=""
+//         />
+//         <label className="float-label__label" for="username">
+//           Username
+//         </label>
+//       </div>
+//       <div className="field float-label">
+//         <input
+//           className="text-input text-input--pasword float-label__input"
+//           data-id="password-input"
+//           id="password"
+//           name="password"
+//           type="password"
+//           autocomplete="on"
+//           value=""
+//         />
+//         <label className="float-label__label" for="password">
+//           Password
+//         </label>
+//       </div>
+//       <div className="control">
+//         <button
+//           className="field is-primary mt-2 button file-input--button button--primary brand-primary-bg"
+//           data-id="button"
+//           type="submit"
+//           data-skcomponent="skbutton"
+//           data-skbuttontype="form-submit"
+//           data-skform="usernamePasswordForm"
+//           data-skbuttonvalue="submit"
+//         >
+//           Sign On
+//           <i className="fas fa-forward ml-2"></i>
+//         </button>
+//       </div>
+//       <div className="control">
+//         <div style="width: 100%; text-align: center;">
+//           <button
+//             type="submit"
+//             className="buttonLink is-primary is-inverted mt-2"
+//             data-skcomponent="skbutton"
+//             data-skbuttontype="form-submit"
+//             data-skform="usernamePasswordForm"
+//             data-skbuttonvalue="forgotPassword"
+//           >
+//             Forgot Password
+//             <i className="fas fa-forward ml-2"></i>
+//           </button>
+//         </div>
+//       </div>
+//     </form>
+//   </div>
+// );
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
