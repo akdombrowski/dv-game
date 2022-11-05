@@ -65,8 +65,7 @@
 }
 
 .dv-col {
-  min-width: 10vw;
-  max-width: 10vw;
+  position: absolute;
   min-height: 100vh;
   max-height: 100vh;
 }

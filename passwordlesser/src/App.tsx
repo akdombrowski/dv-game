@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 import MotionContainer from "./MotionContainer";
 
 const NUMBER_OF_DAVINCIS: number = 1;
-const DV_IMG_WIDTH_VW: number = 10;
+const DV_IMG_WIDTH: number = 10;
+const DV_IMG_WIDTH_VW: string = DV_IMG_WIDTH.toString() + "vw";
 
 const generateDVs = (): number[] => {
   const dvs: number[] = [];
@@ -19,17 +20,29 @@ const generateDVs = (): number[] => {
 const whichRandomHasTheLink = Math.floor(Math.random() * NUMBER_OF_DAVINCIS);
 
 const rndPositionFromLeftEdgeNumber = () =>
-  Math.random() * 100 - DV_IMG_WIDTH_VW;
+  Math.floor(Math.random() * 100 - DV_IMG_WIDTH);
 const rndPositionFromLeftEdge = () =>
   rndPositionFromLeftEdgeNumber().toString() + "%";
 
-const colWidth = (numOfDVs: number) => {
-  Math.floor((100 - DV_IMG_WIDTH_VW) / numOfDVs);
-};
+// const colWidthNumber = (numOfDVs: number) => {
+//   return Math.floor((100 - DV_IMG_WIDTH) / numOfDVs);
+// };
+// const colWidth = colWidthNumber(NUMBER_OF_DAVINCIS).toString() + "vw";
+
+console.log();
+console.log(rndPositionFromLeftEdge());
+console.log();
 
 const mappingDVs = (dvContainers: number[]) => {
   return (
-    <div className="dv-col" style={{ left: rndPositionFromLeftEdge() }}>
+    <div
+      className="dv-col"
+      style={{
+        left: rndPositionFromLeftEdge(),
+        maxWidth: DV_IMG_WIDTH_VW,
+        minWidth: DV_IMG_WIDTH_VW,
+      }}
+    >
       {dvContainers.map((dur, i) => {
         let shouldAdvance = false;
         if (whichRandomHasTheLink === i) {
@@ -66,7 +79,9 @@ function App() {
 
   return (
     <div className="content muscle-container">
-      <div className="flex-child dvs-holder">{mappingDVs(dvContainers)}</div>
+      <div className="flex-child muscle-container dvs-holder">
+        {mappingDVs(dvContainers)}
+      </div>
     </div>
   );
 }
