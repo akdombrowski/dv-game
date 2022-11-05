@@ -12,3 +12,12 @@ https://auth.pingone.com/6f04905c-9d86-4012-95c1-16486d20e26e/as/authorize?respo
 <button class="bxi-button bxi-button--submit mb-3" data-skcomponent="skbutton" data-skbuttontype="form-submit" data-skform="frmStart" data-st-tag="btnStartContinue" data-skbuttonvalue="btnStartContinue">Continue</button>
 
 <button data-skcomponent="skbutton" data-skbuttontype="form-submit" data-skform="frmStart"  data-skbuttonvalue="btnStartContinue"></button>
+
+## from OOTB sign on flow
+
+<button data-skbuttonvalue="submit" data-skform="usernamePasswordForm" data-skbuttontype="form-submit" data-skcomponent="skbutton" type="submit" data-id="button" class="field is-primary mt-2 button file-input--button button--primary brand-primary-bg" id="skbutton_form-submit">
+  <div>
+    Sign On
+    <i class="fas fa-forward ml-2"></i>
+  </div>
+</button>

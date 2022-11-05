@@ -2,156 +2,71 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { motion } from "framer-motion";
+import MotionContainer from "./MotionContainer";
 
-const NUMBER_OF_DAVINCIS = 1;
+const NUMBER_OF_DAVINCIS: number = 1;
+const DV_IMG_WIDTH_VW: number = 10;
 
 const generateDVs = (): number[] => {
   const dvs: number[] = [];
   for (let i = 0; i < NUMBER_OF_DAVINCIS; i++) {
-    dvs.push(i);
+    const duration = Math.random() * 3 + 2;
+    dvs.push(duration);
   }
   return dvs;
 };
 
-const dvContainers = generateDVs();
-
 const whichRandomHasTheLink = Math.floor(Math.random() * NUMBER_OF_DAVINCIS);
 
-const mappingDVs = dvContainers.map((el, i) => {
-  const windowHeight = window.innerHeight;
-  const windowWidth = window.innerWidth;
+const rndPositionFromLeftEdgeNumber = () =>
+  Math.random() * 100 - DV_IMG_WIDTH_VW;
+const rndPositionFromLeftEdge = () =>
+  rndPositionFromLeftEdgeNumber().toString() + "%";
 
-  // Calc width stuff
-  const dvImgWidth = 10;
-  const dvImgWidthStyle = "10vw";
-  const dvImgWidthInPX = windowWidth * (10 / 100);
-  const positionFromLeftEdge =
-    Math.random() * windowWidth - dvImgWidthInPX + "px";
+const colWidth = (numOfDVs: number) => {
+  Math.floor((100 - DV_IMG_WIDTH_VW) / numOfDVs);
+};
 
-  // calc height stuff
-  // aspect ratio is roughly 1.19
-  const dvImgHeightPX = 1.19 * dvImgWidthInPX;
-  const negDVImgHeightPX = 1.19 * dvImgWidthInPX * -1 * 2;
-  // aspect ratio is roughly 1.19 and width is set to 100vw, aka
-  // 100% of window.innerWidth
-  const anthonyImgHeightPX = 1.19 * windowWidth;
-  // const style = document.createElement("style");
-  // document.getElementsByTagName("head")[0].appendChild(style);
-
-  const pastAnthonyPicHeight = anthonyImgHeightPX + dvImgHeightPX;
-  const duration = Math.random() * 3 + 2; // + "s";
-
-  /**
-   * framer-motion makes things a lot easier
-   *
-   * e.g.,
-   * <motion.div
-   *  initial={{ x: "100%" }}
-   *  animate={{ x: "calc(100vw - 50%)" }}
-   * />
-   *
-   */
-
-  if (i === whichRandomHasTheLink) {
-    return (
-      <motion.div
-        initial={{ x: positionFromLeftEdge, y: "-40vh" }}
-        animate={{
-          x: positionFromLeftEdge,
-          y: "120vh",
-        }}
-        transition={{
-          repeat: Infinity,
-          // delay: 1,
-          duration: duration,
-          repeatType: "reverse",
-        }}
-        className="dv-motion-div"
-        key={"dv" + i}
-        id={"dv" + i}
-      >
-        <a
-          id="screen-clickable"
-          data-skcomponent="skbutton"
-          data-skbuttonvalue="signOnPWReset"
-          data-skbuttontype="next-form"
-          href=""
-        >
-          <div
-            className="imgWrapper"
-            style={{ maxWidth: "100%", maxHeight: "100%" }}
-          >
-            <img
-              className="dvImg"
-              id={"dvImg" + el}
-              alt="davinci"
-              src="https://i.imgur.com/B9wl1Gh.png"
-            />
-          </div>
-        </a>
-      </motion.div>
-    );
-  }
-
+const mappingDVs = (dvContainers: number[]) => {
   return (
-    <motion.div
-      initial={{ x: positionFromLeftEdge, y: "-40vh" }}
-      animate={{
-        x: positionFromLeftEdge,
-        y: "120vh",
-      }}
-      transition={{
-        repeat: Infinity,
-        // delay: 1,
-        duration: duration,
-        repeatType: "reverse",
-      }}
-      className="dv-motion-div"
-      key={"dv" + i}
-      id={"dv" + i}
-    >
-      {/* <a
-        id="screen-clickable"
-        data-skcomponent="skbutton"
-        data-skbuttonvalue="signOnPWReset"
-        href=""
-      > */}
-      <div>
-        <img
-          className="dvImg"
-          id={"dvImg" + el}
-          alt="davinci"
-          src="https://i.imgur.com/B9wl1Gh.png"
-        />
-      </div>
-      {/* </a> */}
-    </motion.div>
+    <div className="dv-col" style={{ left: rndPositionFromLeftEdge() }}>
+      {dvContainers.map((dur, i) => {
+        let shouldAdvance = false;
+        if (whichRandomHasTheLink === i) {
+          shouldAdvance = true;
+        } else {
+          shouldAdvance = false;
+        }
+
+        const props: {
+          advance: boolean;
+          yInit: string;
+          yFinal: string;
+          idNumber: number;
+          duration: number;
+        } = {
+          yInit: "25vh",
+          yFinal: "50vh",
+          advance: shouldAdvance,
+          idNumber: i,
+          duration: dur,
+        };
+
+        // TODO: Work on CSS for what MotionContainer is returning. Start at the highest level object and get that to fit in the width of the dv-col div. Then move to the size of the button.
+        return MotionContainer(props);
+      })}
+    </div>
   );
-});
+};
 
 function App() {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [shows, setShows] = useState([]);
+  const [isAdvanceDV, setIsAdvanceDV] = useState(false);
+
+  const dvContainers = generateDVs();
 
   return (
-    <div className="content">
-      {/* <a
-        id="screen-clickable"
-        data-skcomponent="skbutton"
-        data-skbuttonvalue="signOnPWReset"
-        href=""
-      > */}
-      <div className="muscle-container container">
-        <div className="flex-child anthony">
-          <img
-            className="imgEl"
-            alt="anthony"
-            src="https://i.imgur.com/8I6bO52.png"
-          />
-        </div>
-        <div className="flex-child dvs-holder">{mappingDVs}</div>
-      </div>
-      {/* </a> */}
+    <div className="content muscle-container">
+      <div className="flex-child dvs-holder">{mappingDVs(dvContainers)}</div>
     </div>
   );
 }
