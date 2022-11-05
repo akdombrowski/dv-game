@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { motion } from "framer-motion";
 
-const NUMBER_OF_DAVINCIS = 30;
+const NUMBER_OF_DAVINCIS = 1;
 
 const generateDVs = (): number[] => {
   const dvs: number[] = [];
