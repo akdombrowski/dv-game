@@ -3,14 +3,14 @@
   border: none !important;
   font-size: 0;
   background-image: url("https://i.imgur.com/B9wl1Gh.png");
-  background-color: crimson;
+  background-color: transparent;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
   background-size: contain;
   background-clip: content-box;
-  min-width: 10vw;
-  max-width: 10vw;
+  min-width: 100%;
+  max-width: 100%;
   height: auto;
 }
 
@@ -71,4 +71,17 @@
 }
 
 .dv-motion-div {
+  height: 10vh;
+  overflow: hidden;
+}
+
+.form-btn-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.dv-btn-img {
+  background-color: transparent;
+  width: auto;
+  min-height: 100%;
 }

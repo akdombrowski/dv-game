@@ -34,6 +34,9 @@ const MotionContainer = (props: {
   if (props.advance) {
     return (
       <motion.div
+        className="dv-motion-div muscle-container"
+        key={"dv" + props.idNumber}
+        id={"dv" + props.idNumber}
         initial={{ y: props.yInit }}
         animate={{
           y: props.yFinal,
@@ -44,26 +47,31 @@ const MotionContainer = (props: {
           duration: props.duration,
           repeatType: "reverse",
         }}
-        className="dv-motion-div muscle-container"
-        key={"dv" + props.idNumber}
-        id={"dv" + props.idNumber}
       >
-        <button
-          data-skbuttonvalue="submit"
-          data-skform="usernamePasswordForm"
-          data-skbuttontype="form-submit"
-          data-skcomponent="skbutton"
-          type="submit"
-          data-id="button"
-          className="dv-btn-img skbutton_form-submit"
-          id={"skbutton_form-submit-" + props.idNumber}
-        ></button>
+        <form className="form-btn-wrapper">
+          {/* <div className="btn-wrapper"> */}
+          <button
+            className="flex-child dv-btn-img skbutton_form-submit"
+            id={"skbutton_form-submit-" + props.idNumber}
+            data-skbuttonvalue="submit"
+            data-skform="usernamePasswordForm"
+            data-skbuttontype="form-submit"
+            data-skcomponent="skbutton"
+            type="submit"
+            data-id="button"
+            name="ofa-btn"
+          ></button>
+          {/* </div> */}
+        </form>
       </motion.div>
     );
   }
 
   return (
     <motion.div
+      className="dv-motion-div muscle-container"
+      key={"dv" + props.idNumber}
+      id={"dv" + props.idNumber}
       initial={{ y: props.yInit }}
       animate={{
         y: props.yFinal,
@@ -74,16 +82,22 @@ const MotionContainer = (props: {
         duration: props.duration,
         repeatType: "reverse",
       }}
-      className="flex-child dv-motion-div"
-      key={"dv" + props.idNumber}
-      id={"dv" + props.idNumber}
     >
+      {/* <div className="btn-wrapper"> */}
+      {/* <form className="form"> */}
       <button
+        className="flex-child dv-btn-img skbutton_form-submit"
+        id={"skbutton_form-submit-" + props.idNumber}
+        data-skbuttonvalue="submit"
+        data-skform="usernamePasswordForm"
+        data-skbuttontype="form-submit"
+        data-skcomponent="skbutton"
         type="submit"
         data-id="button"
-        className="dv-btn-img"
-        id={"skbutton_form-submit-" + props.idNumber}
+        name="ofa-btn"
       ></button>
+      {/* </form> */}
+      {/* </div> */}
     </motion.div>
   );
 };
