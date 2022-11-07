@@ -1,6 +1,7 @@
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, useEffect } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
+import { isNamedTupleMember } from "typescript";
 
 // example from mdn
 // async function postData(url = "", data = {}) {
@@ -23,6 +24,34 @@ import { motion } from "framer-motion";
 // postData("https://example.com/answer", { answer: 42 }).then((data) => {
 //   console.log(data); // JSON data parsed by `data.json()` call
 // });
+
+const CONTINUE_BTN_VAL = "found-me";
+const XSRF_TOKEN_COOKIE_NAME = "XSRF-TOKEN";
+
+const getCookieValue = (name: string) =>
+  document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)")?.pop() || "";
+
+const createXSRFOriginCookieObject = (xsrfToken: string) => {
+  return {
+    "XSRF-TOKEN": xsrfToken,
+  };
+};
+
+const getXSRFTokenOriginCookie = () => {
+  const xsrfToken = getCookieValue(XSRF_TOKEN_COOKIE_NAME);
+  const xsrfTokenOriginCookieHeaderValue =
+    createXSRFOriginCookieObject(xsrfToken);
+  return xsrfTokenOriginCookieHeaderValue;
+};
+
+const getXSRFTokenOriginCookieURIEncoded = () => {
+  const xsrfTokenOriginCookieHeaderValue = getXSRFTokenOriginCookie();
+  const urlEncodedXSRFTokenOriginCookieHeaderValue = encodeURIComponent(
+    JSON.stringify(xsrfTokenOriginCookieHeaderValue)
+  );
+
+  return urlEncodedXSRFTokenOriginCookieHeaderValue;
+};
 
 // literally pulling from dev tools running a different flow
 const postData = (
@@ -62,6 +91,9 @@ const postData = (
   fetch(url, {
     headers: {
       "Content-Type": "application/json",
+      interactionid: "undefined",
+      interactiontoken: "undefined",
+      "origin-cookies": getXSRFTokenOriginCookieURIEncoded(),
     },
     body: JSON.stringify(data),
     method: "POST",
@@ -86,6 +118,7 @@ const advance = async (e: SyntheticEvent) => {
       eventType: "post",
       postProcess: {},
     },
+    parameters: { buttonType: "next-event", buttonValue: CONTINUE_BTN_VAL },
   };
 
   const envID = "d0dd90cf-dbb9-42aa-89c5-56fefdba73c9";
@@ -106,6 +139,9 @@ const MotionContainer = (props: {
   yFinal: string;
   duration: number;
 }) => {
+  const formID = "form" + props.idNumber.toString();
+  const formInputName = "formInput" + props.idNumber.toString();
+  const formMethod = "post";
   const windowHeight = window.innerHeight;
   const windowWidth = window.innerWidth;
 
@@ -131,7 +167,7 @@ const MotionContainer = (props: {
   if (props.advance) {
     return (
       <motion.div
-        className="dv-motion-div muscle-container"
+        className="dv-motion-div"
         key={"dv" + props.idNumber}
         id={"dv" + props.idNumber}
         initial={{ y: props.yInit }}
@@ -145,29 +181,25 @@ const MotionContainer = (props: {
           repeatType: "reverse",
         }}
       >
-        <form
-          id={"form" + props.idNumber}
-          className="form-btn-wrapper"
-          method="post"
-        >
-          {/* <div className="btn-wrapper"> */}
-          <button
-            className="flex-child dv-btn-img skbutton_form-submit"
-            id={"ofa-btn-" + props.idNumber}
-            onClick={advance}
-            data-skbuttonvalue="button"
-            // data-skform={"form" + props.idNumber}
-            // data-skbuttontype="form-submit"
-            data-skcomponent="skbutton"
-            data-skskipvalidation
-            formMethod="post"
-            formTarget={"form" + props.idNumber}
-            type="button"
-            data-id="button"
-            name="ofa-btn"
-          ></button>
-          {/* </div> */}
-        </form>
+        <button
+          className="skbutton_next"
+          id={"ofa-btn-" + props.idNumber}
+          data-skcustomloadingindicatorclass=""
+          data-skcustomloadingindicator=""
+          data-skdefaultloadingcolor=""
+          // data-skbuttonimageclass="btnImgClass"
+          // data-skbuttonimageplacement="left"
+          // data-skbuttonimage="btnImgURL"
+          // data-skotpinput="btnOTPInputID"
+          // data-skform="btnFormID"
+          data-skbuttontype="next-event"
+          data-skbuttonvalue="found-me"
+          data-skbuttonevent=""
+          data-skvalue="found-me"
+          data-skcomponent="skbutton"
+          type="button"
+          onClick={advance}
+        ></button>
       </motion.div>
     );
   }
@@ -190,16 +222,25 @@ const MotionContainer = (props: {
     >
       {/* <div className="btn-wrapper"> */}
       {/* <form className="form"> */}
+
       <button
-        className="flex-child dv-btn-img skbutton_form-submit"
-        id={"skbutton_form-submit-" + props.idNumber}
-        onClick={wrongDV}
-        data-skbuttonvalue="buton"
-        data-skbuttontype="butt"
+        className="skbutton_next"
+        id={"ofa-btn-" + props.idNumber}
+        data-skcustomloadingindicatorclass=""
+        data-skcustomloadingindicator=""
+        data-skdefaultloadingcolor=""
+        // data-skbuttonimageclass="btnImgClass"
+        // data-skbuttonimageplacement="left"
+        // data-skbuttonimage="btnImgURL"
+        // data-skotpinput="btnOTPInputID"
+        // data-skform="btnFormID"
+        data-skbuttontype="next-event"
+        data-skbuttonvalue={CONTINUE_BTN_VAL}
+        data-skbuttonevent=""
+        data-skvalue={CONTINUE_BTN_VAL}
         data-skcomponent="skbutton"
         type="button"
-        data-id="button"
-        name="ofa-btn"
+        onClick={advance}
       ></button>
       {/* </form> */}
       {/* </div> */}
