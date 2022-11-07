@@ -316,3 +316,19 @@ postData("https://example.com/answer", { answer: 42 }).then((data) => {
   console.log(data); // JSON data parsed by `data.json()` call
 });
 ```
+
+### exploring using a hidden sk button component
+
+```html
+<html lang="en" dir="ltr" class=" ">
+  <head>
+    <title>Security Key Authentication</title>
+  </head>
+  <body>
+    <form id="securityKeyForm" method="post">
+      <input type="hidden" name="attestationValue" id="attestationValue" />
+      {{componnet.skbutton}}
+    </form>
+  </body>
+</html>
+```

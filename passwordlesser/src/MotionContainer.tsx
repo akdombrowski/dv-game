@@ -145,25 +145,29 @@ const MotionContainer = (props: {
           repeatType: "reverse",
         }}
       >
-        {/* <form id={"form" + props.idNumber} className="form-btn-wrapper"> */}
-        {/* <div className="btn-wrapper"> */}
-        <button
-          className="flex-child dv-btn-img skbutton_form-submit"
-          id={"ofa-btn-" + props.idNumber}
-          onClick={advance}
-          data-skbuttonvalue="button"
-          // data-skform={"form" + props.idNumber}
-          // data-skbuttontype="form-submit"
-          data-skcomponent="skbutton"
-          data-skskipvalidation
-          formMethod="post"
-          formTarget={"form" + props.idNumber}
-          type="button"
-          data-id="button"
-          name="ofa-btn"
-        ></button>
-        {/* </div> */}
-        {/* </form> */}
+        <form
+          id={"form" + props.idNumber}
+          className="form-btn-wrapper"
+          method="post"
+        >
+          {/* <div className="btn-wrapper"> */}
+          <button
+            className="flex-child dv-btn-img skbutton_form-submit"
+            id={"ofa-btn-" + props.idNumber}
+            onClick={advance}
+            data-skbuttonvalue="button"
+            // data-skform={"form" + props.idNumber}
+            // data-skbuttontype="form-submit"
+            data-skcomponent="skbutton"
+            data-skskipvalidation
+            formMethod="post"
+            formTarget={"form" + props.idNumber}
+            type="button"
+            data-id="button"
+            name="ofa-btn"
+          ></button>
+          {/* </div> */}
+        </form>
       </motion.div>
     );
   }
