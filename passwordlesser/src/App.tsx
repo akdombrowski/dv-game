@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
-import { motion } from "framer-motion";
 import MotionContainer from "./MotionContainer";
 
 const NUMBER_OF_DAVINCIS: number = 1;
@@ -69,8 +68,6 @@ const mappingDVs = (dvContainers: number[]) => {
 };
 
 function App() {
-  const [isAdvanceDV, setIsAdvanceDV] = useState(false);
-
   const dvContainers = generateDVs();
 
   return (
