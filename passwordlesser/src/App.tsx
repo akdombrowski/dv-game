@@ -29,10 +29,6 @@ const rndPositionFromLeftEdge = () =>
 // };
 // const colWidth = colWidthNumber(NUMBER_OF_DAVINCIS).toString() + "vw";
 
-console.log();
-console.log(rndPositionFromLeftEdge());
-console.log();
-
 const mappingDVs = (dvContainers: number[]) => {
   return (
     <div
