@@ -1104,3 +1104,16 @@ fetch(
   }
 );
 ```
+
+
+before url
+```
+https://auth.pingone.com/d0dd90cf-dbb9-42aa-89c5-56fefdba73c9/davinci/flows/e05e6cf4c27e44ddaec45fd3664abf2f/authorize?client_id=tryFlow&response_type=code&scope=openid&redirect_uri=https://auth.pingone.com/d0dd90cf-dbb9-42aa-89c5-56fefdba73c9/davinci/testrp&tryFlowToken=001b795b-48a3-4276-9f81-2188a80d5c31
+```
+
+after url
+```
+https://auth.pingone.com/d0dd90cf-dbb9-42aa-89c5-56fefdba73c9/davinci/flows/e05e6cf4c27e44ddaec45fd3664abf2f/authorize?client_id=tryFlow&response_type=code&scope=openid&redirect_uri=https://auth.pingone.com/d0dd90cf-dbb9-42aa-89c5-56fefdba73c9/davinci/testrp&tryFlowToken=001b795b-48a3-4276-9f81-2188a80d5c31
+```
+
+they look the same...
