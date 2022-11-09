@@ -4,6 +4,10 @@ import { motion } from "framer-motion";
 const CONTINUE_BTN_VAL = "found-me";
 const XSRF_TOKEN_COOKIE_NAME = "XSRF-TOKEN";
 
+interface dvScript extends HTMLScriptElement {
+  loadIt: () => void;
+}
+
 const getCookieValue = (name: string) =>
   document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)")?.pop() || "";
 
@@ -53,7 +57,7 @@ const postData = async (
     };
   }
 ) => {
-  await fetch(url, {
+  fetch(url, {
     headers: {
       "Content-Type": "application/json",
       interactionid: "undefined",
@@ -64,11 +68,6 @@ const postData = async (
     method: "POST",
     mode: "cors",
   });
-  const dv:  = document.querySelector(
-    'script[src="https://assets.pingone.com/davinci/latest/davinci.js"]'
-  );
-  // call the dv load screen script (doesn't come from this app)
-  dv?.loadIt();
 };
 
 const wrongDV = (e: SyntheticEvent) => {
@@ -100,7 +99,13 @@ const advance = async (e: SyntheticEvent) => {
     connectionID +
     "/capabilities/customHTMLTemplate";
   await postData(url, data);
-  window.loadIt();
+
+  const dv: dvScript | null = document.querySelector(
+    'script[src="https://assets.pingone.com/davinci/latest/davinci.js"]'
+  );
+  // call the dv load screen script (doesn't come from this app)
+  // dv?.loadIt();
+  console.log(dv?.props);
 };
 
 const MotionContainer = (props: {
