@@ -29,8 +29,18 @@ const getXSRFTokenOriginCookieURIEncoded = () => {
   return urlEncodedXSRFTokenOriginCookieHeaderValue;
 };
 
+const getInteractionToken = () => {
+  const interactionToken = getCookieValue("interactionToken");
+  return interactionToken;
+};
+
+const getInteractionID = () => {
+  const interactionID = getCookieValue("interactionId");
+  return interactionID;
+};
+
 // literally pulling from dev tools running a different flow
-const postData = (
+const postData = async (
   url: string,
   data: {
     id: string;
@@ -43,7 +53,7 @@ const postData = (
     };
   }
 ) => {
-  fetch(url, {
+  await fetch(url, {
     headers: {
       "Content-Type": "application/json",
       interactionid: "undefined",
@@ -54,6 +64,11 @@ const postData = (
     method: "POST",
     mode: "cors",
   });
+  const dv:  = document.querySelector(
+    'script[src="https://assets.pingone.com/davinci/latest/davinci.js"]'
+  );
+  // call the dv load screen script (doesn't come from this app)
+  dv?.loadIt();
 };
 
 const wrongDV = (e: SyntheticEvent) => {
@@ -85,6 +100,7 @@ const advance = async (e: SyntheticEvent) => {
     connectionID +
     "/capabilities/customHTMLTemplate";
   await postData(url, data);
+  window.loadIt();
 };
 
 const MotionContainer = (props: {
