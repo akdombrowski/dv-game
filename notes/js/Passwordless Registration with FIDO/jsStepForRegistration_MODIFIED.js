@@ -23,8 +23,8 @@ function webAuthnRegistration(publicKeyCredentialCreationOptions) {
 
 function register(publicKeyCredentialCreationOptions) {
   return new Promise(function (resolve, reject) {
-    const options = JSON.parse(publicKeyCredentialCreationOptions);
-    const publicKeyCredential = {};
+    let options = JSON.parse(publicKeyCredentialCreationOptions);
+    let publicKeyCredential = {};
     publicKeyCredential.rp = options.rp;
     publicKeyCredential.user = options.user;
     publicKeyCredential.user.id = new Uint8Array(options.user.id);
@@ -54,7 +54,7 @@ function register(publicKeyCredentialCreationOptions) {
       .create({ publicKey: publicKeyCredential, signal: authAbortSignal })
       .then(function (newCredentialInfo) {
         // Send new credential info to server for verification and registration.
-        const publicKeyCredential = {};
+        let publicKeyCredential = {};
         if ("id" in newCredentialInfo) {
           publicKeyCredential.id = newCredentialInfo.id;
         }
@@ -67,7 +67,7 @@ function register(publicKeyCredentialCreationOptions) {
         if (!newCredentialInfo.response) {
           throw "Missing 'response' attribute in credential response";
         }
-        const response = {};
+        let response = {};
         response.clientDataJSON = toBase64Str(
           newCredentialInfo.response.clientDataJSON
         );
@@ -98,9 +98,9 @@ function register(publicKeyCredentialCreationOptions) {
 }
 
 function credentialListConversion(list) {
-  const credList = [];
-  for (const i = 0; i < list.length; i++) {
-    const cred = {
+  let credList = [];
+  for (let i = 0; i < list.length; i++) {
+    let cred = {
       type: list[i].type,
       id: new Uint8Array(list[i].id),
     };
