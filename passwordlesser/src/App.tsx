@@ -73,7 +73,7 @@ function App() {
   return (
     <div className="content muscle-container">
       <div className="flex-child muscle-container dvs-holder">
-        {mappingDVs(dvContainers)}
+        <form id="captcha-dv">{mappingDVs(dvContainers)}</form>
       </div>
     </div>
   );

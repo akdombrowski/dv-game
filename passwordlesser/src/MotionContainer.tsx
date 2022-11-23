@@ -77,6 +77,7 @@ const wrongDV = (e: SyntheticEvent) => {
 
 const advance = async (e: SyntheticEvent) => {
   e.preventDefault();
+
   const data = {
     eventName: "continue",
     id: "k24psuiatw",
@@ -173,8 +174,7 @@ const MotionContainer = (props: {
           data-skbuttonevent=""
           data-skvalue="found-me"
           data-skcomponent="skbutton"
-          type="button"
-          onClick={advance}
+          type="submit"
         ></button>
       </motion.div>
     );
@@ -215,8 +215,7 @@ const MotionContainer = (props: {
         data-skbuttonevent=""
         data-skvalue={CONTINUE_BTN_VAL}
         data-skcomponent="skbutton"
-        type="button"
-        onClick={advance}
+        type="submit"
       ></button>
       {/* </form> */}
       {/* </div> */}
