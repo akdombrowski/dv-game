@@ -99,14 +99,14 @@ const advance = async (e: SyntheticEvent) => {
     "/davinci/connections/" +
     connectionID +
     "/capabilities/customHTMLTemplate";
-  await postData(url, data);
+  // await postData(url, data);
 
-  const dv: dvScript | null = document.querySelector(
-    'script[src="https://assets.pingone.com/davinci/latest/davinci.js"]'
-  );
+  // const dv: dvScript | null = document.querySelector(
+  //   'script[src="https://assets.pingone.com/davinci/latest/davinci.js"]'
+  // );
   // call the dv load screen script (doesn't come from this app)
   // dv?.loadIt();
-  console.log(dv?.props);
+  // console.log(dv?.props);
 };
 
 const MotionContainer = (props: {
