@@ -2,6 +2,13 @@ import "bootstrap/dist/css/bootstrap.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+/**
+ *
+ * Currently setup for a registration page. Change to email input for with
+ * option below to go through registration.
+ *
+ * @returns
+ */
 function App() {
   return (
     <Form>
