@@ -4,10 +4,6 @@ import { motion } from "framer-motion";
 const CONTINUE_BTN_VAL = "found-me";
 const XSRF_TOKEN_COOKIE_NAME = "XSRF-TOKEN";
 
-interface dvScript extends HTMLScriptElement {
-  loadIt: () => void;
-}
-
 const getCookieValue = (name: string) =>
   document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)")?.pop() || "";
 
@@ -43,7 +39,6 @@ const getInteractionID = () => {
   return interactionID;
 };
 
-// literally pulling from dev tools running a different flow
 const postData = async (
   url: string,
   data: {
@@ -100,13 +95,6 @@ const advance = async (e: SyntheticEvent) => {
     connectionID +
     "/capabilities/customHTMLTemplate";
   await postData(url, data);
-
-  // const dv: dvScript | null = document.querySelector(
-  //   'script[src="https://assets.pingone.com/davinci/latest/davinci.js"]'
-  // );
-  // call the dv load screen script (doesn't come from this app)
-  // dv?.loadIt();
-  // console.log(dv?.props);
 };
 
 const MotionContainer = (props: {
@@ -138,8 +126,6 @@ const MotionContainer = (props: {
   const anthonyImgHeightPX = 1.19 * windowWidth;
   // const style = document.createElement("style");
   // document.getElementsByTagName("head")[0].appendChild(style);
-
-  const pastAnthonyPicHeight = anthonyImgHeightPX + dvImgHeightPX;
 
   if (props.advance) {
     return (
@@ -176,26 +162,6 @@ const MotionContainer = (props: {
           data-skcomponent="skbutton"
           type="submit"
         ></button>
-
-        {/* <button
-          className="skbutton_next"
-          id={"ofa-btn-" + props.idNumber}
-          data-skcustomloadingindicatorclass=""
-          data-skcustomloadingindicator=""
-          data-skdefaultloadingcolor=""
-          // data-skbuttonimageclass="btnImgClass"
-          // data-skbuttonimageplacement="left"
-          // data-skbuttonimage="btnImgURL"
-          // data-skotpinput="btnOTPInputID"
-          data-skform="dv-form"
-          data-skbuttontype="next-event"
-          data-skbuttonvalue="found-me"
-          data-skbuttonevent=""
-          data-skvalue="found-me"
-          data-skcomponent="skbutton"
-          type="button"
-          // onSubmit={advance}
-        ></button> */}
       </motion.div>
     );
   }
@@ -216,20 +182,12 @@ const MotionContainer = (props: {
         repeatType: "reverse",
       }}
     >
-      {/* <div className="btn-wrapper"> */}
-      {/* <form className="form"> */}
-
       <button
         className="skbutton_next"
         id={"ofa-btn-" + props.idNumber}
         data-skcustomloadingindicatorclass=""
         data-skcustomloadingindicator=""
         data-skdefaultloadingcolor=""
-        // data-skbuttonimageclass="btnImgClass"
-        // data-skbuttonimageplacement="left"
-        // data-skbuttonimage="btnImgURL"
-        // data-skotpinput="btnOTPInputID"
-        // data-skform="btnFormID"
         data-skbuttontype="next-event"
         data-skbuttonvalue={CONTINUE_BTN_VAL}
         data-skbuttonevent=""
@@ -237,8 +195,6 @@ const MotionContainer = (props: {
         data-skcomponent="skbutton"
         type="submit"
       ></button>
-      {/* </form> */}
-      {/* </div> */}
     </motion.div>
   );
 };

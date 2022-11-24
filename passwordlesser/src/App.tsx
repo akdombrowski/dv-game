@@ -23,11 +23,6 @@ const rndPositionFromLeftEdgeNumber = () =>
 const rndPositionFromLeftEdge = () =>
   rndPositionFromLeftEdgeNumber().toString() + "%";
 
-// const colWidthNumber = (numOfDVs: number) => {
-//   return Math.floor((100 - DV_IMG_WIDTH) / numOfDVs);
-// };
-// const colWidth = colWidthNumber(NUMBER_OF_DAVINCIS).toString() + "vw";
-
 const mappingDVs = (dvContainers: number[]) => {
   return (
     <div
@@ -69,93 +64,6 @@ const mappingDVs = (dvContainers: number[]) => {
 
 function App() {
   const dvContainers = generateDVs();
-  const CONTINUE_BTN_VAL = "found-me";
-  const XSRF_TOKEN_COOKIE_NAME = "XSRF-TOKEN";
-
-  const getCookieValue = (name: string) =>
-    document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)")?.pop() || "";
-
-  const createXSRFOriginCookieObject = (xsrfToken: string) => {
-    return {
-      "XSRF-TOKEN": xsrfToken,
-    };
-  };
-
-  const getXSRFTokenOriginCookie = () => {
-    const xsrfToken = getCookieValue(XSRF_TOKEN_COOKIE_NAME);
-    const xsrfTokenOriginCookieHeaderValue =
-      createXSRFOriginCookieObject(xsrfToken);
-    return xsrfTokenOriginCookieHeaderValue;
-  };
-
-  const getXSRFTokenOriginCookieURIEncoded = () => {
-    const xsrfTokenOriginCookieHeaderValue = getXSRFTokenOriginCookie();
-    const urlEncodedXSRFTokenOriginCookieHeaderValue = encodeURIComponent(
-      JSON.stringify(xsrfTokenOriginCookieHeaderValue)
-    );
-
-    return urlEncodedXSRFTokenOriginCookieHeaderValue;
-  };
-
-  const postData = async (
-    url: string,
-    data: {
-      id: string;
-      nextEvent: {
-        constructType: string;
-        eventName: string;
-        params: string[];
-        eventType: string;
-        postProcess: {};
-      };
-    }
-  ) => {
-    fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        interactionid: "undefined",
-        interactiontoken: "undefined",
-        "origin-cookies": getXSRFTokenOriginCookieURIEncoded(),
-      },
-      body: JSON.stringify(data),
-      method: "POST",
-      mode: "cors",
-    });
-  };
-
-  const oldadvanceFlow = async (e: SyntheticEvent) => {
-    e.preventDefault();
-
-    const data = {
-      eventName: "continue",
-      id: "j66zw7fx8p",
-      nextEvent: {
-        constructType: "skEvent",
-        eventName: "continue",
-        params: [],
-        eventType: "post",
-        postProcess: {},
-      },
-      parameters: { buttonType: "form-submit", buttonValue: "captchaDV" },
-    };
-
-    const envID = "6f04905c-9d86-4012-95c1-16486d20e26e";
-    const connectionID = "867ed4363b2bc21c860085ad2baa817d";
-    const url =
-      "https://auth.pingone.com/" +
-      envID +
-      "/davinci/connections/" +
-      connectionID +
-      "/capabilities/customHTMLTemplate";
-    await postData(url, data);
-
-    // const dv: dvScript | null = document.querySelector(
-    //   'script[src="https://assets.pingone.com/davinci/latest/davinci.js"]'
-    // );
-    // call the dv load screen script (doesn't come from this app)
-    // dv?.loadIt();
-    // console.log(dv?.props);
-  };
 
   const advanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -169,21 +77,6 @@ function App() {
     }
     advFlowBtn?.click();
   };
-
-  // onSubmit={advanceFlow}
-
-  // <form id="advance-flow-form">
-  //   <button
-  //     id="advance-flow-btn"
-  //     data-id="advance-flow-btn"
-  //     type="submit"
-  //     data-skcomponent="skbutton"
-  //     data-skbuttontype="form-submit"
-  //     data-skbuttonvalue="submit"
-  //     data-skform="advance-flow-form"
-  //     className="hidden"
-  //   ></button>
-  // </form>;
 
   return (
     <div className="content muscle-container">
