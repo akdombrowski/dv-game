@@ -1,0 +1,9 @@
+{
+  "name": "sign-on-page",
+  "version": "0.0.1",
+  "description": "Sign on page for the dv-game",
+  "main": "index.tsx",
+  "repository": "https://github.com/akdombrowski/dv-game/sign-on-page.git",
+  "author": "Anthony Dombrowski",
+  "license": "MIT"
+}
