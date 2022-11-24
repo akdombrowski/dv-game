@@ -15,7 +15,24 @@
   overflow: hidden;
 }
 
-.skbutton_next {
+.skbutton-next {
+  text-decoration: none;
+  border: none !important;
+  font-size: 0;
+  background-image: url("https://i.imgur.com/B9wl1Gh.png");
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: contain;
+  background-clip: content-box;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+}
+
+.dv-motion-div button {
   text-decoration: none;
   border: none !important;
   font-size: 0;
@@ -79,4 +96,13 @@
 .form-btn-wrapper {
   width: 100%;
   height: 100%;
+}
+
+#dv-form {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.hidden {
+  display: none;
 }

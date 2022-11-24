@@ -80,7 +80,7 @@ const advance = async (e: SyntheticEvent) => {
 
   const data = {
     eventName: "continue",
-    id: "k24psuiatw",
+    id: "j66zw7fx8p",
     nextEvent: {
       constructType: "skEvent",
       eventName: "continue",
@@ -99,7 +99,7 @@ const advance = async (e: SyntheticEvent) => {
     "/davinci/connections/" +
     connectionID +
     "/capabilities/customHTMLTemplate";
-  // await postData(url, data);
+  await postData(url, data);
 
   // const dv: dvScript | null = document.querySelector(
   //   'script[src="https://assets.pingone.com/davinci/latest/davinci.js"]'
@@ -146,7 +146,7 @@ const MotionContainer = (props: {
       <motion.div
         className="dv-motion-div"
         key={"dv" + props.idNumber}
-        id={"dv" + props.idNumber}
+        id={"dv"}
         initial={{ y: props.yInit }}
         animate={{
           y: props.yFinal,
@@ -159,6 +159,25 @@ const MotionContainer = (props: {
         }}
       >
         <button
+          data-skcustomloadingindicatorclass=""
+          data-skcustomloadingindicator=""
+          data-skdefaultloadingcolor=""
+          data-skbuttonimageclass=""
+          data-skbuttonimageplacement=""
+          data-skbuttonimage=""
+          data-skotpinput=""
+          data-skform="captcha-dv-form"
+          data-skbuttontype="form-submit"
+          data-skbuttonvalue="captcha-dv"
+          data-skbuttonevent=""
+          data-skvalue="captcha-dv"
+          className="skbutton-next"
+          id="dv"
+          data-skcomponent="skbutton"
+          type="submit"
+        ></button>
+
+        {/* <button
           className="skbutton_next"
           id={"ofa-btn-" + props.idNumber}
           data-skcustomloadingindicatorclass=""
@@ -168,14 +187,15 @@ const MotionContainer = (props: {
           // data-skbuttonimageplacement="left"
           // data-skbuttonimage="btnImgURL"
           // data-skotpinput="btnOTPInputID"
-          // data-skform="btnFormID"
+          data-skform="dv-form"
           data-skbuttontype="next-event"
           data-skbuttonvalue="found-me"
           data-skbuttonevent=""
           data-skvalue="found-me"
           data-skcomponent="skbutton"
-          type="submit"
-        ></button>
+          type="button"
+          // onSubmit={advance}
+        ></button> */}
       </motion.div>
     );
   }
