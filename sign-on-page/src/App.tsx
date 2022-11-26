@@ -40,7 +40,7 @@ const SignOnPage = () => {
   return (
     <Container fluid className="col-md-8 col-lg-6 mx-auto my-5">
       <Form id="advance-flow-form">
-        <Form.Group className="mb-3" controlId="formAdvanceDVFlow">
+        <Form.Group controlId="advance-flow-input">
           <Form.Control
             type="hidden"
             name="advance-flow-input"
