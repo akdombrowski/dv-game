@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "advanceFlowInputEmail": {
+      "type": "string",
+      "displayName": "advanceFlowInputEmail",
+      "preferredControlType": "textField",
+      "propertyName": "advanceFlowInputEmail"
+    },
+    "advanceFlowInputDifficulty": {
+      "type": "string",
+      "displayName": "advanceFlowInputDifficulty",
+      "preferredControlType": "textField",
+      "propertyName": "advanceFlowInputDifficulty"
+    }
+  }
+}
