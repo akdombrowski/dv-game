@@ -13,5 +13,11 @@
       "preferredControlType": "textField",
       "propertyName": "advanceFlowInputDifficulty"
     }
+    "advanceFlowInputAction": {
+      "type": "string",
+      "displayName": "advanceFlowInputAction",
+      "preferredControlType": "textField",
+      "propertyName": "advanceFlowInputAction"
+    }
   }
 }
