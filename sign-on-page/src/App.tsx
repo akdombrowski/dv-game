@@ -97,33 +97,6 @@ const SignOnPage = () => {
 
   return (
     <Container fluid className="col-md-8 col-lg-6 mx-auto my-5">
-      <Form id="advance-flow-form">
-        <Form.Group controlId="advance-flow-input-difficulty">
-          <Form.Control
-            type="hidden"
-            name="advance-flow-input-difficulty"
-            value={selectedDifficulty}
-          />
-        </Form.Group>
-        <Form.Group controlId="advance-flow-input-email">
-          <Form.Control
-            type="hidden"
-            name="advance-flow-input-email"
-            defaultValue=""
-            ref={emailRef}
-            value={emailInputvalue}
-          />
-        </Form.Group>
-        <Button
-          id="advance-flow-btn"
-          type="submit"
-          data-skcomponent="skbutton"
-          data-skbuttontype="form-submit"
-          data-skbuttonvalue="submit"
-          data-skform="advance-flow-form"
-          style={{ display: "none" }}
-        ></Button>
-      </Form>
       <Row className="mb-4">
         <Col className="col-md-10 col-lg-8 mx-auto">
           <h1 className="display-5 text-center font-monospace">Sign on</h1>
