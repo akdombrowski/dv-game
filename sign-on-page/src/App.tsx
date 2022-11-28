@@ -5,32 +5,90 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
-import { ButtonGroup } from "react-bootstrap";
-import { SyntheticEvent, useState } from "react";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import FormControl, { FormControlProps } from "react-bootstrap/FormControl";
+import {
+  useState,
+  SyntheticEvent,
+  useRef,
+  useEffect,
+  MutableRefObject,
+  ChangeEvent,
+} from "react";
 import { GameDifficultyLevelSelectionFormGroup } from "./GameDifficultyLevelSelectionFormGroup";
 import { EmailInputFormGroup } from "./EmailInputFormGroup";
 
-/**
- *
- * Currently setup for a registration page. Change to email input for with
- * option below to go through registration.
- *
- * @returns
- */
 const SignOnPage = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState("easy");
+  const [emailInputvalue, setEmailInputValue] = useState("");
+
+  const emailRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    // const emailInput: HTMLInputElement = document.getElementById(
+    //   "floatingEmailInput"
+    // ) as HTMLInputElement;
+    // const advInput: HTMLInputElement = document.getElementById(
+    //   "advance-flow-input-email"
+    // ) as HTMLInputElement;
+    // advInput.value = emailInputvalue;
+    console.log("emailRef.current");
+    console.log(emailRef.current);
+    const emailRefCurrent = emailRef.current;
+    if (emailRefCurrent) {
+      const advanceflowinputemail = emailRefCurrent as HTMLInputElement;
+      console.log("advanceflowinputemail.value");
+      console.log(advanceflowinputemail.value);
+    }
+  }, [emailInputvalue]);
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+    console.log("e.cancelable");
+    console.log(e.cancelable);
+    console.log("e.defaultPrevented");
+    console.log(e.defaultPrevented);
+    const target = e.target as HTMLFormElement;
+    const currentTarget = e.currentTarget as HTMLFormElement;
+    console.log("form submit");
+    // console.log("e");
+    // console.log(e);
+    console.log("e.target");
+    console.log(target);
+    console.log("e.target.elements");
+    console.log(target.elements);
+    console.log("e.target.action");
+    console.log(target.action);
+    console.log("e.currentTarget");
+    console.log(currentTarget);
+    console.log("e.currentTarget.elements");
+    console.log(currentTarget.elements);
+    console.log("e.currentTarget.action");
+    console.log(currentTarget.action);
+    console.log("target.value");
+    console.log(target.value);
+    console.log("currentTarget.value");
+    console.log(currentTarget.value);
 
-    const email: HTMLElement | null = document.getElementById("userEmail");
     const advFlowBtn: HTMLElement | null =
       document.getElementById("advance-flow-btn");
-    if (email as HTMLInputElement) {
-      const advance = email as HTMLInputElement;
-      advance.value = "captcha dv";
+
+    if (advFlowBtn) {
+      advFlowBtn.click();
+      return true;
+    } else {
+      throw new Error("Advance button not found");
     }
-    advFlowBtn?.click();
+  };
+
+  const handleEmailUpdate = (e: ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    console.log("email change");
+    console.log("target");
+    console.log(target);
+    console.log("target.value");
+    console.log(target.value);
+    setEmailInputValue(target.value);
   };
 
   const difficultySelectedFn = (difficulty: string) => {
@@ -40,12 +98,20 @@ const SignOnPage = () => {
   return (
     <Container fluid className="col-md-8 col-lg-6 mx-auto my-5">
       <Form id="advance-flow-form">
-        <Form.Group controlId="advance-flow-input">
+        <Form.Group controlId="advance-flow-input-difficulty">
           <Form.Control
             type="hidden"
-            name="advance-flow-input"
-            placeholder="easy"
+            name="advance-flow-input-difficulty"
             value={selectedDifficulty}
+          />
+        </Form.Group>
+        <Form.Group controlId="advance-flow-input-email">
+          <Form.Control
+            type="hidden"
+            name="advance-flow-input-email"
+            defaultValue=""
+            ref={emailRef}
+            value={emailInputvalue}
           />
         </Form.Group>
         <Button
@@ -55,7 +121,6 @@ const SignOnPage = () => {
           data-skbuttontype="form-submit"
           data-skbuttonvalue="submit"
           data-skform="advance-flow-form"
-          className="hidden"
           style={{ display: "none" }}
         ></Button>
       </Form>
@@ -69,7 +134,7 @@ const SignOnPage = () => {
         <Col>
           <Form onSubmit={handleSubmit}>
             <Stack gap={2} className="mb-4">
-              <EmailInputFormGroup />
+              <EmailInputFormGroup updateEmail={handleEmailUpdate} />
               <GameDifficultyLevelSelectionFormGroup
                 difficultySelectedFn={difficultySelectedFn}
               />
