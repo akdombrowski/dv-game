@@ -34,6 +34,30 @@ const SignOnPage = () => {
     }
   }, [emailInputValue, selectedDifficulty]);
 
+  const clickAdvFlowBtn = () => {
+    const advFlowBtn = document.getElementById(
+      "advanceFlowBtn"
+    ) as HTMLInputElement;
+    if (advFlowBtn) {
+      advFlowBtn.click();
+      return true;
+    } else {
+      throw new Error("Advance button not found");
+    }
+  };
+
+  const updateActionValue = (action: string) => {
+    const advFlowActionElement = document.getElementById(
+      "advFlowAction"
+    ) as HTMLInputElement;
+
+    if (advFlowActionElement) {
+      advFlowActionElement.value = action;
+    } else {
+      throw new Error("Input element to send action chosen was not found");
+    }
+  };
+
   const advanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -55,14 +79,10 @@ const SignOnPage = () => {
       );
     }
 
-    const advFlowBtn = document.getElementById(
-      "advanceFlowBtn"
-    ) as HTMLInputElement;
-    if (advFlowBtn) {
-      advFlowBtn.click();
-    } else {
-      throw new Error("Advance button not found");
-    }
+    updateActionValue("signOn");
+
+    // Click the advance button to progress the flow
+    clickAdvFlowBtn();
   };
 
   const handleEmailUpdate = (e: ChangeEvent) => {
@@ -72,6 +92,17 @@ const SignOnPage = () => {
 
   const difficultySelectedFn = (difficulty: string) => {
     setSelectedDifficulty(difficulty);
+  };
+
+  const handleReg = (e: SyntheticEvent) => {
+    e.preventDefault();
+
+    // This fn fires when the registration button is clicked
+    // Set the action type input element's value to be createAccount
+    updateActionValue("createAccount");
+
+    // Click the advance button to progress the flow
+    clickAdvFlowBtn();
   };
 
   return (
@@ -100,7 +131,8 @@ const SignOnPage = () => {
                 <Button
                   id="createNewAcctBtn"
                   variant="outline-secondary"
-                  type="submit"
+                  type="button"
+                  onClick={handleReg}
                 >
                   Create a new account
                 </Button>
