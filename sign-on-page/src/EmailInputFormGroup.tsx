@@ -8,7 +8,7 @@ interface Props {
 
 export const EmailInputFormGroup = (props: Props) => {
   return (
-    <FloatingLabel controlId="floatingEmailInput" label="Email address">
+    <FloatingLabel controlId="floatingEmailInput" label="Username">
       <Form.Control
         required
         type="email"
@@ -17,7 +17,7 @@ export const EmailInputFormGroup = (props: Props) => {
         onChange={props.updateEmail}
       />
       <Form.Text muted className="help-text" id="emailIsUsernameHelpText">
-        This will also be your username.
+        Use an email address that you own.
       </Form.Text>
     </FloatingLabel>
   );
