@@ -84,6 +84,11 @@ function App() {
         <form id="captcha-dv-form" onSubmit={advanceFlow}>
           {mappingDVs(dvContainers)}
         </form>
+        <p
+          className="text-danger mdi mdi-alert-circle"
+          data-id="feedback"
+          data-skcomponent="skerror"
+        ></p>
       </div>
     </div>
   );
