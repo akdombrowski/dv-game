@@ -10,6 +10,8 @@ import { useState, SyntheticEvent, useEffect, ChangeEvent } from "react";
 import { GameDifficultyLevelSelectionFormGroup } from "./GameDifficultyLevelSelectionFormGroup";
 import { EmailInputFormGroup } from "./EmailInputFormGroup";
 
+const includeRegistration: string = "{{global.variables.includeRegistration}}";
+
 const SignOnPage = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState("easy");
   const [emailInputValue, setEmailInputValue] = useState("");
@@ -128,14 +130,20 @@ const SignOnPage = () => {
                 <Button id="signOnBtn" variant="outline-primary" type="submit">
                   Sign on
                 </Button>
-                <Button
-                  id="createNewAcctBtn"
-                  variant="outline-secondary"
-                  type="button"
-                  onClick={handleReg}
-                >
-                  Create a new account
-                </Button>
+
+                {/* Only show register button if registration hasn't been done already */}
+                {includeRegistration === "true" ? (
+                  <Button
+                    id="createNewAcctBtn"
+                    variant="outline-secondary"
+                    type="button"
+                    onClick={handleReg}
+                  >
+                    Register a new account
+                  </Button>
+                ) : (
+                  <></>
+                )}
               </ButtonGroup>
             </Row>
           </Form>
