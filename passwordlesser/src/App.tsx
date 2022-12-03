@@ -84,6 +84,7 @@ function App() {
         <form id="captcha-dv-form" onSubmit={advanceFlow}>
           {mappingDVs(dvContainers)}
         </form>
+        {/* need to show this error as a popup or something */}
         <p
           className="text-danger mdi mdi-alert-circle"
           data-id="feedback"
