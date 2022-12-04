@@ -132,7 +132,7 @@ const SignOnPage = () => {
                 </Button>
 
                 {/* Only show register button if registration hasn't been done already */}
-                {includeRegistration === "true" ? (
+                {includeRegistration ? (
                   <Button
                     id="createNewAcctBtn"
                     variant="outline-secondary"
