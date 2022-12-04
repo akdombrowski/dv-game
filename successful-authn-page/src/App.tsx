@@ -4,8 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Stack from "react-bootstrap/Stack";
-import { useState, SyntheticEvent, useEffect, ChangeEvent } from "react";
+import { SyntheticEvent } from "react";
 
 const SuccessfulAuthnPage = () => {
   const clickAdvFlowBtn = () => {
