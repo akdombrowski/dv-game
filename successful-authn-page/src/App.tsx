@@ -26,17 +26,12 @@ const SuccessfulAuthnPage = () => {
   };
 
   return (
-    <Container fluid className="col-md-8 col-lg-6 mx-auto my-5">
+    <Container fluid className="col-md-8 col-lg-6 mx-auto my-5 dark-mode">
       <Row className="mb-4">
         <Col className="col-md-10 col-lg-8 mx-auto">
           <h1 className="display-5 text-center font-monospace">
             You're now signed on!
           </h1>
-        </Col>
-      </Row>
-      <Row className="mb-4">
-        <Col className="col-md-10 col-lg-8 mx-auto">
-          <h1 className="display-5 text-center font-monospace">Continue</h1>
         </Col>
       </Row>
       <Row>

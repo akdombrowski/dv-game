@@ -1,0 +1,48 @@
+<div
+  class="bg-light d-flex flex-column justify-content-center align-items-center position-absolute top-0 start-0 bottom-0 end-0"
+>
+  <div style="max-width: 400px; width: 100%">
+    <div class="card shadow mb-5">
+      <div class="card-body p-5 d-flex flex-column">
+        <img
+          class="align-self-center mb-5"
+          src="{{global.variables.companyLogo}}"
+          alt="{{global.variables.companyName}}"
+          style="width: 65px; height: 65px;"
+        />
+        <h1 class="text-center mb-4">Create an Account</h1>
+        <p
+          class="text-danger mdi mdi-alert-circle"
+          data-id="feedback"
+          data-skcomponent="skerror"
+        ></p>
+        <form id="usernameForm" data-id="usernameForm">
+          <div class="mb-4 form-floating">
+            <input
+              class="form-control"
+              type="text"
+              name="username"
+              placeholder="Email Address"
+              autocomplete="off"
+              data-id="username-input"
+              id="username"
+            /><label class="form-label" for="username">Email Address</label>
+          </div>
+          <div class="d-flex flex-column">
+            <button
+              data-id="submit-button"
+              type="submit"
+              class="btn btn-primary mb-3"
+              data-skcomponent="skbutton"
+              data-skbuttontype="form-submit"
+              data-skform="usernameForm"
+              data-skbuttonvalue="submit"
+            >
+              Create Account
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
