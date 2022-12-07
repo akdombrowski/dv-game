@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "bootstrap/dist/css/bootstrap.css";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { SyntheticEvent } from "react";
 
-function App() {
+const SuccessfulAuthnPage = () => {
+  const clickAdvFlowBtn = () => {
+    const advFlowBtn = document.getElementById(
+      "advanceFlowBtn"
+    ) as HTMLInputElement;
+    if (advFlowBtn) {
+      advFlowBtn.click();
+      return true;
+    } else {
+      throw new Error("Advance button not found");
+    }
+  };
+
+  const advanceFlow = (e: SyntheticEvent) => {
+    e.preventDefault();
+    // Click the advance button to progress the flow
+    clickAdvFlowBtn();
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container fluid className="col-md-8 col-lg-6 mx-auto my-5 dark-mode">
+      <Row className="mb-4">
+        <Col className="col-md-10 col-lg-8 mx-auto">
+          <h1 className="display-5 text-center font-monospace">
+            Thanks for registering! You're now signed on!
+          </h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form id="signOnForm" onSubmit={advanceFlow}>
+            <Row>
+              <Button id="signOnBtn" variant="outline-primary" type="submit">
+                Continue
+              </Button>
+            </Row>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
-}
+};
 
-export default App;
+export default SuccessfulAuthnPage;
