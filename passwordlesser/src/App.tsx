@@ -19,7 +19,7 @@ const generateDVs = (): number[] => {
 const whichRandomHasTheLink = Math.floor(Math.random() * NUMBER_OF_DAVINCIS);
 
 const rndPositionFromLeftEdgeNumber = () =>
-  Math.floor(Math.random() * 100 - DV_IMG_WIDTH);
+  Math.max(0, Math.floor(Math.random() * 100 - DV_IMG_WIDTH));
 const rndPositionFromLeftEdge = () =>
   rndPositionFromLeftEdgeNumber().toString() + "%";
 
