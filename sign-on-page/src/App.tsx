@@ -13,7 +13,7 @@ import { EmailInputFormGroup } from "./EmailInputFormGroup";
 const includeRegistration: string = "{{global.variables.includeRegistration}}";
 
 const SignOnPage = () => {
-  const [selectedDifficulty, setSelectedDifficulty] = useState("easy");
+  const [selectedDifficulty, setSelectedDifficulty] = useState(0);
   const [emailInputValue, setEmailInputValue] = useState("");
 
   useEffect(() => {
@@ -32,7 +32,8 @@ const SignOnPage = () => {
     if (advanceFlowInputDifficulty) {
       const advanceFlowInputDifficultyInputElement =
         advanceFlowInputDifficulty as HTMLInputElement;
-      advanceFlowInputDifficultyInputElement.value = selectedDifficulty;
+      advanceFlowInputDifficultyInputElement.value =
+        selectedDifficulty.toString();
     }
   }, [emailInputValue, selectedDifficulty]);
 
@@ -92,8 +93,9 @@ const SignOnPage = () => {
     setEmailInputValue(target.value);
   };
 
-  const difficultySelectedFn = (difficulty: string) => {
-    setSelectedDifficulty(difficulty);
+  const difficultySelectedFn = (e: ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    setSelectedDifficulty(Number(target.value));
   };
 
   const handleReg = (e: SyntheticEvent) => {

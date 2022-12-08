@@ -3,7 +3,7 @@ import React, { SyntheticEvent, useState } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
 
-const NUMBER_OF_DAVINCIS: number = 1;
+const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
 const DV_IMG_WIDTH: number = 10;
 const DV_IMG_WIDTH_VW: string = DV_IMG_WIDTH.toString() + "vw";
 

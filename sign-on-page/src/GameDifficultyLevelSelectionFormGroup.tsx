@@ -3,9 +3,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
+import { ChangeEventHandler } from "react";
 
 interface Props {
-  difficultySelectedFn: (difficulty: string) => void;
+  difficultySelectedFn: ChangeEventHandler<HTMLInputElement>;
 }
 
 export const GameDifficultyLevelSelectionFormGroup = (props: Props) => {
@@ -14,7 +15,13 @@ export const GameDifficultyLevelSelectionFormGroup = (props: Props) => {
       <Form.Label column xs={6} sm="auto">
         Choose a difficulty:
       </Form.Label>
-      <ToggleButtonGroup
+      <Form.Range
+        defaultValue={0}
+        min={1}
+        max={100}
+        onChange={props.difficultySelectedFn}
+      ></Form.Range>
+      {/* <ToggleButtonGroup
         as={Col}
         xs={6}
         sm
@@ -47,7 +54,7 @@ export const GameDifficultyLevelSelectionFormGroup = (props: Props) => {
         >
           hard
         </ToggleButton>
-      </ToggleButtonGroup>
+      </ToggleButtonGroup> */}
     </Form.Group>
   );
 };
