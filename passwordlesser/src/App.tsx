@@ -25,14 +25,7 @@ const rndPositionFromLeftEdge = () =>
 
 const mappingDVs = (dvContainers: number[]) => {
   return (
-    <div
-      className="dv-col"
-      style={{
-        left: rndPositionFromLeftEdge(),
-        maxWidth: DV_IMG_WIDTH_VW,
-        minWidth: DV_IMG_WIDTH_VW,
-      }}
-    >
+    <>
       {dvContainers.map((dur, i) => {
         let shouldAdvance = false;
         if (whichRandomHasTheLink === i) {
@@ -56,9 +49,22 @@ const mappingDVs = (dvContainers: number[]) => {
         };
 
         // TODO: Work on CSS for what MotionContainer is returning. Start at the highest level object and get that to fit in the width of the dv-col div. Then move to the size of the button.
-        return MotionContainer(props);
+        return (
+          <div
+            id={"imgCol" + i}
+            key={"imgCol" + i}
+            className="dv-col"
+            style={{
+              left: rndPositionFromLeftEdge(),
+              maxWidth: DV_IMG_WIDTH_VW,
+              minWidth: DV_IMG_WIDTH_VW,
+            }}
+          >
+            {MotionContainer(props)};
+          </div>
+        );
       })}
-    </div>
+    </>
   );
 };
 
