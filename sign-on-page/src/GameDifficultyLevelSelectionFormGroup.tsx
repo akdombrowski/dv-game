@@ -16,7 +16,7 @@ export const GameDifficultyLevelSelectionFormGroup = (props: Props) => {
         Choose a difficulty:
       </Form.Label>
       <Form.Range
-        defaultValue={0}
+        defaultValue={1}
         min={1}
         max={100}
         onChange={props.difficultySelectedFn}

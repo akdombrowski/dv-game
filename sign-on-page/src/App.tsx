@@ -13,7 +13,7 @@ import { EmailInputFormGroup } from "./EmailInputFormGroup";
 const includeRegistration: string = "{{global.variables.includeRegistration}}";
 
 const SignOnPage = () => {
-  const [selectedDifficulty, setSelectedDifficulty] = useState(0);
+  const [selectedDifficulty, setSelectedDifficulty] = useState(1);
   const [emailInputValue, setEmailInputValue] = useState("");
 
   useEffect(() => {
