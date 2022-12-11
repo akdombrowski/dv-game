@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { SyntheticEvent, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
 
 const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
+const CHALLENGES = "{{global.variables.challenges}}";
 const DV_IMG_WIDTH: number = 10;
 const DV_IMG_WIDTH_VW: string = DV_IMG_WIDTH.toString() + "vw";
 
@@ -40,12 +41,14 @@ const mappingDVs = (dvContainers: number[]) => {
           yFinal: string;
           idNumber: number;
           duration: number;
+          challenge: string;
         } = {
           yInit: "25vh",
           yFinal: "50vh",
           advance: shouldAdvance,
           idNumber: i,
           duration: dur,
+          challenge: CHALLENGES[i],
         };
 
         // TODO: Work on CSS for what MotionContainer is returning. Start at the highest level object and get that to fit in the width of the dv-col div. Then move to the size of the button.
@@ -70,6 +73,11 @@ const mappingDVs = (dvContainers: number[]) => {
 
 function App() {
   const dvContainers = generateDVs();
+
+  useEffect(() => {
+    console.log("challenges");
+    console.log("{{global.variables.challenges}}");
+  });
 
   const advanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();

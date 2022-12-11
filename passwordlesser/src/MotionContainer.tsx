@@ -103,6 +103,7 @@ const MotionContainer = (props: {
   yInit: string;
   yFinal: string;
   duration: number;
+  challenge: string;
 }) => {
   const formID = "form" + props.idNumber.toString();
   const formInputName = "formInput" + props.idNumber.toString();
@@ -154,9 +155,9 @@ const MotionContainer = (props: {
           data-skotpinput=""
           data-skform="captcha-dv-form"
           data-skbuttontype="form-submit"
-          data-skbuttonvalue="captcha-dv"
+          data-skbuttonvalue={props.challenge}
           data-skbuttonevent=""
-          data-skvalue="captcha-dv"
+          data-skvalue={props.challenge}
           className="skbutton-next"
           id="dv"
           data-skcomponent="skbutton"
@@ -168,9 +169,9 @@ const MotionContainer = (props: {
 
   return (
     <motion.div
-      className="dv-motion-div muscle-container"
+      className="dv-motion-div"
       key={"dv" + props.idNumber}
-      id={"dv" + props.idNumber}
+      id={"dv"}
       initial={{ y: props.yInit }}
       animate={{
         y: props.yFinal,
@@ -183,15 +184,20 @@ const MotionContainer = (props: {
       }}
     >
       <button
-        className="skbutton_next"
-        id={"ofa-btn-" + props.idNumber}
         data-skcustomloadingindicatorclass=""
         data-skcustomloadingindicator=""
         data-skdefaultloadingcolor=""
-        data-skbuttontype="next-event"
-        data-skbuttonvalue={CONTINUE_BTN_VAL}
+        data-skbuttonimageclass=""
+        data-skbuttonimageplacement=""
+        data-skbuttonimage=""
+        data-skotpinput=""
+        data-skform="captcha-dv-form"
+        data-skbuttontype="form-submit"
+        data-skbuttonvalue={props.challenge}
         data-skbuttonevent=""
-        data-skvalue={CONTINUE_BTN_VAL}
+        data-skvalue={props.challenge}
+        className="skbutton-next"
+        id="dv"
         data-skcomponent="skbutton"
         type="submit"
       ></button>
