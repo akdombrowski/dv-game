@@ -18,7 +18,7 @@
   justify-content: flex-start;
   overflow: hidden;
   background-color: #1a1d2a;
-  background-image: url("data:image/png;base64,{{global.variables.pointerImg}}");
+  background-image: url("https://i.imgur.com/8I6bO52.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: left;
