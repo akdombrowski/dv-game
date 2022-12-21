@@ -24,10 +24,6 @@ const generateDVs = (): number[] => {
   return dvs;
 };
 
-// don't need anymore
-// calculate which should have the advance
-const whichRandomHasTheLink = Math.floor(Math.random() * NUMBER_OF_DAVINCIS);
-
 // calculates a random number to place the col contanining an img
 // min value is 0 to keep from going off screen to the left
 // max value is 99 since I'm converting this to a percentage
@@ -76,15 +72,6 @@ const getChlls = () => {
   if (chs) {
     chsStr = chs.textContent;
     chsStr = chsStr?.slice(1, -1) as string;
-    console.log("global.variables.challenges");
-    console.log("chs");
-    console.log(chs);
-    console.log("chsStr");
-    console.log(chsStr);
-    console.log("typeof chsStr");
-    console.log(typeof chsStr);
-    console.log("JSON.parse(chsStr)");
-    console.log(JSON.parse(chsStr));
     chlls = JSON.parse(chsStr);
   }
 
@@ -148,13 +135,7 @@ function App() {
 
     if (advFlowInput as HTMLInputElement) {
       const advance = advFlowInput as HTMLInputElement;
-      console.log("submitE");
-      console.log(submitE);
-      console.log("submitE.submitter");
-      console.log(submitE.submitter);
       const inputEl = submitE.submitter as HTMLInputElement;
-      console.log("submitE.submitter.value");
-      console.log(inputEl.value);
       const chll = inputEl.value;
 
       advance.value = chll;
@@ -169,7 +150,7 @@ function App() {
         <form id="captcha-dv-form" onSubmit={advanceFlow}>
           {mappingDVs(dvContainers)}
         </form>
-        {/* need to show this error as a popup or something */}
+        {/* need to show the following error as a popup or something */}
         <p
           className="text-danger mdi mdi-alert-circle"
           data-id="feedback"

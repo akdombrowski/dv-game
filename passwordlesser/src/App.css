@@ -1,11 +1,15 @@
-.content {
+.backgroundImg {
   background-color: #1a1d2a;
-  background-image: url("https://i.imgur.com/8I6bO52.png");
+  background-image: url("data:image/png;base64,{{global.variables.pointerImg}}");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: left;
   background-size: cover;
   background-clip: content-box;
+}
+
+.content {
+  border: none !important;
   min-height: 100vh;
   max-height: 100vh;
   padding: 0px;
@@ -13,11 +17,22 @@
   align-items: flex-start;
   justify-content: flex-start;
   overflow: hidden;
+  background-color: #1a1d2a;
+  background-image: url("data:image/png;base64,{{global.variables.pointerImg}}");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: left;
+  background-size: cover;
+  background-clip: content-box;
 }
 
 .skbutton-next {
-  text-decoration: none;
   border: none !important;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  text-decoration: none;
   font-size: 0;
   background-image: url("https://i.imgur.com/B9wl1Gh.png");
   background-color: transparent;
@@ -26,10 +41,6 @@
   background-position: center;
   background-size: contain;
   background-clip: content-box;
-  min-width: 100%;
-  max-width: 100%;
-  min-height: 100%;
-  max-height: 100%;
 }
 
 .dv-motion-div button {
