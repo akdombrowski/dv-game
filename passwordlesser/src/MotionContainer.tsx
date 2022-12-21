@@ -98,80 +98,71 @@ const advance = async (e: SyntheticEvent) => {
 };
 
 const MotionContainer = (props: {
-  idNumber: number;
-  advance: boolean;
   yInit: string;
   yFinal: string;
+  idNumber: number;
   duration: number;
   challenge: string;
 }) => {
-  const formID = "form" + props.idNumber.toString();
-  const formInputName = "formInput" + props.idNumber.toString();
-  const formMethod = "post";
-  const windowHeight = window.innerHeight;
-  const windowWidth = window.innerWidth;
+  // const formID = "form" + props.idNumber.toString();
+  // const formInputName = "formInput" + props.idNumber.toString();
+  // const formMethod = "post";
+  // const windowHeight = window.innerHeight;
+  // const windowWidth = window.innerWidth;
 
-  // Calc width stuff
-  const dvImgWidth = 10;
-  const dvImgWidthStyle = "10vw";
-  const dvImgWidthInPX = windowWidth * (10 / 100);
+  // // Calc width stuff
+  // const dvImgWidth = 10;
+  // const dvImgWidthStyle = "10vw";
+  // const dvImgWidthInPX = windowWidth * (10 / 100);
   // const positionFromLeftEdge =
   //   props.fromLeftEdge * windowWidth - dvImgWidthInPX + "px";
 
   // calc height stuff
-  // aspect ratio is roughly 1.19
-  const dvImgHeightPX = 1.19 * dvImgWidthInPX;
-  const negDVImgHeightPX = 1.19 * dvImgWidthInPX * -1 * 2;
+  // // aspect ratio is roughly 1.19
+  // const dvImgHeightPX = 1.19 * dvImgWidthInPX;
+  // const negDVImgHeightPX = 1.19 * dvImgWidthInPX * -1 * 2;
   // aspect ratio is roughly 1.19 and width is set to 100vw, aka
   // 100% of window.innerWidth
-  const anthonyImgHeightPX = 1.19 * windowWidth;
+  // const anthonyImgHeightPX = 1.19 * windowWidth;
   // const style = document.createElement("style");
   // document.getElementsByTagName("head")[0].appendChild(style);
 
-  if (props.advance) {
-    return (
-      <motion.div
-        className="dv-motion-div"
-        key={"dv" + props.idNumber}
-        id={"dv"}
-        initial={{ y: props.yInit }}
-        animate={{
-          y: props.yFinal,
-        }}
-        transition={{
-          repeat: Infinity,
-          // delay: 1,
-          duration: props.duration,
-          repeatType: "reverse",
-        }}
-      >
-        <button
-          data-skcustomloadingindicatorclass=""
-          data-skcustomloadingindicator=""
-          data-skdefaultloadingcolor=""
-          data-skbuttonimageclass=""
-          data-skbuttonimageplacement=""
-          data-skbuttonimage=""
-          data-skotpinput=""
-          data-skform="captcha-dv-form"
-          data-skbuttontype="form-submit"
-          data-skbuttonvalue={props.challenge}
-          data-skbuttonevent=""
-          data-skvalue={props.challenge}
-          className="skbutton-next"
-          id="dv"
-          data-skcomponent="skbutton"
-          type="submit"
-        ></button>
-      </motion.div>
-    );
-  }
+  // if (props.advance) {
+  //   return (
+  //     <motion.div
+  //       className="dv-motion-div"
+  //       key={"motionDV" + props.idNumber}
+  //       id={"motionDV" + props.idNumber}
+  //       initial={{ y: props.yInit }}
+  //       animate={{
+  //         y: props.yFinal,
+  //       }}
+  //       transition={{
+  //         repeat: Infinity,
+  //         // delay: 1,
+  //         duration: props.duration,
+  //         repeatType: "reverse",
+  //       }}
+  //     >
+  //       <input
+  //         type="text"
+  //         id={"dv" + props.idNumber}
+  //         name={"dv" + props.idNumber}
+  //         value={props.challenge}
+  //       ></input>
+  //       <button
+  //         id={"dvBtn" + props.idNumber}
+  //         className="skbutton-next"
+  //         type="submit"
+  //       ></button>
+  //     </motion.div>
+  //   );
+  // }
 
   return (
     <motion.div
       className="dv-motion-div"
-      key={"dv" + props.idNumber}
-      id={"dv"}
+      id={"motionDV" + props.idNumber}
       initial={{ y: props.yInit }}
       animate={{
         y: props.yFinal,
@@ -183,28 +174,21 @@ const MotionContainer = (props: {
         repeatType: "reverse",
       }}
     >
-      <button
-        data-skcustomloadingindicatorclass=""
-        data-skcustomloadingindicator=""
-        data-skdefaultloadingcolor=""
-        data-skbuttonimageclass=""
-        data-skbuttonimageplacement=""
-        data-skbuttonimage=""
-        data-skotpinput=""
-        data-skform="captcha-dv-form"
-        data-skbuttontype="form-submit"
-        data-skbuttonvalue={props.challenge}
-        data-skbuttonevent=""
-        data-skvalue={props.challenge}
+      {/* <input
+        type="text"
+        id={"dv" + props.idNumber}
+        name={"dv" + props.idNumber}
+        value={props.challenge}
+      ></input> */}
+      <input
+        id={"dvBtn" + props.idNumber}
+        name={"dvBtn" + props.idNumber}
         className="skbutton-next"
-        id="dv"
-        data-skcomponent="skbutton"
         type="submit"
-      ></button>
+        value={props.challenge}
+      ></input>
     </motion.div>
   );
 };
-
-MotionContainer.propTypes = {};
 
 export default MotionContainer;

@@ -1,0 +1,9 @@
+{
+  "name": "img-to-base64",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "read img from file and convert to base64",
+  "main": "index.js",
+  "author": "Anthony Dombrowski",
+  "license": "MIT"
+}
