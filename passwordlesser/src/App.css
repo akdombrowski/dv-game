@@ -34,7 +34,7 @@
   max-height: 100%;
   text-decoration: none;
   font-size: 0;
-  background-image: url("https://i.imgur.com/B9wl1Gh.png");
+  background-image: url("data:image/png;base64,{{global.variables.pointerImg}}");
   background-color: transparent;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -47,7 +47,7 @@
   text-decoration: none;
   border: none !important;
   font-size: 0;
-  background-image: url("https://i.imgur.com/B9wl1Gh.png");
+  background-image: url("data:image/png;base64,{{global.variables.pointerImg}}");
   background-color: transparent;
   background-repeat: no-repeat;
   background-attachment: fixed;
