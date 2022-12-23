@@ -169,6 +169,9 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
   const renderings = {};
   renderings[rnd] = { value: code, pos: position, img: image };
 
+  // save init code
+  const chall = code;
+
   // set to -1 so if ones and twos aren't equal we'll know by checking for -1
   rnd = -1;
 
@@ -209,7 +212,7 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
   //   shuffleObj(renderings);
   // }
 
-  return JSON.stringify(renderings);
+  return { code: chall, renderings: JSON.stringify(renderings) };
 };
 
 module.exports = a = async ({ params }) => {
@@ -217,8 +220,7 @@ module.exports = a = async ({ params }) => {
   const dvImgWidth = Number(params.dvImgWidth);
   const dvColPosArray = generateDVColPosArrays(numOfDVs, dvImgWidth);
   const codes = generateCodes(numOfDVs);
-  const code = codes[codes.length - 1];
-  const renderings = combineCodesAndPosArrayAndImgs(
+  const { code, renderings } = combineCodesAndPosArrayAndImgs(
     numOfDVs,
     codes,
     dvColPosArray
