@@ -32,6 +32,7 @@ const rndPosFromLeftEdgeNumber = (dvColPosSet, dvColPosArray, dvImgWidth) => {
       dvColPosSet.add(rndLeft);
       // add to array to return
       dvColPosArray.push(rndLeft);
+      break;
     }
   }
 
@@ -46,7 +47,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
   // fill up DV_COL_POSITIONS
   let posCreated = 0;
   let dvColPosSet = new Set();
-  let dvColPosArray = new Array(numOfDVs);
+  let dvColPosArray = new Array();
 
   // fill dvColPosArray while trying to avoid overlap with dvColPosSet keeping
   // track of positions
@@ -231,5 +232,6 @@ module.exports = a = async ({ params }) => {
   return {
     code: code,
     renderings: renderings,
+    posArray: dvColPosArray,
   };
 };
