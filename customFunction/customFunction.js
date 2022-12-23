@@ -89,6 +89,26 @@ const shuffleArray = (array) => {
   return array;
 };
 
+const shuffleObjectWithNumberKeys = (obj) => {
+  let currentIndex = obj.keys.length;
+  let randomIndex = 0;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [obj[currentIndex], obj[randomIndex]] = [
+      obj[randomIndex],
+      obj[currentIndex],
+    ];
+  }
+
+  return obj;
+};
+
 const generateCodes = (numOfCodes) => {
   const codes = [];
   for (let i = 0; i < numOfCodes; i++) {
@@ -134,39 +154,60 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
     "img22222222",
   ];
 
+  const chanceForOh = 3;
+
   // shuffle
   shuffleArray(ohs);
   shuffleArray(ones);
   shuffleArray(twos);
 
-  const code = codes.pop();
-  const pos = dvColPosArray.pop();
-  const image = ohs.pop();
   // init
-  const renderings = {
-    0: { value: code, pos: pos, img: image },
-  };
-  numOfDVs--;
+  let rnd = Math.floor(Math.random() * numOfDVs);
+  let code = codes[rnd];
+  let position = dvColPosArray[rnd];
+  let image = ohs[rnd];
+  const renderings = {};
+  renderings[rnd] = { value: code, pos: position, img: image };
+
+  // set to -1 so if ones and twos aren't equal we'll know by checking for -1
+  rnd = -1;
 
   for (let i = 0; i < numOfDVs; i++) {
-    const code = codes[i];
-    const dvColPos = dvColPosArray[i];
-    if (i % 3 === 0) {
-      const rndIndex = Math.floor(Math.random() * ohs.length);
-      img = ohs[rndIndex];
-    } else if (dvColPos < 50) {
-      const rndIndex = Math.floor(Math.random() * ones.length);
-      img = ones[rndIndex];
-    } else {
-      const rndIndex = Math.floor(Math.random() * twos.length);
-      img = twos[rndIndex];
+    // skip the "chosen one" (the one we used for init above)
+    if (i === rnd) continue;
+
+    const rndAddOh = Math.floor(Math.random() * chanceForOh);
+
+    code = codes[i];
+    position = dvColPosArray[i];
+
+    if (ones.length === twos.length) {
+      rnd = Math.floor(Math.random() * ones.length);
     }
-    renderings[i+1] = { value: code, pos: dvColPos, img: img };
+
+    if (rndAddOh === 0) {
+      const rndOhIndex = Math.floor(Math.random() * ohs.length);
+      image = ohs[rndOhIndex];
+    } else if (position < 50) {
+      if (rnd < 0) {
+        rnd = Math.floor(Math.random() * ones.length);
+      }
+      image = ones[rnd];
+    } else {
+      if (rnd < 0) {
+        rnd = Math.floor(Math.random() * twos.length);
+      }
+      image = twos[rnd];
+    }
+    renderings[i] = { value: code, pos: position, img: image };
   }
 
-  if (numOfDVs > 1) {
-    shuffleArray(renderings);
-  }
+  // i think i was able to come up with a way of avoiding needing this by
+  // initializing renderings with a random key value
+  // // only need because we put the code at the first value
+  // if (numOfDVs > 1) {
+  //   shuffleObj(renderings);
+  // }
 
   return JSON.stringify(renderings);
 };
