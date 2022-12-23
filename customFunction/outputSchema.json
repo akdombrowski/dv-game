@@ -1,0 +1,13 @@
+{
+  "output": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string"
+      },
+      "renderings": {
+        "type": "string"
+      }
+    }
+  }
+}
