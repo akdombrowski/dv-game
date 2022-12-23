@@ -153,18 +153,12 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
     const dvColPos = dvColPosArray[i];
     if (i % 3 === 0) {
       const rndIndex = Math.floor(Math.random() * ohs.length);
-      console.log("rndIndex");
-      console.log(rndIndex);
       img = ohs[rndIndex];
     } else if (dvColPos < 50) {
       const rndIndex = Math.floor(Math.random() * ones.length);
-      console.log("rndIndex");
-      console.log(rndIndex);
       img = ones[rndIndex];
     } else {
       const rndIndex = Math.floor(Math.random() * twos.length);
-      console.log("rndIndex");
-      console.log(rndIndex);
       img = twos[rndIndex];
     }
     renderings[i] = { value: code, pos: dvColPos, img: img };
