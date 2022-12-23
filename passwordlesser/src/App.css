@@ -109,6 +109,7 @@
   height: auto;
   flex: 1 1;
   overflow: hidden;
+  top: 0px;
 }
 
 .form-btn-wrapper {

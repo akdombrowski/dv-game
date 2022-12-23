@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { MotionValue, motion } from "framer-motion";
 import { SyntheticEvent } from "react";
 
 const clickSubmitBtn = (e: SyntheticEvent) => {
@@ -8,27 +8,46 @@ const clickSubmitBtn = (e: SyntheticEvent) => {
 };
 
 const MotionContainer = (props: {
-  yInit: string;
-  yFinal: string;
+  yInit: string | number;
+  yFinal: string | number;
+  yMotionValue: MotionValue<number>;
   idNumber: number;
   duration: number;
   challenge: string;
   bgImg: string;
 }) => {
+  const variants = {
+    init: {
+      y: props.yInit,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 1,
+      },
+    },
+    final: {
+      y: props.yFinal,
+    },
+  };
   return (
     <motion.div
       className="dv-motion-div muscle-container"
       id={"motionDV" + props.idNumber}
-      initial={{ y: props.yInit }}
-      animate={{
-        y: props.yFinal,
+      initial="init"
+      animate="final"
+      variants={variants}
+      style={{
+        y: props.yMotionValue,
       }}
       transition={{
         repeat: Infinity,
         duration: props.duration,
         repeatType: "reverse",
       }}
-      style={{}}
+      whileHover={{
+        scale: 1.2,
+        transition: { duration: 0.1 },
+      }}
+      whileTap={{ scale: 2, transition: { duration: 0.1 } }}
     >
       <input
         formNoValidate

@@ -3,6 +3,7 @@ import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
 import * as imgs from "./Imgs";
+import { MotionValue, useMotionValue } from "framer-motion";
 
 const bgImg = imgs.bgImg;
 
@@ -83,6 +84,7 @@ const DV_IMG_WIDTH_VW = DV_IMG_WIDTH.toString() + "vw";
 const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DURATION = 3;
 const MAX_DURATION = 7;
+const IMG_Y_INIT = "0px";
 
 /**
  * It generates an array of random numbers between MIN_DURATION and
@@ -103,65 +105,51 @@ const generateDVs = (): number[] => {
 
 const convertRenderingsToObj = () => {
   if (RENDERINGS) {
-    console.log(RENDERINGS);
-    console.log(JSON.parse(RENDERINGS));
     return JSON.parse(RENDERINGS);
+  } else {
+    console.error("missing renderings");
   }
 
   return null;
 };
 
-const mappingDVs = (dvContainers: number[]) => {
-  const renderings: {
-    [key: number]: { value: string; pos: number; img: string };
-  } = convertRenderingsToObj();
-  // const renderings = RENDERINGS;
-
-  return (
-    <>
-      {dvContainers.map((dur, i) => {
-        // const img =
-        //   "url(data:image/png;base64," + images[renderings[i].img] + ")";
-        const img = "data:image/png;base64, " + images[renderings[i].img];
-
-        const props: {
-          yInit: string;
-          yFinal: string;
-          idNumber: number;
-          duration: number;
-          challenge: string;
-          bgImg: string;
-        } = {
-          yInit: "25vh",
-          yFinal: "50vh",
-          idNumber: i,
-          duration: dur,
-          challenge: renderings[i].value,
-          bgImg: img,
-        };
-
-        return (
-          <div
-            id={"imgCol" + i}
-            key={"imgCol" + i}
-            className="dv-col flex-child"
-            style={{
-              left: renderings[i].pos.toString() + "%",
-              maxWidth: DV_IMG_WIDTH_VW,
-              minWidth: DV_IMG_WIDTH_VW,
-            }}
-          >
-            {MotionContainer(props)}
-          </div>
-        );
-      })}
-    </>
-  );
-};
+const renderings: {
+  [key: number]: { value: string; pos: number; img: string };
+} = convertRenderingsToObj();
 
 function App() {
-  const dvContainers = generateDVs();
+  const [yInit, setYInit] = useState("-1000px");
+  const [yFinal, setYFinal] = useState("1080px");
   const mainContainer = useRef<HTMLDivElement>(null);
+  const dvContainers = generateDVs();
+  const currentYValue: MotionValue<number> = useMotionValue(0);
+
+  const resizeObserver = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.contentBoxSize) {
+        const contentBoxSize = entry.contentBoxSize[0];
+        const dvMotionDiv = document.querySelector(
+          ".dv-motion-div"
+        ) as HTMLDivElement;
+        const h = dvMotionDiv.offsetHeight;
+        const hPX = -h + "px";
+
+        currentYValue.set(-h);
+        setYInit(hPX);
+        setYFinal(contentBoxSize.blockSize + "px");
+      }
+    }
+  });
+
+  useEffect(() => {
+    const dvMotionDiv = document.querySelector(
+      ".dv-motion-div"
+    ) as HTMLDivElement;
+    const h = dvMotionDiv.offsetHeight;
+    const hPX = -h + "px";
+
+    setYInit(hPX);
+  }, []);
 
   useEffect(() => {
     // get the container that the main background image is displaying on
@@ -169,43 +157,65 @@ function App() {
     //   "mainContainer"
     // ) as HTMLDivElement;
     const bgImageContainer = mainContainer.current as HTMLDivElement;
-    console.log("mainContainer");
-    console.log(mainContainer);
-    console.log("mainContainer.current");
-    console.log(mainContainer.current);
 
     if (bgImageContainer) {
-      // get dimensions of main background image's container
-      const height = bgImageContainer.offsetHeight;
-      const width = bgImageContainer.offsetWidth;
-
-      // get the container for the dv-cols
-      const dvColsContainer = document.getElementById("dvColsContainer");
-      const captchaDVForm = document.getElementById("captcha-dv-form");
-      // cast as div element
-      const dvsHolderDiv = dvColsContainer as HTMLDivElement;
-      const captchaDVFormDiv = captchaDVForm as HTMLDivElement;
-      // set that div element's dimensions to match the main background
-      // container's dimensions
-      console.log("width, height");
-      console.log(width, height);
-
-      // dvsHolderDiv.style.maxHeight = String(height) + "px";
-      // dvsHolderDiv.style.minHeight = String(height) + "px";
-      // dvsHolderDiv.style.height = String(height) + "px";
-      // dvsHolderDiv.style.maxWidth = String(width) + "px";
-      // dvsHolderDiv.style.minWidth = String(width) + "px";
-      // dvsHolderDiv.style.width = String(width) + "px";
-      // captchaDVFormDiv.style.maxHeight = String(height) + "px";
-      // captchaDVFormDiv.style.minHeight = String(height) + "px";
-      // captchaDVFormDiv.style.height = String(height) + "px";
-      // captchaDVFormDiv.style.maxWidth = String(width) + "px";
-      // captchaDVFormDiv.style.minWidth = String(width) + "px";
-      // captchaDVFormDiv.style.width = String(width) + "px";
+      resizeObserver.observe(bgImageContainer);
     } else {
-      console.log("bg img container not found");
+      console.log("main bg img container not found");
     }
-  }, [mainContainer]);
+
+    return () => {
+      resizeObserver.unobserve(bgImageContainer);
+    };
+  }, [mainContainer, resizeObserver]);
+
+  const mappingDVs = (dvContainers: number[]) => {
+    return (
+      <>
+        {dvContainers.map((dur, i) => {
+          // const img =
+          //   "url(data:image/png;base64," + images[renderings[i].img] + ")";
+          const img = "data:image/png;base64, " + images[renderings[i].img];
+
+          console.log("ran mappingDVs");
+          console.log("yFinal", yFinal);
+
+          const props: {
+            yInit: string | number;
+            yFinal: string | number;
+            yMotionValue: MotionValue<number>;
+            idNumber: number;
+            duration: number;
+            challenge: string;
+            bgImg: string;
+          } = {
+            yInit: yInit,
+            yFinal: yFinal,
+            yMotionValue: currentYValue,
+            idNumber: i,
+            duration: dur,
+            challenge: renderings[i].value,
+            bgImg: img,
+          };
+
+          return (
+            <div
+              id={"imgCol" + i}
+              key={"imgCol" + i}
+              className="dv-col flex-child"
+              style={{
+                left: renderings[i].pos.toString() + "%",
+                maxWidth: DV_IMG_WIDTH_VW,
+                minWidth: DV_IMG_WIDTH_VW,
+              }}
+            >
+              {MotionContainer(props)}
+            </div>
+          );
+        })}
+      </>
+    );
+  };
 
   const advanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();
