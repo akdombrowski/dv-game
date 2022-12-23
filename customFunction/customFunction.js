@@ -212,7 +212,9 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
   //   shuffleObj(renderings);
   // }
 
-  return { code: chall, renderings: JSON.stringify(renderings) };
+  const renderingsString = JSON.stringify(renderings);
+
+  return { code: chall, renderings: renderingsString };
 };
 
 module.exports = a = async ({ params }) => {
