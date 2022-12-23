@@ -92,7 +92,7 @@ const shuffleArray = (array) => {
 const generateCodes = (numOfCodes) => {
   const codes = [];
   for (let i = 0; i < numOfCodes; i++) {
-    const code = crypto.randomBytes(256).toString("base64url");
+    const code = crypto.randomBytes(64).toString("base64url");
     codes.push(code);
   }
 
