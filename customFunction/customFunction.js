@@ -161,7 +161,7 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
       const rndIndex = Math.floor(Math.random() * twos.length);
       img = twos[rndIndex];
     }
-    renderings[i] = { value: code, pos: dvColPos, img: img };
+    renderings[i+1] = { value: code, pos: dvColPos, img: img };
   }
 
   if (numOfDVs > 1) {
