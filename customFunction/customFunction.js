@@ -4,7 +4,7 @@ const crypto = require("crypto");
 // min value is 0 to keep from going off screen to the left
 // max value is 99 since I'm converting this to a percentage
 const rndPositionFromLeftForImg = (dvImgWidth) => {
-  return Math.max(0, Math.floor(Math.random() * 99 - dvImgWidth));
+  return Math.max(0, Math.floor(Math.random() * (99 - dvImgWidth)));
 };
 
 /**
@@ -21,7 +21,7 @@ const rndPosFromLeftEdgeNumber = (dvColPosSet, dvColPosArray, dvImgWidth) => {
   // initialize rndLeft
   let rndLeft = rndPositionFromLeftForImg(dvImgWidth);
 
-  // keep iterations to 100 just to avoid infinite loop. at that point we'll probably have to overlap. if i really want, I can take the total window width and divide it by the dv img width to get when the whole window width should be filled up. but overlapping could make that tricky since I'm only checking for exact position was already used
+  // keep iterations to 100 just to avoid infinite loop. at that point we'll probably have to overlap.
   for (let i = 0; i < iterationsToFindLeftPos; i++) {
     // if we already have this position try again, else break out and use that
     // value
