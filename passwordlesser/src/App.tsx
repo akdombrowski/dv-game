@@ -161,13 +161,13 @@ function App() {
     if (bgImageContainer) {
       resizeObserver.observe(bgImageContainer);
     } else {
-      console.log("main bg img container not found");
+      console.error("main bg img container not found");
     }
 
     return () => {
       resizeObserver.unobserve(bgImageContainer);
     };
-  }, [mainContainer, resizeObserver]);
+  }, []);
 
   const mappingDVs = (dvContainers: number[]) => {
     return (
@@ -176,9 +176,6 @@ function App() {
           // const img =
           //   "url(data:image/png;base64," + images[renderings[i].img] + ")";
           const img = "data:image/png;base64, " + images[renderings[i].img];
-
-          console.log("ran mappingDVs");
-          console.log("yFinal", yFinal);
 
           const props: {
             yInit: string | number;
