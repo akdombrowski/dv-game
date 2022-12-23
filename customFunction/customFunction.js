@@ -3,7 +3,7 @@ const crypto = require("crypto");
 // calculates a random number to place the col contanining an img
 // min value is 0 to keep from going off screen to the left
 // max value is 99 - dvImgWidth since I'm converting this to a percentage
-const rndPositionFromLeftForImg = (dvImgWidth) => {
+const rndNum = (dvImgWidth) => {
   return Math.max(0, Math.floor(Math.random() * (99 - dvImgWidth)));
 };
 
@@ -19,14 +19,14 @@ const rndPosFromLeftEdgeNumber = (dvColPosSet, dvColPosArray, dvImgWidth) => {
   // pos values are integers from 0 - 100.
   const iterationsToFindLeftPos = 100;
   // initialize rndLeft
-  let rndLeft = rndPositionFromLeftForImg(dvImgWidth);
+  let rndLeft = rndNum(dvImgWidth);
 
   // keep iterations to 100 just to avoid infinite loop. at that point we'll probably have to overlap.
   for (let i = 0; i < iterationsToFindLeftPos; i++) {
     // if we already have this position try again, else break out and use that
     // value
     if (dvColPosSet.has(rndLeft)) {
-      rndLeft = rndPositionFromLeftForImg(dvImgWidth);
+      rndLeft = rndNum(dvImgWidth);
     } else {
       // add to set to try to avoid overlapping
       dvColPosSet.add(rndLeft);
