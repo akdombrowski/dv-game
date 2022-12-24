@@ -562,6 +562,8 @@ module.exports = a = async ({ params }) => {
     codes,
     dvColPosArrayPositions
   );
+  const numDirectOverlaps =
+    dvColPosArrayPositions.length - dvColPosArray.filter((pos) => pos).length;
 
   return {
     code: code,
@@ -572,5 +574,6 @@ module.exports = a = async ({ params }) => {
     noLuck: noLuck,
     positionsOverlapping: positionsOverlapping,
     maxPositionsWithoutOverlap: maxPositionsWithoutOverlap,
+    numDirectOverlaps: numDirectOverlaps,
   };
 };
