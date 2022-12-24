@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
+import React, { BaseSyntheticEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
 import * as imgs from "./Imgs";
@@ -171,26 +171,19 @@ function App() {
 
   const advanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();
-    const submitE = e.nativeEvent as SubmitEvent;
-    const advFlowValue: HTMLElement | null =
-      document.getElementById("advFlowValue");
-    const advFlowSubmitBtn: HTMLElement | null =
-      document.getElementById("advFlowSubmitBtn");
+    const advFlowValue = document.getElementById(
+      "advFlowValue"
+    ) as HTMLInputElement;
+    const advFlowSubmitBtn = document.getElementById(
+      "advFlowSubmitBtn"
+    ) as HTMLInputElement;
 
     if (advFlowValue as HTMLInputElement) {
-      console.log("e");
-      console.log(e);
-      console.log("e.nativeEvent");
-      console.log(e.nativeEvent);
-      console.log("submitE");
-      console.log(submitE);
-      console.log("submitE?.submitter");
-      console.log(submitE?.submitter);
       const advance = advFlowValue as HTMLInputElement;
-      const inputEl = submitE.submitter as HTMLInputElement;
-      const chll = inputEl.value;
+      const target = e.target as HTMLInputElement;
+      const value = target.value;
 
-      advance.value = chll;
+      advance.value = value;
     }
 
     advFlowSubmitBtn?.click();
