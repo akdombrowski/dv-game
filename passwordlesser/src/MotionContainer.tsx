@@ -35,7 +35,6 @@ const MotionContainer = (props: {
       id={"motionDV" + props.idNumber}
       initial="init"
       animate="final"
-      variants={variants}
       style={{
         y: props.yMotionValue,
       }}
