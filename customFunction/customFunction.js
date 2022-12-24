@@ -7,8 +7,33 @@ const floorRND = (max) => {
 // calculates a random number to place the col contanining an img
 // min value is 0 to keep from going off screen to the left
 // max value is 99 - dvImgWidth since I'm converting this to a percentage
-const rndNum = (dvImgWidth) => {
+const rndPos = (dvImgWidth) => {
   return Math.max(0, floorRND(99 - dvImgWidth));
+};
+
+/**
+ * Generates random position and adds to and returns an array
+ * @returns An array of random positions without overlap
+ */
+const addPos = (dvColPosArray, dvImgWidth) => {
+  // initialize rndLeft
+  let rndPosFromLeft = rndPos(dvImgWidth);
+
+  for (let i = 0; i < dvColPosArray; i++) {
+    const min = dvColPosArray[i];
+    const max = dvColPosArray[i] + dvImgWidth;
+    // if we already have this position (disallowing overlap), try again, else break out and use that
+    // value
+    if (rndPosFromLeft > min && rndPosFromLeft < max) {
+      rndPosFromLeft = rndPos(dvImgWidth);
+    } else {
+      // add to array to return
+      dvColPosArray.push(rndPosFromLeft);
+      break;
+    }
+  }
+
+  return dvColPosArray;
 };
 
 /**
@@ -19,36 +44,46 @@ const rndNum = (dvImgWidth) => {
  * @returns A random number between 0 and the window width minus the width of the
  * image.
  */
-const rndPosFromLeftEdgeNumber = (dvColPosSet, dvColPosArray, dvImgWidth) => {
+const addPosWithOverlap = (dvColPosSet, dvColPosArray, dvImgWidth) => {
   // pos values are integers from 0 - 100.
-  const iterationsToFindLeftPos = 100;
-  // initialize rndLeft
-  let rndLeft = rndNum(dvImgWidth);
+  const numPosWithoutCompleteOverlap = 100;
+  // initialize rndPosFromLeft
+  let rndPosFromLeft = rndPos(dvImgWidth);
+  const initialPosArrayLength = dvColPosArray.length;
 
-  // keep iterations to 100 just to avoid infinite loop. at that point we'll probably have to overlap.
-  for (let i = 0; i < iterationsToFindLeftPos; i++) {
+  // keep iterations to 100 just to avoid infinite loop. at that point we'll probably have to just overlap to avoid too high of an execution time.
+  for (let i = 0; i < numPosWithoutCompleteOverlap; i++) {
     // if we already have this position try again, else break out and use that
     // value
-    if (dvColPosSet.has(rndLeft)) {
-      rndLeft = rndNum(dvImgWidth);
+    if (dvColPosSet.has(rndPosFromLeft)) {
+      rndPosFromLeft = rndPos(dvImgWidth);
     } else {
       // add to set to try to avoid overlapping
-      dvColPosSet.add(rndLeft);
+      dvColPosSet.add(rndPosFromLeft);
       // add to array to return
-      dvColPosArray.push(rndLeft);
+      dvColPosArray.push(rndPosFromLeft);
       break;
     }
+  }
+
+  // ran through
+  if (dvColPosArray.length === initialPosArrayLength) {
+    // add to set to try to avoid overlapping
+    dvColPosSet.add(rndPosFromLeft);
+    // add to array to return
+    dvColPosArray.push(rndPosFromLeft);
   }
 
   return { dvColPosSet: dvColPosSet, dvColPosArray: dvColPosArray };
 };
 
 // convert rnd number to percentage
-const rndPosPercFromLeftEdge = () =>
-  rndPosFromLeftEdgeNumber().toString() + "%";
+const rndPosPercFromLeftEdge = () => addPos().toString() + "%";
 
+// fill up array of positions
 const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
-  // fill up DV_COL_POSITIONS
+  // if dvImgWidth were 1, we'd have 100 position slots from 0 - 99
+  const maxPositionsWithoutOverlap = Math.ceil(100 / dvImgWidth);
   let posCreated = 0;
   let dvColPosSet = new Set();
   let dvColPosArray = new Array();
@@ -56,11 +91,20 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
   // fill dvColPosArray while trying to avoid overlap with dvColPosSet keeping
   // track of positions
   while (posCreated < numOfDVs) {
-    ({ dvColPosSet, dvColPosArray } = rndPosFromLeftEdgeNumber(
-      dvColPosSet,
-      dvColPosArray,
-      dvImgWidth
-    ));
+    if (dvColPosArray.length > 100) {
+      // we have to overlap entirely now
+      dvColPosArray.push(floorRND(100));
+    } else {
+      if (numOfDVs <= maxPositionsWithoutOverlap) {
+        dvColPosArray = addPos(dvColPosSet, dvColPosArray, dvImgWidth);
+      } else {
+        ({ dvColPosSet, dvColPosArray } = addPosWithOverlap(
+          dvColPosSet,
+          dvColPosArray,
+          dvImgWidth
+        ));
+      }
+    }
     posCreated++;
   }
 
