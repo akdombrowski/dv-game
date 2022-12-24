@@ -173,6 +173,7 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
   // save init rnd index and code
   const initRND = rnd;
   const initCode = code;
+  const initPos = position;
 
   // set to -1 so if ones and twos aren't equal we'll know by checking for -1
   rnd = -1;
@@ -193,7 +194,7 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
     if (rndAddOh === 0) {
       const rndOhIndex = Math.floor(Math.random() * ohs.length);
       image = ohs[rndOhIndex];
-    } else if (position < 50) {
+    } else if (position < initPos) {
       if (rnd < 0) {
         rnd = Math.floor(Math.random() * ones.length);
       }
