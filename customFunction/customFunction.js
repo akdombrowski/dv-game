@@ -256,13 +256,6 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
     renderings[i] = { value: code, pos: position, img: image };
   }
 
-  // i think i was able to come up with a way of avoiding needing this by
-  // initializing renderings with a random key value
-  // // only need because we put the code at the first value
-  // if (numOfDVs > 1) {
-  //   shuffleObj(renderings);
-  // }
-
   const renderingsString = JSON.stringify(renderings);
 
   return { code: initCode, renderings: renderingsString };
