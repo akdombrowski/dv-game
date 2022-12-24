@@ -4,7 +4,7 @@ const floorRND = (max) => {
   return Math.floor(Math.random() * max);
 };
 
-// calculates a random number to place the col contanining an img
+// calculates a random number to place the col containing an img
 // min value is 0 to keep from going off screen to the left
 // max value is 99 - dvImgWidth since I'm converting this to a percentage
 const rndPos = (dvImgWidth) => {
