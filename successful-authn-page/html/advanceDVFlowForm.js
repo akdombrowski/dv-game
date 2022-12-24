@@ -1,5 +1,5 @@
 /**
- * Call this function when want to submit a form wit a value in advanceFlowValue
+ * Call this function when want to submit a form wit a value in advFlowValue
  * @param {Event} e
  */
 const advanceFlow = (e) => {

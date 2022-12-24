@@ -175,7 +175,7 @@ function App() {
     e.preventDefault();
     const submitE = e.nativeEvent as SubmitEvent;
     const advFlowInput: HTMLElement | null =
-      document.getElementById("advanceFlowValue");
+      document.getElementById("advFlowValue");
     const advFlowSubmitBtn: HTMLElement | null =
       document.getElementById("advFlowSubmitBtn");
 
