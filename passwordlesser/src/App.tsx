@@ -7,10 +7,10 @@ import { MotionValue, useMotionValue } from "framer-motion";
 
 const bgImg = imgs.bgImg;
 
-type img0s = {
+type img0sType = {
   [key: string]: string;
 };
-type image0Type = keyof img0s;
+type image0Type = keyof img0sType;
 const img0 = imgs.img0;
 const img00 = imgs.img00;
 const img000 = imgs.img000;
@@ -30,10 +30,10 @@ const img0s = {
   img00000000: img00000000,
 };
 
-type img1s = {
+type img1sType = {
   [key: string]: string;
 };
-type image1Type = keyof img1s;
+type image1Type = keyof img1sType;
 const img1 = imgs.img1;
 const img11 = imgs.img11;
 const img111 = imgs.img111;
@@ -53,10 +53,10 @@ const img1s = {
   img11111111: img11111111,
 };
 
-type img2s = {
+type img2sType = {
   [key: string]: string;
 };
-type image2Type = keyof img2s;
+type image2Type = keyof img2sType;
 const img2 = imgs.img2;
 const img22 = imgs.img22;
 const img222 = imgs.img222;

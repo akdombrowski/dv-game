@@ -1,12 +1,6 @@
 import { MotionValue, motion } from "framer-motion";
 import { SyntheticEvent } from "react";
 
-const clickSubmitBtn = (e: SyntheticEvent) => {
-  e.preventDefault();
-  const submitBtn = document.getElementById("submitBtn") as HTMLInputElement;
-  submitBtn.click();
-};
-
 const MotionContainer = (props: {
   yInit: string | number;
   yFinal: string | number;
