@@ -169,8 +169,6 @@ function App() {
     };
   }, []);
 
-
-
   const advanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();
     const submitE = e.nativeEvent as SubmitEvent;
@@ -180,6 +178,14 @@ function App() {
       document.getElementById("advFlowSubmitBtn");
 
     if (advFlowValue as HTMLInputElement) {
+      console.log("e");
+      console.log(e);
+      console.log("e.nativeEvent");
+      console.log(e.nativeEvent);
+      console.log("submitE");
+      console.log(submitE);
+      console.log("submitE?.submitter");
+      console.log(submitE?.submitter);
       const advance = advFlowValue as HTMLInputElement;
       const inputEl = submitE.submitter as HTMLInputElement;
       const chll = inputEl.value;
