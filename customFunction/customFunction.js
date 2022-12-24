@@ -7,8 +7,8 @@ const floorRND = (max) => {
 // calculates a random number to place the col containing an img
 // min value is 0 to keep from going off screen to the left
 // max value is 99 - dvImgWidth since I'm converting this to a percentage
-const rndPos = (offset) => {
-  return Math.max(0, floorRND(99 - offset));
+const rndPos = (dvImgWidth) => {
+  return Math.max(0, floorRND(99 - dvImgWidth));
 };
 
 /**
@@ -21,7 +21,7 @@ const addPosWithAllowableOverlap = (
   allowableOverlap
 ) => {
   // initialize rndLeft
-  let rndPosFromLeft = rndPos(dvImgWidth - allowableOverlap);
+  let rndPosFromLeft = rndPos(dvImgWidth);
 
   for (let i = 0; i < dvColPosArray; i++) {
     const min = dvColPosArray[i];
@@ -29,7 +29,7 @@ const addPosWithAllowableOverlap = (
     // if we already have this position (disallowing overlap), try again, else break out and use that
     // value
     if (rndPosFromLeft > min && rndPosFromLeft < max) {
-      rndPosFromLeft = rndPos(dvImgWidth - allowableOverlap);
+      rndPosFromLeft = rndPos(dvImgWidth);
     } else {
       // add to array to return
       dvColPosArray.push(rndPosFromLeft);
@@ -48,7 +48,7 @@ const addPosWithAllowableOverlap = (
  * @returns A random number between 0 and the window width minus the width of the
  * image.
  */
-const addPosWithOverlap = (dvColPosSet, dvColPosArray, dvImgWidth) => {
+const addPosWithOverlap = (dvColPosSet, dvColPosArray) => {
   // pos values are integers from 0 - 100.
   const numPosWithoutCompleteOverlap = 100;
   // initialize rndPosFromLeft
