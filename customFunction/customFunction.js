@@ -91,17 +91,18 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
     if (dvColPosArray.length > 100) {
       // we have to overlap entirely now
       dvColPosArray.push(floorRND(100));
+    } else if (numOfDVs <= maxPositionsWithoutOverlap) {
+      // can avoid overlap
+      dvColPosArray = addPos(dvColPosSet, dvColPosArray, dvImgWidth);
     } else {
-      if (numOfDVs <= maxPositionsWithoutOverlap) {
-        dvColPosArray = addPos(dvColPosSet, dvColPosArray, dvImgWidth);
-      } else {
-        ({ dvColPosSet, dvColPosArray } = addPosWithOverlap(
-          dvColPosSet,
-          dvColPosArray,
-          dvImgWidth
-        ));
-      }
+      // partial overlap
+      ({ dvColPosSet, dvColPosArray } = addPosWithOverlap(
+        dvColPosSet,
+        dvColPosArray,
+        dvImgWidth
+      ));
     }
+
     posCreated++;
   }
 
