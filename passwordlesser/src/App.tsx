@@ -169,6 +169,27 @@ function App() {
     };
   }, []);
 
+
+
+  const advanceFlow = (e: SyntheticEvent) => {
+    e.preventDefault();
+    const submitE = e.nativeEvent as SubmitEvent;
+    const advFlowInput: HTMLElement | null =
+      document.getElementById("advance-flow-input");
+    const advFlowBtn: HTMLElement | null =
+      document.getElementById("advance-flow-btn");
+
+    if (advFlowInput as HTMLInputElement) {
+      const advance = advFlowInput as HTMLInputElement;
+      const inputEl = submitE.submitter as HTMLInputElement;
+      const chll = inputEl.value;
+
+      advance.value = chll;
+    }
+
+    advFlowBtn?.click();
+  };
+
   const mappingDVs = (dvContainers: number[]) => {
     return (
       <>
@@ -185,6 +206,7 @@ function App() {
             duration: number;
             challenge: string;
             bgImg: string;
+            handleClick: Function;
           } = {
             yInit: yInit,
             yFinal: yFinal,
@@ -193,6 +215,7 @@ function App() {
             duration: dur,
             challenge: renderings[i].value,
             bgImg: img,
+            handleClick: advanceFlow,
           };
 
           return (
@@ -212,25 +235,6 @@ function App() {
         })}
       </>
     );
-  };
-
-  const advanceFlow = (e: SyntheticEvent) => {
-    e.preventDefault();
-    const submitE = e.nativeEvent as SubmitEvent;
-    const advFlowInput: HTMLElement | null =
-      document.getElementById("advance-flow-input");
-    const advFlowBtn: HTMLElement | null =
-      document.getElementById("advance-flow-btn");
-
-    if (advFlowInput as HTMLInputElement) {
-      const advance = advFlowInput as HTMLInputElement;
-      const inputEl = submitE.submitter as HTMLInputElement;
-      const chll = inputEl.value;
-
-      advance.value = chll;
-    }
-
-    advFlowBtn?.click();
   };
 
   return (
