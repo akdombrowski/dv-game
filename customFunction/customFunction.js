@@ -121,39 +121,46 @@ const getPositionWithMinOverlap = (
   dvColPosSet
 ) => {
   let iteration = 0;
-  let dvColPosArrayWithOnlyTakenPositions = dvColPosArray;
 
   loop1: while (iteration < maxIterationsBeforePickingAnyRND) {
     let foundOverlap = false;
-    if (dvColPosSet.has(rndPosFromLeft)) {
-      // the rnd value overlaps one(+) of the positions
-      // get a new random value
-      rndPosFromLeft = rndPos(dvImgWidth);
 
+    if (
+      rndPosFromLeft >= 100 - dvImgWidth - 1 &&
+      dvColPosArrayPositions[rndPosFromLeft]
+    ) {
+      rndPosFromLeft = rndPos(dvImgWidth);
+      iteration++;
       continue;
     }
-    loop2: for (let position of dvColPosSet) {
-      const min = position;
-      const max = position + dvImgWidth - overlap;
-      // if we already have this position (disallowing overlap), try again, else break out and use that
-      // value
-      if (rndPosFromLeft > min && rndPosFromLeft < max) {
+
+    loop2: for (
+      let pos = rndPosFromLeft;
+      pos < rndPosFromLeft + dvImgWidth - overlap;
+      pos++
+    ) {
+      // if we already have this position (disallowing overlap), try again by
+      // breaking out
+      if (dvColPosArray[pos]) {
         foundOverlap = true;
         break loop2;
       }
     }
 
     if (foundOverlap) {
+      // overlap found!
       // the rnd value overlaps one(+) of the positions
       // get a new random value
       rndPosFromLeft = rndPos(dvImgWidth);
     } else {
-      // add to set to try to avoid overlapping (in case we move to the overlapping const)
+      // NO overlap found!
+      // keep track to try to avoid overlapping and to use for position
+      // renderings
       dvColPosSet.add(rndPosFromLeft);
-      // add to array to return
       dvColPosArray[rndPosFromLeft] = true;
       dvColPosArrayPositions.push(rndPosFromLeft);
 
+      // we can end the outer loop since we found our non-overlapping position
       break loop1;
     }
 
