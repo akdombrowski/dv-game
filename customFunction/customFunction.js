@@ -170,15 +170,16 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
   const renderings = {};
   renderings[rnd] = { value: code, pos: position, img: image };
 
-  // save init code
-  const chall = code;
+  // save init rnd index and code
+  const initRND = rnd;
+  const initCode = code;
 
   // set to -1 so if ones and twos aren't equal we'll know by checking for -1
   rnd = -1;
 
   for (let i = 0; i < numOfDVs; i++) {
     // skip the "chosen one" (the one we used for init above)
-    if (i === rnd) continue;
+    if (i === initRND) continue;
 
     const rndAddOh = Math.floor(Math.random() * chanceForOh);
 
@@ -215,7 +216,7 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
 
   const renderingsString = JSON.stringify(renderings);
 
-  return { code: chall, renderings: renderingsString };
+  return { code: initCode, renderings: renderingsString };
 };
 
 module.exports = a = async ({ params }) => {
