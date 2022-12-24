@@ -22,19 +22,31 @@ const addPosWithAllowableOverlap = (
 ) => {
   // initialize rndLeft
   let rndPosFromLeft = rndPos(dvImgWidth);
+  const maxIterationsBeforePickingAnyRND = 100;
+  let iteration = 0;
 
-  for (let i = 0; i < dvColPosArray; i++) {
-    const min = dvColPosArray[i];
-    const max = dvColPosArray[i] + dvImgWidth - allowableOverlap;
-    // if we already have this position (disallowing overlap), try again, else break out and use that
-    // value
-    if (rndPosFromLeft > min && rndPosFromLeft < max) {
+  loop1: while (maxIterationsBeforePickingAnyRND) {
+    loop2: for (let i = 0; i < dvColPosArray; i++) {
+      const min = dvColPosArray[i];
+      const max = dvColPosArray[i] + dvImgWidth - allowableOverlap;
+      const foundOverlap = false;
+      // if we already have this position (disallowing overlap), try again, else break out and use that
+      // value
+      if (rndPosFromLeft > min && rndPosFromLeft < max) {
+        foundOverlap = true;
+        break loop2;
+      }
+    }
+
+    if (foundOverlap) {
       rndPosFromLeft = rndPos(dvImgWidth);
     } else {
       // add to array to return
       dvColPosArray.push(rndPosFromLeft);
-      break;
+      break loop1;
     }
+
+    iteration++;
   }
 
   return dvColPosArray;
