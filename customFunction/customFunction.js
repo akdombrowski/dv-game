@@ -1,10 +1,14 @@
 const crypto = require("crypto");
 
+const floorRND = (max) => {
+  return Math.floor(Math.random() * max);
+};
+
 // calculates a random number to place the col contanining an img
 // min value is 0 to keep from going off screen to the left
 // max value is 99 - dvImgWidth since I'm converting this to a percentage
 const rndNum = (dvImgWidth) => {
-  return Math.max(0, Math.floor(Math.random() * (99 - dvImgWidth)));
+  return Math.max(0, floorRND(99 - dvImgWidth));
 };
 
 /**
@@ -77,7 +81,7 @@ const shuffleArray = (array) => {
   // While there remain elements to shuffle.
   while (currentIndex != 0) {
     // Pick a remaining element.
-    randomIndex = Math.floor(Math.random() * currentIndex);
+    randomIndex = floorRND(currentIndex);
     currentIndex--;
 
     // And swap it with the current element.
@@ -97,7 +101,7 @@ const shuffleObjectWithNumberKeys = (obj) => {
   // While there remain elements to shuffle.
   while (currentIndex != 0) {
     // Pick a remaining element.
-    randomIndex = Math.floor(Math.random() * currentIndex);
+    randomIndex = floorRND(currentIndex);
     currentIndex--;
 
     // And swap it with the current element.
@@ -163,11 +167,14 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
   shuffleArray(twos);
 
   // init
-  let rnd = Math.floor(Math.random() * ohs.length);
+  const renderings = {};
+  const rndOh = floorRND(ohs.length);
+
+  let rnd = floorRND(numOfDVs);
   let code = codes[rnd];
   let position = dvColPosArray[rnd];
-  let image = ohs[rnd];
-  const renderings = {};
+  let image = ohs[rndOh];
+
   renderings[rnd] = { value: code, pos: position, img: image };
 
   // save init rnd index and code
@@ -182,26 +189,26 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
     // skip the "chosen one" (the one we used for init above)
     if (i === initRND) continue;
 
-    const rndAddOh = Math.floor(Math.random() * chanceForOh);
+    const rndAddOh = floorRND(chanceForOh);
 
     code = codes[i];
     position = dvColPosArray[i];
 
     if (ones.length === twos.length) {
-      rnd = Math.floor(Math.random() * ones.length);
+      rnd = floorRND(ones.length);
     }
 
     if (rndAddOh === 0) {
-      const rndOhIndex = Math.floor(Math.random() * ohs.length);
+      const rndOhIndex = floorRND(ohs.length);
       image = ohs[rndOhIndex];
     } else if (position < initPos) {
       if (rnd < 0) {
-        rnd = Math.floor(Math.random() * ones.length);
+        rnd = floorRND(ones.length);
       }
       image = ones[rnd];
     } else {
       if (rnd < 0) {
-        rnd = Math.floor(Math.random() * twos.length);
+        rnd = floorRND(twos.length);
       }
       image = twos[rnd];
     }
