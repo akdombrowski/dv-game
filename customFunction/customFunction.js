@@ -41,7 +41,7 @@ const addPosWithAllowableOverlap = (
 
   loop1: while (maxIterationsBeforePickingAnyRND) {
     let foundOverlap = false;
-    loop2: for (let i = 0; i < dvColPosArray,length; i++) {
+    loop2: for (let i = 0; i < dvColPosArray.length; i++) {
       const min = dvColPosArray[i];
       const max = dvColPosArray[i] + dvImgWidth - overlap;
       // if we already have this position (disallowing overlap), try again, else break out and use that
