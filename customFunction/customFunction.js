@@ -123,6 +123,11 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
   let dvColPosSet = new Set();
   let dvColPosArray = new Array();
   let noLuck = 0;
+  let positionsOverlapping = {
+    withoutOverlap: 0,
+    withPartialOverlap: 0,
+    withOverlap: 0,
+  };
 
   // fill dvColPosArray while trying to avoid overlap with dvColPosSet keeping
   // track of positions
@@ -130,6 +135,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
     if (dvColPosArray.length > 100) {
       // we have to overlap entirely now
       dvColPosArray.push(floorRND(100));
+      positionsOverlapping.withOverlap = positionsOverlapping.withOverlap + 1;
     } else if (posCreated <= maxPositionsWithoutOverlap) {
       // can avoid overlap
       ({ dvColPosArray, noLuck } = addPosWithAllowableOverlap(
@@ -139,6 +145,8 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
         false,
         noLuck
       ));
+      positionsOverlapping.withOverlap =
+        positionsOverlapping.withoutOverlap + 1;
     } else if (posCreated < 50) {
       // can avoid overlap
       ({ dvColPosArray, noLuck } = addPosWithAllowableOverlap(
@@ -148,6 +156,8 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
         true,
         noLuck
       ));
+      positionsOverlapping.withPartialOverlap =
+        positionsOverlapping.withPartialOverlap + 1;
     } else {
       // partial overlap
       ({ dvColPosSet, dvColPosArray } = addPosWithOverlap(
@@ -155,6 +165,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
         dvColPosArray,
         dvImgWidth
       ));
+      positionsOverlapping.withOverlap = positionsOverlapping.withOverlap + 1;
     }
 
     posCreated++;
@@ -167,7 +178,11 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
   //   colPosPercs = colPos + "%";
   // }
 
-  return { dvColPosArray: dvColPosArray, noLuck: noLuck };
+  return {
+    dvColPosArray: dvColPosArray,
+    noLuck: noLuck,
+    positionsOverlapping: positionsOverlapping,
+  };
 };
 
 const shuffleArray = (array) => {
@@ -319,10 +334,8 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
 module.exports = a = async ({ params }) => {
   const numOfDVs = Number(params.numDVs);
   const dvImgWidth = Number(params.dvImgWidth);
-  const { dvColPosArray, noLuck } = generateDVColPosArrays(
-    numOfDVs,
-    dvImgWidth
-  );
+  const { dvColPosArray, noLuck, positionsOverlapping } =
+    generateDVColPosArrays(numOfDVs, dvImgWidth);
   const codes = generateCodes(numOfDVs);
   const { code, renderings } = combineCodesAndPosArrayAndImgs(
     numOfDVs,
@@ -335,5 +348,6 @@ module.exports = a = async ({ params }) => {
     renderings: renderings,
     posArray: dvColPosArray,
     noLuck: noLuck,
+    positionsOverlapping: positionsOverlapping,
   };
 };
