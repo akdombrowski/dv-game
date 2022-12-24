@@ -139,7 +139,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
       // we have to overlap entirely now
       dvColPosArray.push(floorRND(100));
       positionsOverlapping.withRandom = positionsOverlapping.withRandom + 1;
-    } else if (posCreated <= maxPositionsWithoutOverlap) {
+    } else if (posCreated < maxPositionsWithoutOverlap) {
       // can avoid overlap
       ({ dvColPosArray, noLuck } = addPosWithAllowableOverlap(
         dvColPosArray,
