@@ -29,7 +29,7 @@ const addPosWithAllowableOverlap = (
     // if we already have this position (disallowing overlap), try again, else break out and use that
     // value
     if (rndPosFromLeft > min && rndPosFromLeft < max) {
-      rndPosFromLeft = rndPos(dvImgWidth);
+      rndPosFromLeft = rndPos(dvImgWidth - allowableOverlap);
     } else {
       // add to array to return
       dvColPosArray.push(rndPosFromLeft);
