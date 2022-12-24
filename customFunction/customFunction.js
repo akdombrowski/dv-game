@@ -563,7 +563,8 @@ module.exports = a = async ({ params }) => {
     dvColPosArrayPositions
   );
   const numDirectOverlaps =
-    dvColPosArrayPositions.length - dvColPosArray.filter((pos) => pos).length;
+    dvColPosArray.length -
+    dvColPosArrayPositions.filter((pos) => pos).length;
 
   return {
     code: code,
