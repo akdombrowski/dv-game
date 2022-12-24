@@ -169,7 +169,7 @@ function App() {
     };
   }, []);
 
-  const advanceFlow = (e: SyntheticEvent) => {
+  const updateValueAndAdvanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();
     const advFlowValue = document.getElementById(
       "advFlowValue"
@@ -214,7 +214,7 @@ function App() {
             duration: dur,
             challenge: renderings[i].value,
             bgImg: img,
-            handleClick: advanceFlow,
+            handleClick: updateValueAndAdvanceFlow,
           };
 
           return (
@@ -250,7 +250,7 @@ function App() {
         <form
           id="captcha-dv-form"
           className="flex-form full-child"
-          onSubmit={advanceFlow}
+          onSubmit={updateValueAndAdvanceFlow}
         >
           {mappingDVs(dvContainers)}
         </form>
