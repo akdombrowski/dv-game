@@ -175,9 +175,9 @@ function App() {
     e.preventDefault();
     const submitE = e.nativeEvent as SubmitEvent;
     const advFlowInput: HTMLElement | null =
-      document.getElementById("advance-flow-input");
-    const advFlowBtn: HTMLElement | null =
-      document.getElementById("advance-flow-btn");
+      document.getElementById("advanceFlowValue");
+    const advFlowSubmitBtn: HTMLElement | null =
+      document.getElementById("advFlowSubmitBtn");
 
     if (advFlowInput as HTMLInputElement) {
       const advance = advFlowInput as HTMLInputElement;
@@ -187,7 +187,7 @@ function App() {
       advance.value = chll;
     }
 
-    advFlowBtn?.click();
+    advFlowSubmitBtn?.click();
   };
 
   const mappingDVs = (dvContainers: number[]) => {
