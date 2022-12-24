@@ -174,13 +174,13 @@ function App() {
   const advanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();
     const submitE = e.nativeEvent as SubmitEvent;
-    const advFlowInput: HTMLElement | null =
+    const advFlowValue: HTMLElement | null =
       document.getElementById("advFlowValue");
     const advFlowSubmitBtn: HTMLElement | null =
       document.getElementById("advFlowSubmitBtn");
 
-    if (advFlowInput as HTMLInputElement) {
-      const advance = advFlowInput as HTMLInputElement;
+    if (advFlowValue as HTMLInputElement) {
+      const advance = advFlowValue as HTMLInputElement;
       const inputEl = submitE.submitter as HTMLInputElement;
       const chll = inputEl.value;
 
