@@ -77,9 +77,6 @@ const addPosWithOverlap = (dvColPosSet, dvColPosArray, dvImgWidth) => {
   return { dvColPosSet: dvColPosSet, dvColPosArray: dvColPosArray };
 };
 
-// convert rnd number to percentage
-const rndPosPercFromLeftEdge = () => addPos().toString() + "%";
-
 // fill up array of positions
 const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
   // if dvImgWidth were 1, we'd have 100 position slots from 0 - 99
