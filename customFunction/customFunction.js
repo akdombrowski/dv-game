@@ -23,6 +23,7 @@ const addPosWithAllowableOverlap = (
   // initialize rndLeft
   let rndPosFromLeft = rndPos(dvImgWidth);
   const maxIterationsBeforePickingAnyRND = 100;
+  const initialPosArrayLength = dvColPosArray.length;
   let iteration = 0;
 
   loop1: while (maxIterationsBeforePickingAnyRND) {
@@ -47,6 +48,14 @@ const addPosWithAllowableOverlap = (
     }
 
     iteration++;
+  }
+
+  // ran through
+  if (dvColPosArray.length === initialPosArrayLength) {
+    // add to set to try to avoid overlapping
+    dvColPosSet.add(rndPosFromLeft);
+    // add to array to return
+    dvColPosArray.push(rndPosFromLeft);
   }
 
   return dvColPosArray;
