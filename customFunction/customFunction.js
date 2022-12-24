@@ -16,6 +16,48 @@ const floorRND = (max) => {
   return Math.floor(Math.random() * max);
 };
 
+const shuffleArray = (array) => {
+  let currentIndex = array.length;
+  let randomIndex = 0;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+    // Pick a remaining element.
+    randomIndex = floorRND(currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+
+  // unnecessary to use since this modifies the array in place, and this will
+  // modify the original array argument where this func is called from
+  return array;
+};
+
+const shuffleObjectWithNumberKeys = (obj) => {
+  let currentIndex = obj.keys.length;
+  let randomIndex = 0;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+    // Pick a remaining element.
+    randomIndex = floorRND(currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [obj[currentIndex], obj[randomIndex]] = [
+      obj[randomIndex],
+      obj[currentIndex],
+    ];
+  }
+
+  return obj;
+};
+
 /**
  * It calculates a random number to place the col containing an img
  * min value is 0 to keep from going off screen to the left
@@ -282,48 +324,6 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
     positionsOverlapping,
     maxPositionsWithoutOverlap,
   };
-};
-
-const shuffleArray = (array) => {
-  let currentIndex = array.length;
-  let randomIndex = 0;
-
-  // While there remain elements to shuffle.
-  while (currentIndex != 0) {
-    // Pick a remaining element.
-    randomIndex = floorRND(currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ];
-  }
-
-  // unnecessary to use since this modifies the array in place, and this will
-  // modify the original array argument where this func is called from
-  return array;
-};
-
-const shuffleObjectWithNumberKeys = (obj) => {
-  let currentIndex = obj.keys.length;
-  let randomIndex = 0;
-
-  // While there remain elements to shuffle.
-  while (currentIndex != 0) {
-    // Pick a remaining element.
-    randomIndex = floorRND(currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [obj[currentIndex], obj[randomIndex]] = [
-      obj[randomIndex],
-      obj[currentIndex],
-    ];
-  }
-
-  return obj;
 };
 
 /**
