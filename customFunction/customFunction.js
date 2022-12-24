@@ -148,7 +148,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
         false,
         noLuck
       ));
-      positionsOverlapping.withOutOverlap =
+      positionsOverlapping.withoutOverlap =
         positionsOverlapping.withoutOverlap + 1;
     } else if (posCreated < 50) {
       // can avoid overlap
