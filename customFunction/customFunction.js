@@ -72,11 +72,13 @@ const rndPos = (dvImgWidth) => {
   return Math.max(0, floorRND(maxPositionFromLeftEdge));
 };
 
-const noLuckFallback = (dvColPosArray, dvColPosSet, rndPosFromLeft, noLuck) => {
+const noLuckFallback = (dvColPosArray, dvColPosSet, noLuck, dvImgWidth) => {
+  const rnd = rndPos(dvImgWidth);
+
   // add to set to try to avoid overlapping
-  dvColPosSet.add(rndPosFromLeft);
+  dvColPosSet.add(rnd);
   // add to array to return
-  dvColPosArray.push(rndPosFromLeft);
+  dvColPosArray.push(rnd);
   noLuck++;
 
   return { noLuck, dvColPosSet, dvColPosArray };
@@ -187,7 +189,7 @@ const addPosWithAllowableOverlap = (
   allowOverlap,
   noLuck
 ) => {
-  const maxIterationsBeforePickingAnyRND = 100;
+  const maxIterationsBeforePickingAnyRND = 100000;
   const initialPosArrayLength = dvColPosArray.length;
   let overlap = 0;
   // initialize rndLeft
@@ -215,8 +217,8 @@ const addPosWithAllowableOverlap = (
     ({ noLuck, dvColPosSet, dvColPosArray } = noLuckFallback(
       dvColPosArray,
       dvColPosSet,
-      rndPosFromLeft,
-      noLuck
+      noLuck,
+      dvImgWidth
     ));
   }
 
@@ -251,8 +253,8 @@ const addPosWithOverlap = (dvColPosSet, dvColPosArray, dvImgWidth, noLuck) => {
     ({ noLuck, dvColPosSet, dvColPosArray } = noLuckFallback(
       dvColPosArray,
       dvColPosSet,
-      rndPosFromLeft,
-      noLuck
+      noLuck,
+      dvImgWidth
     ));
   }
 
