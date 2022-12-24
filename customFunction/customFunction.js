@@ -185,6 +185,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
     dvColPosArray: dvColPosArray,
     noLuck: noLuck,
     positionsOverlapping: positionsOverlapping,
+    maxPositionsWithoutOverlap: maxPositionsWithoutOverlap,
   };
 };
 
@@ -337,8 +338,12 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
 module.exports = a = async ({ params }) => {
   const numOfDVs = Number(params.numDVs);
   const dvImgWidth = Number(params.dvImgWidth);
-  const { dvColPosArray, noLuck, positionsOverlapping } =
-    generateDVColPosArrays(numOfDVs, dvImgWidth);
+  const {
+    dvColPosArray,
+    noLuck,
+    positionsOverlapping,
+    maxPositionsWithoutOverlap,
+  } = generateDVColPosArrays(numOfDVs, dvImgWidth);
   const codes = generateCodes(numOfDVs);
   const { code, renderings } = combineCodesAndPosArrayAndImgs(
     numOfDVs,
@@ -353,5 +358,6 @@ module.exports = a = async ({ params }) => {
     posArrayLength: dvColPosArray.length,
     noLuck: noLuck,
     positionsOverlapping: positionsOverlapping,
+    maxPositionsWithoutOverlap: maxPositionsWithoutOverlap,
   };
 };
