@@ -18,7 +18,8 @@ const rndPos = (dvImgWidth) => {
 const addPosWithAllowableOverlap = (
   dvColPosArray,
   dvImgWidth,
-  allowableOverlap,
+  maxPositionsWithoutOverlap,
+  allowOverlap,
   noLuck
 ) => {
   // initialize rndLeft
@@ -26,12 +27,23 @@ const addPosWithAllowableOverlap = (
   const maxIterationsBeforePickingAnyRND = 100;
   const initialPosArrayLength = dvColPosArray.length;
   let iteration = 0;
+  let overlap = 0;
+  if (allowOverlap) {
+    const howFarOverMaxOverlapLimit =
+      dvColPosArray.length - maxPositionsWithoutOverlap;
+    // if needing to overlap, find out min overlap we need
+    if (howFarOverMaxOverlapLimit > 0) {
+      overlap = Math.ceil(
+        howFarOverMaxOverlapLimit / maxPositionsWithoutOverlap
+      );
+    }
+  }
 
   loop1: while (maxIterationsBeforePickingAnyRND) {
     let foundOverlap = false;
     loop2: for (let i = 0; i < dvColPosArray; i++) {
       const min = dvColPosArray[i];
-      const max = dvColPosArray[i] + dvImgWidth - allowableOverlap;
+      const max = dvColPosArray[i] + dvImgWidth - overlap;
       // if we already have this position (disallowing overlap), try again, else break out and use that
       // value
       if (rndPosFromLeft > min && rndPosFromLeft < max) {
@@ -106,7 +118,7 @@ const addPosWithOverlap = (dvColPosSet, dvColPosArray) => {
 // fill up array of positions
 const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
   // if dvImgWidth were 1, we'd have 100 position slots from 0 - 99
-  const maxPositionsWithoutOverlap = Math.ceil(100 / dvImgWidth);
+  const maxPositionsWithoutOverlap = Math.floor(100 / dvImgWidth);
   let posCreated = 0;
   let dvColPosSet = new Set();
   let dvColPosArray = new Array();
@@ -123,17 +135,19 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
       ({ dvColPosArray, noLuck } = addPosWithAllowableOverlap(
         dvColPosArray,
         dvImgWidth,
-        0,
+        maxPositionsWithoutOverlap,
+        false,
         noLuck
       ));
-    // } else if (posCreated < 50) {
-    //   // can avoid overlap
-    //   ({ dvColPosArray, noLuck } = addPosWithAllowableOverlap(
-    //     dvColPosArray,
-    //     dvImgWidth,
-    //     2,
-    //     noLuck
-    //   ));
+    } else if (posCreated < 50) {
+      // can avoid overlap
+      ({ dvColPosArray, noLuck } = addPosWithAllowableOverlap(
+        dvColPosArray,
+        dvImgWidth,
+        maxPositionsWithoutOverlap,
+        true,
+        noLuck
+      ));
     } else {
       // partial overlap
       ({ dvColPosSet, dvColPosArray } = addPosWithOverlap(
