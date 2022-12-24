@@ -15,13 +15,17 @@ const rndPos = (dvImgWidth) => {
  * Generates random position and adds to and returns an array
  * @returns An array of random positions without overlap
  */
-const addPos = (dvColPosArray, dvImgWidth) => {
+const addPosWithAllowableOverlap = (
+  dvColPosArray,
+  dvImgWidth,
+  allowableOverlap
+) => {
   // initialize rndLeft
   let rndPosFromLeft = rndPos(dvImgWidth);
 
   for (let i = 0; i < dvColPosArray; i++) {
     const min = dvColPosArray[i];
-    const max = dvColPosArray[i] + dvImgWidth;
+    const max = dvColPosArray[i] + dvImgWidth - allowableOverlap;
     // if we already have this position (disallowing overlap), try again, else break out and use that
     // value
     if (rndPosFromLeft > min && rndPosFromLeft < max) {
@@ -93,7 +97,20 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
       dvColPosArray.push(floorRND(100));
     } else if (numOfDVs <= maxPositionsWithoutOverlap) {
       // can avoid overlap
-      dvColPosArray = addPos(dvColPosSet, dvColPosArray, dvImgWidth);
+      dvColPosArray = addPosWithAllowableOverlap(
+        dvColPosSet,
+        dvColPosArray,
+        dvImgWidth,
+        0
+      );
+    } else if (numOfDVs < 50) {
+      // can avoid overlap
+      dvColPosArray = addPosWithAllowableOverlap(
+        dvColPosSet,
+        dvColPosArray,
+        dvImgWidth,
+        2
+      );
     } else {
       // partial overlap
       ({ dvColPosSet, dvColPosArray } = addPosWithOverlap(
