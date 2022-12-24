@@ -155,7 +155,7 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
     "img22222222",
   ];
 
-  const chanceForOh = 3;
+  const chanceForOh = 10;
 
   // shuffle
   shuffleArray(ohs);
@@ -163,7 +163,7 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
   shuffleArray(twos);
 
   // init
-  let rnd = Math.floor(Math.random() * numOfDVs);
+  let rnd = Math.floor(Math.random() * ohs.length);
   let code = codes[rnd];
   let position = dvColPosArray[rnd];
   let image = ohs[rnd];
