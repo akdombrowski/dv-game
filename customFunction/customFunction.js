@@ -69,6 +69,7 @@ const addPosWithAllowableOverlap = (
     dvColPosSet.add(rndPosFromLeft);
     // add to array to return
     dvColPosArray.push(rndPosFromLeft);
+    noLuck++;
   }
 
   return { dvColPosArray: dvColPosArray, noLuck: noLuck };
@@ -110,6 +111,7 @@ const addPosWithOverlap = (dvColPosSet, dvColPosArray) => {
     dvColPosSet.add(rndPosFromLeft);
     // add to array to return
     dvColPosArray.push(rndPosFromLeft);
+    noLuck++;
   }
 
   return { dvColPosSet: dvColPosSet, dvColPosArray: dvColPosArray };
@@ -127,7 +129,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
     withoutOverlap: 0,
     withPartialOverlap: 0,
     withOverlap: 0,
-    withRandom: 0
+    withRandom: 0,
   };
 
   // fill dvColPosArray while trying to avoid overlap with dvColPosSet keeping
