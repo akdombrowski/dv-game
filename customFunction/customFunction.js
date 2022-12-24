@@ -127,6 +127,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
     withoutOverlap: 0,
     withPartialOverlap: 0,
     withOverlap: 0,
+    withRandom: 0
   };
 
   // fill dvColPosArray while trying to avoid overlap with dvColPosSet keeping
@@ -135,7 +136,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
     if (dvColPosArray.length > 100) {
       // we have to overlap entirely now
       dvColPosArray.push(floorRND(100));
-      positionsOverlapping.withOverlap = positionsOverlapping.withOverlap + 1;
+      positionsOverlapping.withRandom = positionsOverlapping.withRandom + 1;
     } else if (posCreated <= maxPositionsWithoutOverlap) {
       // can avoid overlap
       ({ dvColPosArray, noLuck } = addPosWithAllowableOverlap(
@@ -145,7 +146,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
         false,
         noLuck
       ));
-      positionsOverlapping.withOverlap =
+      positionsOverlapping.withOutOverlap =
         positionsOverlapping.withoutOverlap + 1;
     } else if (posCreated < 50) {
       // can avoid overlap
