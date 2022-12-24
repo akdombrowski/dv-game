@@ -133,7 +133,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
   // fill dvColPosArray while trying to avoid overlap with dvColPosSet keeping
   // track of positions
   while (posCreated < numOfDVs) {
-    if (dvColPosArray.length > 100) {
+    if (posCreated > 100) {
       // we have to overlap entirely now
       dvColPosArray.push(floorRND(100));
       positionsOverlapping.withRandom = positionsOverlapping.withRandom + 1;
