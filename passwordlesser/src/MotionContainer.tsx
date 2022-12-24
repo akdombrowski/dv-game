@@ -15,6 +15,7 @@ const MotionContainer = (props: {
   duration: number;
   challenge: string;
   bgImg: string;
+  handleClick: Function;
 }) => {
   const variants = {
     init: {
@@ -28,6 +29,12 @@ const MotionContainer = (props: {
       y: props.yFinal,
     },
   };
+
+  const handleClick = (e: SyntheticEvent) => {
+    e.preventDefault();
+    props.handleClick(e);
+  };
+
   return (
     <motion.div
       className="dv-motion-div muscle-container"
@@ -50,20 +57,12 @@ const MotionContainer = (props: {
       whileTap={{ scale: 2, transition: { duration: 0.1 } }}
     >
       <input
-        formNoValidate
-        id="submitBtn"
-        name="submitBtn"
-        className="hidden"
-        type="submit"
-        form="captcha-dv-form"
-      ></input>
-      <input
         id={"dvBtn" + props.idNumber}
         name={"dvBtn" + props.idNumber}
         alt={"captcha image option"}
         className="skbutton-next backgroundImg"
         type="image"
-        onClick={clickSubmitBtn}
+        onClick={handleClick}
         value={props.challenge}
         src={props.bgImg}
       ></input>
