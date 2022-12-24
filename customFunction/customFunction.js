@@ -350,6 +350,7 @@ module.exports = a = async ({ params }) => {
     code: code,
     renderings: renderings,
     posArray: dvColPosArray,
+    posArrayLength: dvColPosArray.length,
     noLuck: noLuck,
     positionsOverlapping: positionsOverlapping,
   };
