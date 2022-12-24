@@ -153,7 +153,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
   //   colPosPercs = colPos + "%";
   // }
 
-  return dvColPosArray;
+  return { dvColPosArray: dvColPosArray, noLuck: noLuck };
 };
 
 const shuffleArray = (array) => {
@@ -305,7 +305,10 @@ const combineCodesAndPosArrayAndImgs = (numOfDVs, codes, dvColPosArray) => {
 module.exports = a = async ({ params }) => {
   const numOfDVs = Number(params.numDVs);
   const dvImgWidth = Number(params.dvImgWidth);
-  const dvColPosArray = generateDVColPosArrays(numOfDVs, dvImgWidth);
+  const { dvColPosArray, noLuck } = generateDVColPosArrays(
+    numOfDVs,
+    dvImgWidth
+  );
   const codes = generateCodes(numOfDVs);
   const { code, renderings } = combineCodesAndPosArrayAndImgs(
     numOfDVs,
@@ -317,5 +320,6 @@ module.exports = a = async ({ params }) => {
     code: code,
     renderings: renderings,
     posArray: dvColPosArray,
+    noLuck: noLuck,
   };
 };
