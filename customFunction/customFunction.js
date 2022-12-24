@@ -33,7 +33,7 @@ const addPosWithAllowableOverlap = (
       dvColPosArray.length - maxPositionsWithoutOverlap;
     // if needing to overlap, find out min overlap we need
     if (howFarOverMaxOverlapLimit > 0) {
-      overlap = Math.ceil(
+      overlap = Math.floor(
         howFarOverMaxOverlapLimit / maxPositionsWithoutOverlap
       );
     }
