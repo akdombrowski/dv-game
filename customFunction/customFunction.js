@@ -19,49 +19,42 @@ const floorRND = (max) => {
 /**
  * It calculates a random number to place the col containing an img
  * min value is 0 to keep from going off screen to the left
- * max value is 99 - dvImgWidth since I'm converting this to a percentage
+ * max value is 100 - dvImgWidth since I'm using this value as a percentage
+ * and dvImgWidth should be in vw units
  * @param dvImgWidth - the width of the div containing the image
  * @returns A random number
  */
 const rndPos = (dvImgWidth) => {
   // use max to make sure we don't choose a negative value
-  const maxPositionFromLeftEdge = 99 - dvImgWidth;
+  const maxPositionFromLeftEdge = 100 - dvImgWidth;
   return Math.max(0, floorRND(maxPositionFromLeftEdge));
 };
 
-const noLuckFallback = (
-  dvColPosArray,
-  initialPosArrayLength,
-  dvColPosSet,
-  rndPosFromLeft,
-  noLuck
-) => {
-  if (dvColPosArray.length === initialPosArrayLength) {
-    // add to set to try to avoid overlapping
-    dvColPosSet.add(rndPosFromLeft);
-    // add to array to return
-    dvColPosArray.push(rndPosFromLeft);
-    noLuck++;
-  }
+const noLuckFallback = (dvColPosArray, dvColPosSet, rndPosFromLeft, noLuck) => {
+  // add to set to try to avoid overlapping
+  dvColPosSet.add(rndPosFromLeft);
+  // add to array to return
+  dvColPosArray.push(rndPosFromLeft);
+  noLuck++;
 
   return { noLuck, dvColPosSet, dvColPosArray };
 };
 
 const getMinOverlapNeeded = (
-  allowOverlap,
   dvColPosArray,
   maxPositionsWithoutOverlap,
   overlap
 ) => {
-  if (allowOverlap) {
-    const howFarOverMaxOverlapLimit =
-      dvColPosArray.length - maxPositionsWithoutOverlap;
-    // if needing to overlap, find out min overlap we need
-    if (howFarOverMaxOverlapLimit > 0) {
-      overlap = Math.floor(
-        howFarOverMaxOverlapLimit / maxPositionsWithoutOverlap
-      );
-    }
+  const howFarOverMaxOverlapLimit =
+    dvColPosArray.length - maxPositionsWithoutOverlap;
+  // if needing to overlap, find out min overlap we need
+
+  if (howFarOverMaxOverlapLimit > 0) {
+    overlap = Math.floor(
+      howFarOverMaxOverlapLimit / maxPositionsWithoutOverlap
+    );
+  } else {
+    overlap = 0;
   }
 
   return overlap;
@@ -79,6 +72,13 @@ const getPositionWithMinOverlap = (
 
   loop1: while (iteration < maxIterationsBeforePickingAnyRND) {
     let foundOverlap = false;
+    if (dvColPosSet.has(rndPosFromLeft)) {
+      // the rnd value overlaps one(+) of the positions
+      // get a new random value
+      rndPosFromLeft = rndPos(dvImgWidth);
+
+      continue;
+    }
     loop2: for (let i = 0; i < dvColPosArray.length; i++) {
       const min = dvColPosArray[i];
       const max = dvColPosArray[i] + dvImgWidth - overlap;
@@ -99,6 +99,7 @@ const getPositionWithMinOverlap = (
       dvColPosSet.add(rndPosFromLeft);
       // add to array to return
       dvColPosArray.push(rndPosFromLeft);
+
       break loop1;
     }
 
@@ -108,6 +109,7 @@ const getPositionWithMinOverlap = (
   return { rndPosFromLeft, dvColPosSet, dvColPosArray };
 };
 
+// doesn't allow direct overlap
 const getPosWithOverlapAllowed = (
   numPosWithoutCompleteOverlap,
   dvColPosSet,
@@ -149,12 +151,13 @@ const addPosWithAllowableOverlap = (
   // initialize rndLeft
   let rndPosFromLeft = rndPos(dvImgWidth);
 
-  overlap = getMinOverlapNeeded(
-    allowOverlap,
-    dvColPosArray,
-    maxPositionsWithoutOverlap,
-    overlap
-  );
+  if (allowOverlap) {
+    overlap = getMinOverlapNeeded(
+      dvColPosArray,
+      maxPositionsWithoutOverlap,
+      overlap
+    );
+  }
 
   ({ rndPosFromLeft, dvColPosSet, dvColPosArray } = getPositionWithMinOverlap(
     maxIterationsBeforePickingAnyRND,
@@ -165,14 +168,15 @@ const addPosWithAllowableOverlap = (
     dvColPosSet
   ));
 
-  // ran through without luck
-  ({ noLuck, dvColPosSet, dvColPosArray } = noLuckFallback(
-    dvColPosArray,
-    initialPosArrayLength,
-    dvColPosSet,
-    rndPosFromLeft,
-    noLuck
-  ));
+  if (dvColPosArray.length === initialPosArrayLength) {
+    // ran through without luck, use rndPos anyways
+    ({ noLuck, dvColPosSet, dvColPosArray } = noLuckFallback(
+      dvColPosArray,
+      dvColPosSet,
+      rndPosFromLeft,
+      noLuck
+    ));
+  }
 
   return { dvColPosSet, dvColPosArray, noLuck };
 };
@@ -200,14 +204,15 @@ const addPosWithOverlap = (dvColPosSet, dvColPosArray, dvImgWidth, noLuck) => {
     dvColPosArray
   ));
 
-  // ran through without luck
-  ({ noLuck, dvColPosSet, dvColPosArray } = noLuckFallback(
-    dvColPosArray,
-    initialPosArrayLength,
-    dvColPosSet,
-    rndPosFromLeft,
-    noLuck
-  ));
+  if (dvColPosArray.length === initialPosArrayLength) {
+    // ran through without luck
+    ({ noLuck, dvColPosSet, dvColPosArray } = noLuckFallback(
+      dvColPosArray,
+      dvColPosSet,
+      rndPosFromLeft,
+      noLuck
+    ));
+  }
 
   return { dvColPosSet, dvColPosArray, noLuck };
 };
@@ -235,7 +240,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
       positionsOverlapping.withRandom = positionsOverlapping.withRandom + 1;
     } else if (posCreated < maxPositionsWithoutOverlap) {
       // can avoid overlap
-      ({ dvColPosArray, noLuck } = addPosWithAllowableOverlap(
+      ({ dvColPosSet, dvColPosArray, noLuck } = addPosWithAllowableOverlap(
         dvColPosSet,
         dvColPosArray,
         dvImgWidth,
@@ -246,8 +251,8 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
       positionsOverlapping.withoutOverlap =
         positionsOverlapping.withoutOverlap + 1;
     } else if (posCreated < 50) {
-      // can avoid overlap
-      ({ dvColPosArray, noLuck } = addPosWithAllowableOverlap(
+      // can allow partial overlap
+      ({ dvColPosSet, dvColPosArray, noLuck } = addPosWithAllowableOverlap(
         dvColPosSet,
         dvColPosArray,
         dvImgWidth,
@@ -346,9 +351,9 @@ const getImgToUseAtPos = (
   initPos,
   rnd
 ) => {
-  const rndAddOh = floorRND(chanceForOh);
+  const rndChanceToUseOhImg = floorRND(chanceForOh);
 
-  if (rndAddOh === 0) {
+  if (rndChanceToUseOhImg === 0) {
     const rndOhIndex = floorRND(ohs.length);
     image = ohs[rndOhIndex];
   } else if (position < initPos) {
