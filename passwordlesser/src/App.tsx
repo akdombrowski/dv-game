@@ -1,5 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { BaseSyntheticEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
+import React, {
+  BaseSyntheticEvent,
+  SyntheticEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
 import * as imgs from "./Imgs";
