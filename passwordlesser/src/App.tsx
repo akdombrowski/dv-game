@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
-import * as imgs from "./Imgs";
+import * as imgs from "./ImgsAmbig";
 import { MotionValue, useMotionValue } from "framer-motion";
 
 const bgImg = imgs.bgImg;
@@ -36,53 +36,53 @@ const img0s = {
   img00000000: img00000000,
 };
 
-type img1sType = {
+type img00sType = {
   [key: string]: string;
 };
-type image1Type = keyof img1sType;
-const img1 = imgs.img1;
-const img11 = imgs.img11;
-const img111 = imgs.img111;
-const img1111 = imgs.img1111;
-const img11111 = imgs.img11111;
-const img111111 = imgs.img111111;
-const img1111111 = imgs.img1111111;
-const img11111111 = imgs.img11111111;
-const img1s = {
-  img1: img1,
-  img11: img11,
-  img111: img111,
-  img1111: img1111,
-  img11111: img11111,
-  img111111: img111111,
-  img1111111: img1111111,
-  img11111111: img11111111,
+type image00Type = keyof img00sType;
+const img000000000 = imgs.img000000000;
+const img0000000000 = imgs.img0000000000;
+const img00000000000 = imgs.img00000000000;
+const img000000000000 = imgs.img000000000000;
+const img0000000000000 = imgs.img0000000000000;
+const img00000000000000 = imgs.img00000000000000;
+const img000000000000000 = imgs.img000000000000000;
+const img0000000000000000 = imgs.img0000000000000000;
+const img00s = {
+  img000000000: img000000000,
+  img0000000000: img0000000000,
+  img00000000000: img00000000000,
+  img000000000000: img000000000000,
+  img0000000000000: img0000000000000,
+  img00000000000000: img00000000000000,
+  img000000000000000: img000000000000000,
+  img0000000000000000: img0000000000000000,
 };
 
-type img2sType = {
+type img000sType = {
   [key: string]: string;
 };
-type image2Type = keyof img2sType;
-const img2 = imgs.img2;
-const img22 = imgs.img22;
-const img222 = imgs.img222;
-const img2222 = imgs.img2222;
-const img22222 = imgs.img22222;
-const img222222 = imgs.img222222;
-const img2222222 = imgs.img2222222;
-const img22222222 = imgs.img22222222;
-const img2s = {
-  img2: img2,
-  img22: img22,
-  img222: img222,
-  img2222: img2222,
-  img22222: img22222,
-  img222222: img222222,
-  img2222222: img2222222,
-  img22222222: img22222222,
+type image000Type = keyof img000sType;
+const img00000000000000000 = imgs.img00000000000000000;
+const img000000000000000000 = imgs.img000000000000000000;
+const img0000000000000000000 = imgs.img0000000000000000000;
+const img00000000000000000000 = imgs.img00000000000000000000;
+const img000000000000000000000 = imgs.img000000000000000000000;
+const img0000000000000000000000 = imgs.img0000000000000000000000;
+const img00000000000000000000000 = imgs.img00000000000000000000000;
+const img000000000000000000000000 = imgs.img000000000000000000000000;
+const img000s = {
+  img00000000000000000: img00000000000000000,
+  img000000000000000000: img000000000000000000,
+  img0000000000000000000: img0000000000000000000,
+  img00000000000000000000: img00000000000000000000,
+  img000000000000000000000: img000000000000000000000,
+  img0000000000000000000000: img0000000000000000000000,
+  img00000000000000000000000: img00000000000000000000000,
+  img000000000000000000000000: img000000000000000000000000,
 };
 
-const images: { [key: string]: string } = { ...img0s, ...img1s, ...img2s };
+const images: { [key: string]: string } = { ...img0s, ...img00s, ...img000s };
 
 const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
 const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
