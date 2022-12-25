@@ -124,7 +124,7 @@ const renderings: {
 } = convertRenderingsToObj();
 
 function App() {
-  const [yInit, setYInit] = useState("-1000px");
+  const [yInit, setYInit] = useState("0px");
   const [yFinal, setYFinal] = useState("1080px");
   const mainContainer = useRef<HTMLDivElement>(null);
   const dvContainers = generateDVs();
@@ -147,7 +147,7 @@ function App() {
         console.log(currentYValue);
         console.log("hPX");
         console.log(hPX);
-        currentYValue.set(0);
+        currentYValue.set(-h);
         setYInit(hPX);
         setYFinal(contentBoxSize.blockSize + "px");
       }
