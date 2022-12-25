@@ -3,24 +3,32 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
-import { ChangeEventHandler } from "react";
+import { ChangeEvent, ChangeEventHandler, useState } from "react";
 
 interface Props {
   difficultySelectedFn: ChangeEventHandler<HTMLInputElement>;
 }
 
 export const GameDifficultyLevelSelectionFormGroup = (props: Props) => {
+  const [difficulty, setDifficulty] = useState("1");
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setDifficulty(e.target.value);
+    props.difficultySelectedFn(e);
+  };
+
   return (
     <Form.Group as={Row} className="gap-1">
       <Form.Label column xs={6} sm="auto">
-        Choose a difficulty:
+        Choose a difficulty: ({difficulty})
       </Form.Label>
       <Form.Range
         className="px-5"
-        defaultValue={1}
+        defaultValue={difficulty}
         min={1}
         max={25}
-        onChange={props.difficultySelectedFn}
+        onChange={handleChange}
       ></Form.Range>
       {/* <ToggleButtonGroup
         as={Col}
