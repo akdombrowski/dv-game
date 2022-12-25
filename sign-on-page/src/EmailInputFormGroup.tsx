@@ -8,7 +8,7 @@ interface Props {
 
 export const EmailInputFormGroup = (props: Props) => {
   return (
-    <FloatingLabel controlId="floatingEmailInput" label="Username" className="px-3">
+    <FloatingLabel controlId="floatingEmailInput" label="Username">
       <Form.Control
         required
         type="email"

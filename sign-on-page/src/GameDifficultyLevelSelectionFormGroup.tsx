@@ -16,9 +16,10 @@ export const GameDifficultyLevelSelectionFormGroup = (props: Props) => {
         Choose a difficulty:
       </Form.Label>
       <Form.Range
+        className="px-5"
         defaultValue={1}
         min={1}
-        max={100}
+        max={25}
         onChange={props.difficultySelectedFn}
       ></Form.Range>
       {/* <ToggleButtonGroup
