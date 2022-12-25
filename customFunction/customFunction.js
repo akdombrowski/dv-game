@@ -7,12 +7,6 @@ const crypto = require("crypto");
  * @returns A random number between 0 and the max value provided.
  */
 const floorRND = (max) => {
-  // make sure we don't have a negative max value
-  // if no max was provided, use 1
-  if (max <= 1) {
-    console.error("Need a max greater than 1 to get a random value");
-    return -1;
-  }
   return Math.floor(Math.random() * max);
 };
 
