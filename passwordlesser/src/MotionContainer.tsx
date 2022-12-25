@@ -29,15 +29,17 @@ const MotionContainer = (props: {
     props.handleClick(e);
   };
 
+  const y = props.yMotionValue;
+
   return (
     <motion.div
       className="dv-motion-div muscle-container"
       id={"motionDV" + props.idNumber}
-      initial="init"
-      animate="final"
-      style={{
-        y: props.yMotionValue,
+      initial={{ y: props.yInit }}
+      animate={{
+        y: props.yFinal,
       }}
+      style={{ y }}
       transition={{
         repeat: Infinity,
         duration: props.duration,
