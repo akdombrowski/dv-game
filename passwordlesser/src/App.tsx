@@ -131,6 +131,9 @@ function App() {
   const currentYValue: MotionValue<number> = useMotionValue(0);
 
   const resizeObserver = new ResizeObserver((entries) => {
+    console.log("entries");
+    console.log(entries);
+
     for (const entry of entries) {
       if (entry.contentBoxSize) {
         const contentBoxSize = entry.contentBoxSize[0];
@@ -140,22 +143,27 @@ function App() {
         const h = dvMotionDiv.offsetHeight;
         const hPX = -h + "px";
 
-        currentYValue.set(-h);
+        console.log("currentYValue");
+        console.log(currentYValue);
+        console.log("hPX");
+        console.log(hPX);
+        currentYValue.set(0);
         setYInit(hPX);
         setYFinal(contentBoxSize.blockSize + "px");
       }
     }
   });
 
-  useEffect(() => {
-    const dvMotionDiv = document.querySelector(
-      ".dv-motion-div"
-    ) as HTMLDivElement;
-    const h = dvMotionDiv.offsetHeight;
-    const hPX = -h + "px";
+  // useEffect(() => {
+  //   const dvMotionDiv = document.querySelector(
+  //     ".dv-motion-div"
+  //   ) as HTMLDivElement;
+  //   const h = dvMotionDiv.offsetHeight;
+  //   const hPX = -h + "px";
 
-    setYInit(hPX);
-  }, []);
+  //   currentYValue.set(0);
+  //   setYInit(hPX);
+  // }, []);
 
   useEffect(() => {
     // get the container that the main background image is displaying on

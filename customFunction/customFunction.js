@@ -73,7 +73,7 @@ const rndPos = (dvImgWidth) => {
 };
 
 const noLuckFallback = (
-  dvColPosArray,
+  dvColVisualizePositionsArray,
   dvColPosArrayPositions,
   dvColPosSet,
   noLuck,
@@ -84,11 +84,11 @@ const noLuckFallback = (
   // add to set to try to avoid overlapping
   dvColPosSet.add(rnd);
   // add to array to return
-  dvColPosArray[rnd] = true;
+  dvColVisualizePositionsArray[rnd] = true;
   dvColPosArrayPositions.push(rnd);
   noLuck++;
 
-  return { noLuck, dvColPosSet, dvColPosArray, dvColPosArrayPositions };
+  return { noLuck, dvColPosSet, dvColVisualizePositionsArray, dvColPosArrayPositions };
 };
 
 const getMinOverlapNeeded = (
@@ -113,7 +113,7 @@ const getMinOverlapNeeded = (
 
 const getPositionWithMinOverlap = (
   maxIterationsBeforePickingAnyRND,
-  dvColPosArray,
+  dvColVisualizePositionsArray,
   dvColPosArrayPositions,
   dvImgWidth,
   overlap,
@@ -141,7 +141,7 @@ const getPositionWithMinOverlap = (
     ) {
       // if we already have this position (disallowing overlap), try again by
       // breaking out
-      if (dvColPosArray[pos]) {
+      if (dvColVisualizePositionsArray[pos]) {
         foundOverlap = true;
         break loop2;
       }
@@ -157,7 +157,7 @@ const getPositionWithMinOverlap = (
       // keep track to try to avoid overlapping and to use for position
       // renderings
       dvColPosSet.add(rndPosFromLeft);
-      dvColPosArray[rndPosFromLeft] = true;
+      dvColVisualizePositionsArray[rndPosFromLeft] = true;
       dvColPosArrayPositions.push(rndPosFromLeft);
 
       // we can end the outer loop since we found our non-overlapping position
@@ -167,7 +167,7 @@ const getPositionWithMinOverlap = (
     iteration++;
   }
 
-  return { rndPosFromLeft, dvColPosSet, dvColPosArray, dvColPosArrayPositions };
+  return { rndPosFromLeft, dvColPosSet, dvColVisualizePositionsArray, dvColPosArrayPositions };
 };
 
 // doesn't allow direct overlap
@@ -175,7 +175,7 @@ const getPosWithOverlapAllowed = (
   numPosWithoutCompleteOverlap,
   dvColPosSet,
   rndPosFromLeft,
-  dvColPosArray,
+  dvColVisualizePositionsArray,
   dvColPosArrayPositions
 ) => {
   for (let i = 0; i < numPosWithoutCompleteOverlap; i++) {
@@ -187,13 +187,13 @@ const getPosWithOverlapAllowed = (
       // add to set to try to avoid overlapping
       dvColPosSet.add(rndPosFromLeft);
       // add to array to return
-      dvColPosArray[rndPosFromLeft] = true;
+      dvColVisualizePositionsArray[rndPosFromLeft] = true;
       dvColPosArrayPositions.push(rndPosFromLeft);
       break;
     }
   }
 
-  return { rndPosFromLeft, dvColPosSet, dvColPosArray, dvColPosArrayPositions };
+  return { rndPosFromLeft, dvColPosSet, dvColVisualizePositionsArray, dvColPosArrayPositions };
 };
 
 /**
@@ -202,7 +202,7 @@ const getPosWithOverlapAllowed = (
  */
 const addPosWithAllowableOverlap = (
   dvColPosSet,
-  dvColPosArray,
+  dvColVisualizePositionsArray,
   dvColPosArrayPositions,
   dvImgWidth,
   maxPositionsWithoutOverlap,
@@ -223,10 +223,10 @@ const addPosWithAllowableOverlap = (
     );
   }
 
-  ({ rndPosFromLeft, dvColPosSet, dvColPosArray, dvColPosArrayPositions } =
+  ({ rndPosFromLeft, dvColPosSet, dvColVisualizePositionsArray, dvColPosArrayPositions } =
     getPositionWithMinOverlap(
       maxIterationsBeforePickingAnyRND,
-      dvColPosArray,
+      dvColVisualizePositionsArray,
       dvColPosArrayPositions,
       dvImgWidth,
       overlap,
@@ -236,9 +236,9 @@ const addPosWithAllowableOverlap = (
 
   if (dvColPosArrayPositions.length === initialPosArrayLength) {
     // ran through without luck, use rndPos anyways
-    ({ noLuck, dvColPosSet, dvColPosArray, dvColPosArrayPositions } =
+    ({ noLuck, dvColPosSet, dvColVisualizePositionsArray, dvColPosArrayPositions } =
       noLuckFallback(
-        dvColPosArray,
+        dvColVisualizePositionsArray,
         dvColPosArrayPositions,
         dvColPosSet,
         noLuck,
@@ -246,7 +246,7 @@ const addPosWithAllowableOverlap = (
       ));
   }
 
-  return { dvColPosSet, dvColPosArray, dvColPosArrayPositions, noLuck };
+  return { dvColPosSet, dvColVisualizePositionsArray, dvColPosArrayPositions, noLuck };
 };
 
 /**
@@ -259,7 +259,7 @@ const addPosWithAllowableOverlap = (
  */
 const addPosWithOverlap = (
   dvColPosSet,
-  dvColPosArray,
+  dvColVisualizePositionsArray,
   dvColPosArrayPositions,
   dvImgWidth,
   noLuck
@@ -271,20 +271,20 @@ const addPosWithOverlap = (
   let rndPosFromLeft = rndPos(dvImgWidth);
 
   // keep iterations to 100 just to avoid infinite loop. at that point we'll probably have to just overlap to avoid too high of an execution time.
-  ({ rndPosFromLeft, dvColPosSet, dvColPosArray, dvColPosArrayPositions } =
+  ({ rndPosFromLeft, dvColPosSet, dvColVisualizePositionsArray, dvColPosArrayPositions } =
     getPosWithOverlapAllowed(
       numPosWithoutCompleteOverlap,
       dvColPosSet,
       rndPosFromLeft,
-      dvColPosArray,
+      dvColVisualizePositionsArray,
       dvColPosArrayPositions
     ));
 
   if (dvColPosSet.size === initialPosArrayLength) {
     // ran through without luck
-    ({ noLuck, dvColPosSet, dvColPosArray, dvColPosArrayPositions } =
+    ({ noLuck, dvColPosSet, dvColVisualizePositionsArray, dvColPosArrayPositions } =
       noLuckFallback(
-        dvColPosArray,
+        dvColVisualizePositionsArray,
         dvColPosArrayPositions,
         dvColPosSet,
         noLuck,
@@ -292,7 +292,7 @@ const addPosWithOverlap = (
       ));
   }
 
-  return { dvColPosSet, dvColPosArray, dvColPosArrayPositions, noLuck };
+  return { dvColPosSet, dvColVisualizePositionsArray, dvColPosArrayPositions, noLuck };
 };
 
 // fill an array while trying to avoid overlap and moving up slowly
@@ -309,23 +309,23 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
   let posCreated = 0;
   let noLuck = 0;
   let dvColPosSet = new Set();
-  let dvColPosArray = new Array(100);
+  let dvColVisualizePositionsArray = new Array(100);
   let dvColPosArrayPositions = new Array();
-  dvColPosArray = dvColPosArray.fill(0);
+  dvColVisualizePositionsArray = dvColVisualizePositionsArray.fill(0);
 
   while (posCreated < numOfDVs) {
     if (posCreated > 100) {
       // we have to overlap entirely now
       const rnd = floorRND(100);
-      dvColPosArray[rnd] = true;
+      dvColVisualizePositionsArray[rnd] = true;
       dvColPosArrayPositions.push(rnd);
       positionsOverlapping.withRandom = positionsOverlapping.withRandom + 1;
     } else if (posCreated < maxPositionsWithoutOverlap) {
       // can avoid overlap
-      ({ dvColPosSet, dvColPosArray, dvColPosArrayPositions, noLuck } =
+      ({ dvColPosSet, dvColVisualizePositionsArray, dvColPosArrayPositions, noLuck } =
         addPosWithAllowableOverlap(
           dvColPosSet,
-          dvColPosArray,
+          dvColVisualizePositionsArray,
           dvColPosArrayPositions,
           dvImgWidth,
           maxPositionsWithoutOverlap,
@@ -336,10 +336,10 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
         positionsOverlapping.withoutOverlap + 1;
     } else if (posCreated < 50) {
       // can allow partial overlap
-      ({ dvColPosSet, dvColPosArray, dvColPosArrayPositions, noLuck } =
+      ({ dvColPosSet, dvColVisualizePositionsArray, dvColPosArrayPositions, noLuck } =
         addPosWithAllowableOverlap(
           dvColPosSet,
-          dvColPosArray,
+          dvColVisualizePositionsArray,
           dvColPosArrayPositions,
           dvImgWidth,
           maxPositionsWithoutOverlap,
@@ -350,10 +350,10 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
         positionsOverlapping.withPartialOverlap + 1;
     } else {
       // overlap
-      ({ dvColPosSet, dvColPosArray, dvColPosArrayPositions, noLuck } =
+      ({ dvColPosSet, dvColVisualizePositionsArray, dvColPosArrayPositions, noLuck } =
         addPosWithOverlap(
           dvColPosSet,
-          dvColPosArray,
+          dvColVisualizePositionsArray,
           dvColPosArrayPositions,
           dvImgWidth,
           noLuck
@@ -365,7 +365,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
   }
 
   return {
-    dvColPosArray,
+    dvColVisualizePositionsArray,
     dvColPosArrayPositions,
     noLuck,
     positionsOverlapping,
@@ -550,7 +550,7 @@ module.exports = a = async ({ params }) => {
   const numOfDVs = Number(params.numDVs);
   const dvImgWidth = Number(params.dvImgWidth);
   let {
-    dvColPosArray,
+    dvColVisualizePositionsArray,
     dvColPosArrayPositions,
     noLuck,
     positionsOverlapping,
@@ -564,12 +564,12 @@ module.exports = a = async ({ params }) => {
   );
   const numDirectOverlaps =
     dvColPosArrayPositions.length -
-    dvColPosArray.filter((pos) => pos).length;
+    dvColVisualizePositionsArray.filter((pos) => pos).length;
 
   return {
     code: code,
     renderings: renderings,
-    posArray: dvColPosArray,
+    posArray: dvColVisualizePositionsArray,
     positions: dvColPosArrayPositions,
     posArrayLength: dvColPosArrayPositions.length,
     noLuck: noLuck,
