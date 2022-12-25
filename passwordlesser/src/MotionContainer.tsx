@@ -29,7 +29,7 @@ const MotionContainer = (props: {
     props.handleClick(e);
   };
 
-  const y = props.yMotionValue;
+  const yMV = props.yMotionValue;
 
   return (
     <motion.div
@@ -39,7 +39,7 @@ const MotionContainer = (props: {
       animate={{
         y: props.yFinal,
       }}
-      style={{ y }}
+      style={{ y: yMV }}
       transition={{
         repeat: Infinity,
         duration: props.duration,
