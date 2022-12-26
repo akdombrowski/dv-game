@@ -6,9 +6,9 @@
 
 2. read base64
 
-3. this creates a buffer
+3. this creates a buffer (or a string if you provide an encoding when reading file with readfilesync)
 
-4. brotli compress the buffer (buf)
+4. brotli compress the buffer (buf) or string
 
    ```javascript
    zlib.brotliCompressSync(buf, {

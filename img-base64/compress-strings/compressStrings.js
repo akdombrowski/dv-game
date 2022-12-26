@@ -224,7 +224,7 @@ const compressFilesInDir = async (dirname) => {
 const decompressFileContentsZLIBBrotli = async (filename) => {
   const readCompressedBinFilename = filename + "_compressed_brotli.bin";
   const readCompressedUTF8Filename = filename + "_compressed_brotli_utf8.txt";
-  const readCompressedB64Filename = filename + "_compressed_brotli_utf8.txt";
+  const readCompressedB64Filename = filename + "_compressed_brotli_b64.txt";
   const readBinFilenamePathObj = path.parse(readCompressedBinFilename);
   const readUTF8FilenamePathObj = path.parse(readCompressedUTF8Filename);
   const readB64FilenamePathObj = path.parse(readCompressedB64Filename);
@@ -256,22 +256,28 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   console.time("total for decompressing " + fileBaseBin);
 
   console.log();
-  console.time("read");
-  console.log("reading from", readBinFilenamePathObj.base);
-
   const originalFileBuf = readFileSync(path.resolve(FILE));
   const len = originalFileBuf.length;
-
   console.log("len", len);
 
-  const bufBin = readFileSync(
+  console.log();
+  console.time("read");
+  console.log("reading from", readBinFilenamePathObj.base);
+  const bin = readFileSync(
     path.resolve(readBinFilenamePathObj.dir, readBinFilenamePathObj.base)
   );
-  const bufUTF8 = readFileSync(
+
+  console.time("read");
+  console.log("reading from", readUTF8FilenamePathObj.base);
+  const utf8 = readFileSync(
     path.resolve(readUTF8FilenamePathObj.dir, readUTF8FilenamePathObj.base)
   );
-  const bufB64 = readFileSync(
-    path.resolve(readB64FilenamePathObj.dir, readB64FilenamePathObj.base)
+
+  console.log();
+  console.log("reading from", readB64FilenamePathObj.base);
+  const b64 = readFileSync(
+    path.resolve(readB64FilenamePathObj.dir, readB64FilenamePathObj.base),
+    { encoding: "utf8" }
   );
 
   const bufToUInt8Array = new Uint8Array(originalFileBuf);
@@ -297,19 +303,11 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   // const decompressedUTF8 = decompress(bufUTF8, len);
   // const decompressedB64 = decompress(bufB64, len);
 
-  const decompressedBin = zlib.brotliDecompressSync(bufBin, {
+  const decompressedBin = zlib.brotliDecompressSync(bin, {
     [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
     [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
     [zlib.constants.BROTLI_PARAM_SIZE_HINT]: len,
   });
-
-  // console.log();
-  // console.log(
-  //   "...",
-  //   "decompressing file " +
-  //     readBUTF8FilenamePathObj.base,
-  //   "..."
-  // );
 
   // these two don't work for some reason
   // const decompressedUTF8 = zlib.brotliDecompressSync(bufUTF8, {
@@ -317,11 +315,24 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   //   [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
   //   [zlib.constants.BROTLI_PARAM_SIZE_HINT]: len,
   // });
-  // const decompressedB64 = zlib.brotliDecompressSync(bufB64, {
-  //   [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
-  //   [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
-  //   [zlib.constants.BROTLI_PARAM_SIZE_HINT]: len,
-  // });
+
+  console.log();
+  console.log(
+    "...",
+    "decompressing file " + readB64FilenamePathObj.base,
+    "..."
+  );
+  const decompressedB64ToB64Buf = Buffer.from(
+    b64, "base64"
+  );
+  const decompressedB64 = zlib.brotliDecompressSync(
+    decompressedB64ToB64Buf,
+    {
+      [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_GENERIC,
+      [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
+      [zlib.constants.BROTLI_PARAM_SIZE_HINT]: len,
+    }
+  );
 
   // without options
   // const decompressedBin = zlib.brotliDecompressSync(bufBin);
@@ -336,7 +347,6 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   console.time("write");
   console.log("...", "writing to", decompressedBinOutputFile, "...");
   // console.log("...", "writing to", decompressedUTF8OutputFile, "...");
-  // console.log("...", "writing to", decompressedB64OutputFile, "...");
 
   if (!existsSync(decompressedBinOutputFile)) {
     const decompressedOutputFileBinFD = openSync(
@@ -350,14 +360,6 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   // if (!existsSync(decompressedUTF8OutputFile)) {
   //   const decompressedOutputFileUTF8FD = openSync(
   //     decompressedUTF8OutputFile,
-  //     fs.constants.O_CREAT,
-  //     // fs.constants.O_RDWR,
-  //     "765"
-  //   );
-  // }
-  // if (!existsSync(decompressedB64OutputFile)) {
-  //   const compressedOutputFileTxtFD = openSync(
-  //     decompressedB64OutputFile,
   //     fs.constants.O_CREAT,
   //     // fs.constants.O_RDWR,
   //     "765"
@@ -377,12 +379,6 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   //   fs.constants.O_RDWR,
   //   "765"
   // );
-  // const decompressedBase64OutputFileFD = openSync(
-  //   decompressedB64OutputFile,
-  //   // fs.constants.O_CREAT,
-  //   fs.constants.O_RDWR,
-  //   "765"
-  // );
 
   writeSync(decompressedBinOutputFileFD, decompressedBin);
   // same as above because of default enoding is utf8
@@ -391,12 +387,28 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   //   decompressedBin.toString("utf8"),
   //   null
   // );
+
+  console.log("...", "writing to", decompressedB64OutputFile, "...");
+  if (!existsSync(decompressedB64OutputFile)) {
+    const compressedOutputFileTxtFD = openSync(
+      decompressedB64OutputFile,
+      fs.constants.O_CREAT,
+      // fs.constants.O_RDWR,
+      "765"
+    );
+  }
+  const decompressedB64OutputFileFD = openSync(
+    decompressedB64OutputFile,
+    // fs.constants.O_CREAT,
+    fs.constants.O_RDWR,
+    "765"
+  );
   // it's already in b64 encoding this would encode it again
-  // writeSync(
-  //   decompressedBase64OutputFileFD,
-  //   decompressedBin.toString("base64"),
-  //   null
-  // );
+  writeSync(
+    decompressedB64OutputFileFD,
+    decompressedBin.toString("base64"),
+    null
+  );
 
   console.log();
   console.log("written!");
@@ -415,18 +427,25 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
     "binary",
     "utf8"
   );
+  const beginningOfTranscodedBin = decompressedBinAndTranscodedUTF8
+    .toString("utf8")
+    .slice(0, 50);
+
   const decompressedB64AndTranscodedUTF8 = buffer.transcode(
-    decompressedBin,
+    decompressedB64,
     "binary",
     "utf8"
   );
-  const beginningOfTranscodedBin = decompressedBinAndTranscodedUTF8
+  const beginningOfTranscodedB64 = decompressedB64AndTranscodedUTF8
     .toString("utf8")
     .slice(0, 50);
 
   console.log();
   console.log("beginningOfTranscodedBin");
   console.log(beginningOfTranscodedBin);
+  console.log();
+  console.log("beginningOfTranscodedB64");
+  console.log(beginningOfTranscodedB64);
 
   console.log();
   console.log("originalFileBuf === decompressedBinAndTranscodedUTF8");
@@ -435,6 +454,11 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   console.log(originalFileBuf.equals(decompressedBinAndTranscodedUTF8));
   console.log("originalFileBuf.compare(decompressedBinAndTranscodedUTF8)");
   console.log(originalFileBuf.compare(decompressedBinAndTranscodedUTF8));
+  console.log();
+  console.log("originalFileBuf.equals(decompressedB64AndTranscodedUTF8)");
+  console.log(originalFileBuf.equals(decompressedB64AndTranscodedUTF8));
+  console.log("originalFileBuf.compare(decompressedB64AndTranscodedUTF8)");
+  console.log(originalFileBuf.compare(decompressedB64AndTranscodedUTF8));
 
   console.log();
   console.log();
@@ -451,7 +475,7 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   console.log(
     "compare two bufs pre-anything then post-compression-then-decompression"
   );
-  console.log(bufBin.compare(decompressedBinBuf));
+  console.log(bin.compare(decompressedBinBuf));
 
   const decompressedBinBufToB64 = decompressedBinBuf.toString("base64");
   const decompressedBinToB64ToBuf = Buffer.from(
@@ -460,13 +484,13 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   console.log(
     "compare two bufs pre-anything then post-compression-then-decompression-b64-buffer"
   );
-  console.log(bufBin.compare(decompressedBinToB64ToBuf));
+  console.log(bin.compare(decompressedBinToB64ToBuf));
 
   const decompressedBinToB64ToConstToBuf = Buffer.from(decompressedBinBufToB64);
   console.log(
     "compare two bufs pre-anything then post-compression-then-decompression-b64-const-buffer"
   );
-  console.log(bufBin.compare(decompressedBinToB64ToConstToBuf));
+  console.log(bin.compare(decompressedBinToB64ToConstToBuf));
 
   console.log("Buffer.byteLength(" + path.resolve(FILE) + ")");
   console.log(Buffer.byteLength(originalFileBuf));
