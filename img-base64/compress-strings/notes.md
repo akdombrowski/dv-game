@@ -61,8 +61,17 @@
 
 ## need to figure out how to store as plain text in between compression and deconpression
 
+&nbsp;
+
 - try converting output of compression to base64url (or base64)
+
+  - look at decompression func
+
+&nbsp;
+
 - hex looks like it'll be bigger in size and could possibly drop some data
+
+&nbsp;
 
 ## example output from run of script
 
