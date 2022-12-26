@@ -1,0 +1,14 @@
+{
+  "name": "compressStrings",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "compress base64 image strings",
+  "main": "compressStrings.js",
+  "author": "Anthony Dombrowski",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "brotli": "^1.3.3",
+    "compress-brotli": "^1.3.8"
+  }
+}
