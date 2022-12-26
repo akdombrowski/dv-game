@@ -283,11 +283,11 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   console.time("decompression");
   console.log(
     "...",
-    "decompressing file " +
-      readBinFilenamePathObj.base,
+    "decompressing file " + readBinFilenamePathObj.base,
     "..."
   );
 
+  // using different npm module
   // const decompressedBin = decompress(buf);
   // const decompressedBin = decompress(bufBin, len);
   // const decompressedUTF8 = decompress(bufUTF8, len);
@@ -307,6 +307,7 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   //   "..."
   // );
 
+  // these two don't work for some reason
   // const decompressedUTF8 = zlib.brotliDecompressSync(bufUTF8, {
   //   [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
   //   [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
@@ -318,6 +319,7 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   //   [zlib.constants.BROTLI_PARAM_SIZE_HINT]: len,
   // });
 
+  // without options
   // const decompressedBin = zlib.brotliDecompressSync(bufBin);
   // const decompressedUTF8 = zlib.brotliDecompressSync(bufUTF8);
   // const decompressedB64 = zlib.brotliDecompressSync(bufB64);
@@ -332,11 +334,6 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   // console.log("...", "writing to", decompressedUTF8OutputFile, "...");
   // console.log("...", "writing to", decompressedB64OutputFile, "...");
 
-  // writeFileSync(
-  //   decompressedBase64OutputFile,
-  //   Buffer.from(decompressed).toString("base64")
-  // );
-
   if (!existsSync(decompressedBinOutputFile)) {
     const decompressedOutputFileBinFD = openSync(
       decompressedBinOutputFile,
@@ -345,22 +342,23 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
       "765"
     );
   }
-  if (!existsSync(decompressedUTF8OutputFile)) {
-    const decompressedOutputFileUTF8FD = openSync(
-      decompressedUTF8OutputFile,
-      fs.constants.O_CREAT,
-      // fs.constants.O_RDWR,
-      "765"
-    );
-  }
-  if (!existsSync(decompressedB64OutputFile)) {
-    const compressedOutputFileTxtFD = openSync(
-      decompressedB64OutputFile,
-      fs.constants.O_CREAT,
-      // fs.constants.O_RDWR,
-      "765"
-    );
-  }
+  // not currently used
+  // if (!existsSync(decompressedUTF8OutputFile)) {
+  //   const decompressedOutputFileUTF8FD = openSync(
+  //     decompressedUTF8OutputFile,
+  //     fs.constants.O_CREAT,
+  //     // fs.constants.O_RDWR,
+  //     "765"
+  //   );
+  // }
+  // if (!existsSync(decompressedB64OutputFile)) {
+  //   const compressedOutputFileTxtFD = openSync(
+  //     decompressedB64OutputFile,
+  //     fs.constants.O_CREAT,
+  //     // fs.constants.O_RDWR,
+  //     "765"
+  //   );
+  // }
 
   const decompressedBinOutputFileFD = openSync(
     decompressedBinOutputFile,
@@ -368,18 +366,19 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
     fs.constants.O_RDWR,
     "765"
   );
-  const decompressedUTF8OutputFileFD = openSync(
-    decompressedUTF8OutputFile,
-    // fs.constants.O_CREAT,
-    fs.constants.O_RDWR,
-    "765"
-  );
-  const decompressedBase64OutputFileFD = openSync(
-    decompressedB64OutputFile,
-    // fs.constants.O_CREAT,
-    fs.constants.O_RDWR,
-    "765"
-  );
+  // not used
+  // const decompressedUTF8OutputFileFD = openSync(
+  //   decompressedUTF8OutputFile,
+  //   // fs.constants.O_CREAT,
+  //   fs.constants.O_RDWR,
+  //   "765"
+  // );
+  // const decompressedBase64OutputFileFD = openSync(
+  //   decompressedB64OutputFile,
+  //   // fs.constants.O_CREAT,
+  //   fs.constants.O_RDWR,
+  //   "765"
+  // );
 
   writeSync(decompressedBinOutputFileFD, decompressedBin);
   // same as above because of default enoding is utf8

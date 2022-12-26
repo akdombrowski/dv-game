@@ -60,3 +60,6 @@
 &nbsp;
 
 ## need to figure out how to store as plain text in between compression and deconpression
+
+- try converting output of compression to base64url (or base64)
+- hex looks like it'll be bigger in size and could possibly drop some data
