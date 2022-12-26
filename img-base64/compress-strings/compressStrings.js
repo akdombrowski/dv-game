@@ -299,13 +299,13 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
     [zlib.constants.BROTLI_PARAM_SIZE_HINT]: len,
   });
 
-  console.log();
-  console.log(
-    "...",
-    "decompressing file " +
-      readBinFilenamePathObj.base,
-    "..."
-  );
+  // console.log();
+  // console.log(
+  //   "...",
+  //   "decompressing file " +
+  //     readBUTF8FilenamePathObj.base,
+  //   "..."
+  // );
 
   // const decompressedUTF8 = zlib.brotliDecompressSync(bufUTF8, {
   //   [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
