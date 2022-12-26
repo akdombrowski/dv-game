@@ -86,6 +86,15 @@ const compressFileContentsZLIBBrotli = async (filename) => {
       "765"
     );
   }
+  const compressedOutputFileBinFD = openSync(
+    compressedOutputFileBin,
+    // fs.constants.O_CREAT,
+    fs.constants.O_RDWR,
+    "765"
+  );
+  writeSync(compressedOutputFileBinFD, compressed);
+
+  console.log("...", "writing to", compressedOutputFileUTF8, "...");
   if (!existsSync(compressedOutputFileUTF8)) {
     const compressedOutputFileUTF8FD = openSync(
       compressedOutputFileUTF8,
@@ -94,32 +103,30 @@ const compressFileContentsZLIBBrotli = async (filename) => {
       "765"
     );
   }
-  if (!existsSync(compressedOutputFileB64)) {
-    const compressedOutputFileTxtFD = openSync(
-      compressedOutputFileB64,
-      fs.constants.O_CREAT,
-      // fs.constants.O_RDWR,
-      "765"
-    );
-  }
-  const compressedOutputFileBinFD = openSync(
-    compressedOutputFileBin,
-    // fs.constants.O_CREAT,
-    fs.constants.O_RDWR,
-    "765"
-  );
   const compressedOutputFileUTF8FD = openSync(
     compressedOutputFileUTF8,
     // fs.constants.O_CREAT,
     fs.constants.O_RDWR,
     "765"
   );
-  const compressedOutputFileTxtFD = openSync(
+  writeSync(compressedOutputFileUTF8FD, compressed.toString("utf8"));
+
+  console.log("...", "writing to", compressedOutputFileB64, "...");
+  if (!existsSync(compressedOutputFileB64)) {
+    const compressedOutputFileB64FD = openSync(
+      compressedOutputFileB64,
+      fs.constants.O_CREAT,
+      // fs.constants.O_RDWR,
+      "765"
+    );
+  }
+  const compressedOutputFileB64FD = openSync(
     compressedOutputFileB64,
     // fs.constants.O_CREAT,
     fs.constants.O_RDWR,
     "765"
   );
+  writeSync(compressedOutputFileB64FD, compressed.toString("base64"));
 
   // writeFileSync(
   //   compressedOutputFileBin,
@@ -129,9 +136,6 @@ const compressFileContentsZLIBBrotli = async (filename) => {
   //   compressedOutputFileB64,
   //   compressed.toString("base64")
   // );
-  writeSync(compressedOutputFileBinFD, compressed, null);
-  writeSync(compressedOutputFileUTF8FD, compressed.toString("utf8"), null);
-  writeSync(compressedOutputFileTxtFD, compressed.toString("base64"), null);
   // new buffer.File([compressed], compressedOutputFileBinFD, {
   //   type: "application/octet-stream",
   // });
@@ -601,12 +605,71 @@ const decompressFilesInDir = async (dirname) => {
   console.timeEnd("total for " + dirname);
 };
 
+const convertBinaryFileTobase64 = async (filename) => {
+  const filenamePathObj = path.parse(filename);
+  const fileBase = filenamePathObj.base;
+  const nameOfFile = filenamePathObj.name;
+
+  const b64OutputFileFormat = {
+    dir: "./compressedBrotliToB64",
+    base: nameOfFile + "_compressed_brotli_to_b64.txt",
+  };
+
+  const b64OutputFile = path.format(b64OutputFileFormat);
+
+  const totalTimeLabel = "total for converting file to base64 " + fileBase;
+  console.time(totalTimeLabel);
+
+  console.log();
+  console.time("read");
+  console.log("reading from", filenamePathObj.base);
+  const readFileBuf = readFileSync(
+    path.resolve(filenamePathObj.dir, filenamePathObj.base)
+  );
+  console.timeEnd("read");
+
+  console.time("convert");
+  console.log("...", "converting file contents to base64", "...");
+
+  const b64Converted = readFileBuf.toString("base64");
+
+  console.log(b64Converted.slice(0, 50));
+
+  console.timeEnd("convert");
+
+  console.time("write");
+
+  if (!existsSync(b64OutputFile)) {
+    const b64OutputFileFD = openSync(
+      b64OutputFile,
+      fs.constants.O_CREAT,
+      // fs.constants.O_RDWR,
+      "765"
+    );
+  }
+  const b64OutputFileFD = openSync(
+    b64OutputFile,
+    // fs.constants.O_CREAT,
+    fs.constants.O_RDWR,
+    "765"
+  );
+
+  writeSync(b64OutputFileFD, b64Converted);
+
+  console.timeEnd("write");
+
+  console.timeEnd(totalTimeLabel);
+
+  return b64Converted;
+};
+
 try {
   // compressFilesInDir(DIR);
   // await compressFileContents(FILE);
   await compressFileContentsZLIBBrotli(FILE);
   // await decompressFileContents(READ_FILE);
   await decompressFileContentsZLIBBrotli(READ_BROTLI_FILE);
+  // await convertBinaryFileTobase64();
 } catch (err) {
   console.error(err);
 }
