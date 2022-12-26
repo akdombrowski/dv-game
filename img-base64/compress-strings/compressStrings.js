@@ -427,15 +427,16 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
     "binary",
     "utf8"
   );
-  const beginningOfTranscodedBin = decompressedBinAndTranscodedUTF8
-    .toString("utf8")
-    .slice(0, 50);
 
   const decompressedB64AndTranscodedUTF8 = buffer.transcode(
     decompressedB64,
     "binary",
     "utf8"
   );
+
+  const beginningOfTranscodedBin = decompressedBinAndTranscodedUTF8
+    .toString("utf8")
+    .slice(0, 50);
   const beginningOfTranscodedB64 = decompressedB64AndTranscodedUTF8
     .toString("utf8")
     .slice(0, 50);
