@@ -329,8 +329,8 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   console.log();
   console.time("write");
   console.log("...", "writing to", decompressedBinOutputFile, "...");
-  console.log("...", "writing to", decompressedUTF8OutputFile, "...");
-  console.log("...", "writing to", decompressedB64OutputFile, "...");
+  // console.log("...", "writing to", decompressedUTF8OutputFile, "...");
+  // console.log("...", "writing to", decompressedB64OutputFile, "...");
 
   // writeFileSync(
   //   decompressedBase64OutputFile,
