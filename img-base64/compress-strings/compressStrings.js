@@ -381,32 +381,18 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
     "765"
   );
 
-  writeSync(decompressedBinOutputFileFD, decompressedBin, null);
-  writeSync(
-    decompressedUTF8OutputFileFD,
-    decompressedBin.toString("utf8"),
-    null
-  );
-  writeSync(
-    decompressedBase64OutputFileFD,
-    decompressedBin.toString("base64"),
-    null
-  );
-
-  // new buffer.File(
-  //   [decompressedBin],
-  //   decompressedBinOutputFileFD,
-  //   "application/octet-stream"
-  // );
-  // new buffer.File(
-  //   [decompressedUTF8],
+  writeSync(decompressedBinOutputFileFD, decompressedBin);
+  // same as above because of default enoding is utf8
+  // writeSync(
   //   decompressedUTF8OutputFileFD,
-  //   "text/plain"
+  //   decompressedBin.toString("utf8"),
+  //   null
   // );
-  // new buffer.File(
-  //   [decompressedB64],
+  // it's already in b64 encoding this would encode it again
+  // writeSync(
   //   decompressedBase64OutputFileFD,
-  //   "text/plain"
+  //   decompressedBin.toString("base64"),
+  //   null
   // );
 
   console.log();
