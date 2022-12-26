@@ -266,12 +266,14 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   const bin = readFileSync(
     path.resolve(readBinFilenamePathObj.dir, readBinFilenamePathObj.base)
   );
+  console.log("read!");
 
-  console.time("read");
+  console.log();
   console.log("reading from", readUTF8FilenamePathObj.base);
   const utf8 = readFileSync(
     path.resolve(readUTF8FilenamePathObj.dir, readUTF8FilenamePathObj.base)
   );
+  console.log("read!");
 
   console.log();
   console.log("reading from", readB64FilenamePathObj.base);
@@ -279,6 +281,7 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
     path.resolve(readB64FilenamePathObj.dir, readB64FilenamePathObj.base),
     { encoding: "utf8" }
   );
+  console.log("read!");
 
   const bufToUInt8Array = new Uint8Array(originalFileBuf);
   const bufToUInt8Array2 = new Uint8Array(
@@ -308,6 +311,7 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
     [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
     [zlib.constants.BROTLI_PARAM_SIZE_HINT]: len,
   });
+  console.log("decompressed!");
 
   // these two don't work for some reason
   // const decompressedUTF8 = zlib.brotliDecompressSync(bufUTF8, {
@@ -322,17 +326,13 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
     "decompressing file " + readB64FilenamePathObj.base,
     "..."
   );
-  const decompressedB64ToB64Buf = Buffer.from(
-    b64, "base64"
-  );
-  const decompressedB64 = zlib.brotliDecompressSync(
-    decompressedB64ToB64Buf,
-    {
-      [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_GENERIC,
-      [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
-      [zlib.constants.BROTLI_PARAM_SIZE_HINT]: len,
-    }
-  );
+  const decompressedB64ToB64Buf = Buffer.from(b64, "base64");
+  const decompressedB64 = zlib.brotliDecompressSync(decompressedB64ToB64Buf, {
+    [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_GENERIC,
+    [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
+    [zlib.constants.BROTLI_PARAM_SIZE_HINT]: len,
+  });
+  console.log("decompressed!");
 
   // without options
   // const decompressedBin = zlib.brotliDecompressSync(bufBin);
@@ -340,7 +340,7 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   // const decompressedB64 = zlib.brotliDecompressSync(bufB64);
 
   console.log();
-  console.log("decompressed!");
+  console.log("all files decompressed!");
   console.timeEnd("decompression");
 
   console.log();
@@ -381,6 +381,7 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   // );
 
   writeSync(decompressedBinOutputFileFD, decompressedBin);
+  console.log("written!");
   // same as above because of default enoding is utf8
   // writeSync(
   //   decompressedUTF8OutputFileFD,
@@ -409,6 +410,7 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
     decompressedBin.toString("base64"),
     null
   );
+  console.log("written!");
 
   console.log();
   console.log("written!");
