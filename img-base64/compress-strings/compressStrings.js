@@ -453,6 +453,8 @@ const decompressFileContentsZLIBBrotli = async (filename) => {
   console.log();
   console.log("originalFileBuf === decompressedBinAndTranscodedUTF8");
   console.log(originalFileBuf === decompressedBinAndTranscodedUTF8);
+
+  console.log();
   console.log("originalFileBuf.equals(decompressedBinAndTranscodedUTF8)");
   console.log(originalFileBuf.equals(decompressedBinAndTranscodedUTF8));
   console.log("originalFileBuf.compare(decompressedBinAndTranscodedUTF8)");

@@ -1,62 +1,180 @@
 # process for compressing and decompressing
 
+   &nbsp;
+
+   ***
+   ***
+   ***
+
 ## compression
 
 1. base64 encode png
 
-2. read base64
+2. create a buffer from the base64 file or from a string
 
-3. this creates a buffer (or a string if you provide an encoding when reading file with readfilesync)
+   ```js
 
-4. brotli compress the buffer (buf) or string
+   console.log("reading from", filenamePathObj.base);
 
-   ```javascript
-   zlib.brotliCompressSync(buf, {
-        [zlib.constants.BROTLI_PARAM_MODE]:
+   const buf = readFileSync(
+         path.resolve(filenamePathObj.dir, filenamePathObj.base)
+   );
+
+   /**
+   *
+   *
+   * or from a string
+   *
+   *
+   */
+
+   // Create buffer from the base64 encoded png
+   const buf = Buffer.from("base64-encoded-png")
+
+   ```
+
+3. brotli compress the string
+
+   ```js
+
+   // This import syntax is for running in nodejs
+   // Convert appropriately for running in browser
+   import zlib from "node:zlib";
+
+   const compressed = zlib.brotliCompressSync(buf, {
+         [zlib.constants.BROTLI_PARAM_MODE]:
             zlib.constants.BROTLI_MODE_TEXT,
-        [zlib.constants.BROTLI_PARAM_QUALITY]:
+         [zlib.constants.BROTLI_PARAM_QUALITY]:
             zlib.constants.BROTLI_MAX_QUALITY,
-        [zlib.constants.BROTLI_PARAM_SIZE_HINT]:
+         [zlib.constants.BROTLI_PARAM_SIZE_HINT]:
             statSync(filename).size,
    });
-   ```
-
-5. Output is a buffer. Save or write that compressed buffer output to a
-   file without converting to a string
-
-    &nbsp;
-
-    ***
-
-    &nbsp;
-    &nbsp;
-
-## decompression
-
-6. Take the previous contents or read from file
-
-7. decompress the buffer (bufBin)
-
-   ```javascript
-
-   zlib.brotliDecompressSync(bufBin, {
-     [zlib.constants.BROTLI_PARAM_MODE]:
-        zlib.constants.BROTLI_MODE_TEXT,
-     [zlib.constants.BROTLI_PARAM_QUALITY]:
-        zlib.constants.BROTLI_MAX_QUALITY,
-     [zlib.constants.BROTLI_PARAM_SIZE_HINT]:
-        len,
-   });
 
    ```
 
-8. convert to string with utf8 encoding or write buffer to file (default was utf8 encoding for writing a buffer)
+   Output is a buffer.
 
-    &nbsp;
+4.
+   Save or write that compressed buffer output to a file with converting to a base64 encoded string.
 
+      ```js
+
+      console.log("...", "writing to", compressedOutputFileB64, "...");
+      if (!existsSync(compressedOutputFileB64)) {
+         const compressedOutputFileB64FD = openSync(
+               compressedOutputFileB64,
+               fs.constants.O_CREAT,
+               // fs.constants.O_RDWR,
+               "765"
+         );
+      }
+      const compressedOutputFileB64FD = openSync(
+            compressedOutputFileB64,
+            // fs.constants.O_CREAT,
+            fs.constants.O_RDWR,
+            "765"
+      );
+
+      // convert buffer to base64 string then write to file
+      writeSync(compressedOutputFileB64FD, compressed.toString("base64"));
+
+      ```
+
+&nbsp;
+
+***
+***
 ***
 
 &nbsp;
+
+## storage
+
+1. Take the compressed contents
+
+   ```js
+
+   // This import syntax is for running in nodejs
+   // Convert appropriately for running in browser
+   import zlib from "node:zlib";
+   import { Buffer } from "node:buffer";
+
+   // Create buffer from the base64 encoded png
+   const buf = Buffer.from("base64-encoded-png")
+
+   // Compress or get compressed contents
+   const compressed = zlib.brotliCompressSync(buf, {
+         [zlib.constants.BROTLI_PARAM_MODE]:
+            zlib.constants.BROTLI_MODE_TEXT,
+         [zlib.constants.BROTLI_PARAM_QUALITY]:
+            zlib.constants.BROTLI_MAX_QUALITY,
+         [zlib.constants.BROTLI_PARAM_SIZE_HINT]:
+            statSync(filename).size,
+   });
+
+   const compressedB64String = compressed.toString("base64")
+
+   ```
+
+2. Store base64 encoded string
+
+&nbsp;
+
+***
+***
+***
+
+## decompression
+
+1. Take the previous contents as a string or read from file to a string
+
+2. Create a buffer from the string (compressedB64String) specifying base64 encoding
+
+   ```js
+
+   /**
+    * If using string (compressedB64String)
+    */
+   console.log(
+         "...",
+         "decompressing file " + readB64FilenamePathObj.base,
+         "..."
+   );
+   const decompressedB64ToB64Buf = Buffer.from(compressedB64String, "base64");
+   const decompressedB64 = zlib.brotliDecompressSync(decompressedB64ToB64Buf, {
+         [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_GENERIC,
+         [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
+         [zlib.constants.BROTLI_PARAM_SIZE_HINT]: len,
+   });
+
+   ```
+
+3. Transcode from binary to utf8
+
+   ```js
+
+   import buffer from "node:buffer";
+
+   const decompressedB64AndTranscodedUTF8 = buffer.transcode(
+         decompressedB64,
+         "binary",
+         "utf8"
+   );
+
+   ```
+
+4. convert to string with utf8 encoding or write buffer to file (default was utf8 encoding for writing a buffer)
+
+   - Don't convert to a string with base64 encoding.
+
+     - This will base64 encode our original base64 encoded contents (basically base64 encoding the original png binary twice)
+
+&nbsp;
+
+***
+***
+***
+
 &nbsp;
 
 ## need to figure out how to store as plain text in between compression and deconpression
@@ -66,6 +184,8 @@
 - try converting output of compression to base64url (or base64)
 
   - look at decompression func
+
+  - figured it out! updated the above with storage section!
 
 &nbsp;
 
