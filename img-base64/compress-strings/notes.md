@@ -14,8 +14,6 @@
 
    ```js
 
-   console.log("reading from", filenamePathObj.base);
-
    const buf = readFileSync(
          path.resolve(filenamePathObj.dir, filenamePathObj.base)
    );
@@ -59,7 +57,6 @@
 
       ```js
 
-      console.log("...", "writing to", compressedOutputFileB64, "...");
       if (!existsSync(compressedOutputFileB64)) {
          const compressedOutputFileB64FD = openSync(
                compressedOutputFileB64,
@@ -135,13 +132,8 @@
    /**
     * If using string (compressedB64String)
     */
-   console.log(
-         "...",
-         "decompressing file " + readB64FilenamePathObj.base,
-         "..."
-   );
-   const decompressedB64ToB64Buf = Buffer.from(compressedB64String, "base64");
-   const decompressedB64 = zlib.brotliDecompressSync(decompressedB64ToB64Buf, {
+   const decompressedCompressedB64ToB64Buf = Buffer.from(compressedB64String, "base64");
+   const decompressedCompressedB64 = zlib.brotliDecompressSync(decompressedCompressedB64ToB64Buf, {
          [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_GENERIC,
          [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
          [zlib.constants.BROTLI_PARAM_SIZE_HINT]: len,
@@ -155,8 +147,8 @@
 
    import buffer from "node:buffer";
 
-   const decompressedB64AndTranscodedUTF8 = buffer.transcode(
-         decompressedB64,
+   const decompressedCompressedB64AndTranscodedToUTF8 = buffer.transcode(
+         decompressedCompressedB64,
          "binary",
          "utf8"
    );
@@ -168,6 +160,28 @@
    - Don't convert to a string with base64 encoding.
 
      - This will base64 encode our original base64 encoded contents (basically base64 encoding the original png binary twice)
+
+&nbsp;
+
+***
+***
+***
+
+## testing
+
+1. Use buffers and the equals() or compare() functions
+
+   - Don't use '==='
+
+   ```js
+   console.log();
+   console.log("originalB64Buf.equals(decompressedCompressedB64AndTranscodedToUTF8)");
+   console.log(originalB64Buf.equals(decompressedCompressedB64AndTranscodedToUTF8));
+
+   console.log();
+   console.log("originalB64Buf.compare(decompressedCompressedB64AndTranscodedToUTF8)");
+   console.log(originalB64Buf.compare(decompressedCompressedB64AndTranscodedToUTF8));
+   ```
 
 &nbsp;
 
