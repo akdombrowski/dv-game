@@ -550,38 +550,11 @@ const fillRenderings = (
 };
 
 const getImgOptions = () => {
-  const ohs = [
-    "img0",
-    "img00",
-    "img000",
-    "img0000",
-    "img00000",
-    "img000000",
-    "img0000000",
-    "img00000000",
-  ];
+  const ohs = images.me;
 
-  const ones = [
-    "img1",
-    "img11",
-    "img111",
-    "img1111",
-    "img11111",
-    "img111111",
-    "img1111111",
-    "img11111111",
-  ];
+  const ones = images.pointA;
 
-  const twos = [
-    "img2",
-    "img22",
-    "img222",
-    "img2222",
-    "img22222",
-    "img222222",
-    "img2222222",
-    "img22222222",
-  ];
+  const twos = images.pointB;
 
   const chanceForOh = 10;
 
