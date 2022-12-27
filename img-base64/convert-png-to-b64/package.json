@@ -1,0 +1,10 @@
+{
+  "name": "convert-png-to-b64",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "convert png to base64",
+  "main": "convertImgToBase64.js",
+  "author": "Anthony Dombrowski",
+  "license": "MIT",
+  "private": true
+}
