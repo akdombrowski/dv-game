@@ -1,15 +1,17 @@
 import { writeFileSync, readFileSync, opendirSync } from "node:fs";
 import { Buffer } from "node:buffer";
+import path from "node:path";
 
-const FILE = "./toonme/toonme_eda3e3_2_flipped (1) copy7.png";
+const FILE = "./groupphoto3 (1).png";
 // const DIR = "toonme";
 const DIR = "anthony";
 
 const convert = (filename) => {
+  const file = path.parse(filename)
   const buf = readFileSync(filename);
   const base64Output = buf.toString("base64");
   const separateFilename = filename.split("/");
-  const base64OutputFile = "./base64/" + separateFilename[-1] + ".base64";
+  const base64OutputFile = "./base64/" + file.name + ".txt";
 
   console.log("writing to " + base64OutputFile);
 
