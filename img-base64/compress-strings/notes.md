@@ -130,8 +130,14 @@
    ```js
 
    /**
+    * Reading from file
+    */
+   const compressedB64String = readFileSync(filePath, { encoding: "utf8" });
+
+   /**
     * If using string (compressedB64String)
     */
+   const compressedB64String = "base64-png-data-compressed-then-encoded-as-base64-string";
    const decompressedCompressedB64ToB64Buf = Buffer.from(compressedB64String, "base64");
    const decompressedCompressedB64 = zlib.brotliDecompressSync(decompressedCompressedB64ToB64Buf, {
          [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_GENERIC,
