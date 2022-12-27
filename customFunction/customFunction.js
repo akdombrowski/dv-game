@@ -551,11 +551,8 @@ const fillRenderings = (
 
 const getImgOptions = () => {
   const ohs = images.me;
-
   const ones = images.pointA;
-
   const twos = images.pointB;
-
   const chanceForOh = 10;
 
   // shuffle
