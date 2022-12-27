@@ -207,9 +207,6 @@ function App() {
     return (
       <>
         {dvContainers.map((dur, i) => {
-          // const img =
-          //   "url(data:image/png;base64," + images[renderings[i].img] + ")";
-          const img = "data:image/png;base64, " + images[renderings[i].img];
 
           const props: {
             yInit: string | number;
@@ -218,7 +215,7 @@ function App() {
             idNumber: number;
             duration: number;
             challenge: string;
-            bgImg: string;
+            img: string;
             handleClick: Function;
           } = {
             yInit: yInit,
@@ -227,7 +224,7 @@ function App() {
             idNumber: i,
             duration: dur,
             challenge: renderings[i].value,
-            bgImg: img,
+            img: renderings[i].img,
             handleClick: updateValueAndAdvanceFlow,
           };
 

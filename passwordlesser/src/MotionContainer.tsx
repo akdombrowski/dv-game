@@ -8,7 +8,7 @@ const MotionContainer = (props: {
   idNumber: number;
   duration: number;
   challenge: string;
-  bgImg: string;
+  img: string;
   handleClick: Function;
 }) => {
   const variants = {
@@ -59,7 +59,7 @@ const MotionContainer = (props: {
         type="image"
         onClick={handleClick}
         value={props.challenge}
-        src={props.bgImg}
+        src={props.img}
       ></input>
       {/* style={{ backgroundImage: props.bgImg }} */}
     </motion.div>
