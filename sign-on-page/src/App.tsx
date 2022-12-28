@@ -19,8 +19,6 @@ const SignOnPage = () => {
   // run on after first render
   useEffect(() => {
     const root = document.querySelector("body") as HTMLElement;
-    console.log("document.getRootNode()?.nodeType");
-    console.log(document.getRootNode()?.nodeType);
 
     root.style.backgroundColor = "black";
   }, []);
