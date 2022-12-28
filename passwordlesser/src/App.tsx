@@ -56,7 +56,7 @@ const precacheAllImagesNeeded = async () => {
     return new Promise(() => new Error("didn't get renderings info"));
   }
 
-  const proms = [];
+  const proms: Promise<void>[] = [];
   const imgsSet = new Set();
 
   for (const r of Object.values(renderings)) {
@@ -69,6 +69,7 @@ const precacheAllImagesNeeded = async () => {
       proms.push(img.decode());
     }
   }
+
   return proms;
 };
 
