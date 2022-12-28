@@ -16,6 +16,15 @@ const SignOnPage = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState(1);
   const [emailInputValue, setEmailInputValue] = useState("");
 
+  // run on after first render
+  useEffect(() => {
+    const root = document.querySelector("body") as HTMLElement;
+    console.log("document.getRootNode()?.nodeType");
+    console.log(document.getRootNode()?.nodeType);
+
+    root.style.backgroundColor = "black";
+  }, []);
+
   useEffect(() => {
     const advanceFlowInputEmail: HTMLElement | null = document.getElementById(
       "advanceFlowInputEmail"
@@ -111,6 +120,8 @@ const SignOnPage = () => {
 
   return (
     <Container fluid className="col-md-8 col-lg-6 mx-auto my-5">
+      {/* style={{ */}
+      {/* backgroundColor: "black", color: "white"}}> */}
       <Row className="mb-4">
         <Col className="col-md-10 col-lg-8 mx-auto">
           <h1 className="display-5 text-center font-monospace">Sign on</h1>
