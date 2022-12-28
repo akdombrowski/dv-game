@@ -18,9 +18,9 @@ const SignOnPage = () => {
 
   // run on after first render
   useEffect(() => {
-    const root = document.querySelector("body") as HTMLElement;
+    const body = document.body as HTMLElement;
 
-    root.style.backgroundColor = "black";
+    body.style.backgroundColor = "black";
   }, []);
 
   useEffect(() => {

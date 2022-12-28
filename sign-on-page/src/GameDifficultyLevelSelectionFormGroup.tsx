@@ -17,7 +17,7 @@ export const GameDifficultyLevelSelectionFormGroup = (props: Props) => {
 
   return (
     <Form.Group as={Row} className="gap-1">
-      <Form.Label column xs={6} sm="auto">
+      <Form.Label column xs={6} sm="auto" style={{ color: "white" }}>
         Choose a difficulty: ({difficulty})
       </Form.Label>
       <Form.Range
