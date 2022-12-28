@@ -66,7 +66,6 @@ const precacheAllImagesNeeded = async () => {
       imgsSet.add(r.img);
       const img = new Image();
       img.src = r.img;
-      // proms.push(img.decode());
 
       const ev = new Event("imgLoaded");
       img.addEventListener(
