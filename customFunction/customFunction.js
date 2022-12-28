@@ -6,7 +6,7 @@ const images = {
     ahhhhhh: "https://i.ibb.co/4dgrH9T/groupphoto3.png",
   },
   me: [
-    "    https://i.ibb.co/j6SmfCv/anthony7.png",
+    "https://i.ibb.co/j6SmfCv/anthony7.png",
     "https://i.ibb.co/fYcrgBH/anthony6.png",
     "https://i.ibb.co/1YC8Xqq/anthony5.png",
     "https://i.ibb.co/QXCQkBg/anthony4.png",
