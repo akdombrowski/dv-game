@@ -51,31 +51,51 @@ const renderings: {
   [key: number]: { value: string; pos: number; img: string };
 } = convertRenderingsToObj();
 
+const precacheAllImagesNeeded = async () => {
+  if (!renderings) {
+    return new Promise(() => new Error("didn't get renderings info"));
+  }
+
+  const proms = [];
+
+  for (const r of Object.values(renderings)) {
+    const imgs = [];
+    imgs.push(r.img);
+    const img = new Image();
+    img.src = r.img;
+    proms.push(img.decode());
+  }
+  return proms;
+};
+
 function App() {
+  const [imgsLoaded, setImgsLoaded] = useState(false);
   const [yInit, setYInit] = useState("-100px");
   const [yFinal, setYFinal] = useState("1080px");
   const mainContainer = useRef<HTMLDivElement>(null);
   const dvContainers = generateDVs();
   const currentYValue: MotionValue<number> = useMotionValue(0);
 
-  const resizeObserver = new ResizeObserver((entries) => {
-    console.log("entries");
-    console.log(entries);
+  const waitForImages = async () => {
+    await precacheAllImagesNeeded();
+    setImgsLoaded(true);
+  };
 
+  const resizeObserver = new ResizeObserver((entries) => {
     for (const entry of entries) {
       if (entry.contentBoxSize) {
         const contentBoxSize = entry.contentBoxSize[0];
         const dvMotionDiv = document.querySelector(
           ".dv-motion-div"
         ) as HTMLDivElement;
-        const h = dvMotionDiv.offsetHeight;
-        const hPX = -h + "px";
+        const h = dvMotionDiv.offsetHeight * -1.1;
+        const hPX = h + "px";
 
         console.log("currentYValue");
         console.log(currentYValue);
         console.log("hPX");
         console.log(hPX);
-        currentYValue.set(-h);
+        currentYValue.set(h);
         setYInit(hPX);
         setYFinal(contentBoxSize.blockSize + "px");
       }
@@ -83,13 +103,24 @@ function App() {
   });
 
   useEffect(() => {
-    const dvMotionDiv = document.querySelector(
-      ".dv-motion-div"
-    ) as HTMLDivElement;
-    const height = dvMotionDiv.clientHeight * -1 - 1;
-    setYInit(height + "px");
     console.log("dvContainers");
     console.log(dvContainers);
+
+    const setYInitAfterImageLoading = async () => {
+      // load images
+      await waitForImages();
+
+      const dvMotionDiv = document.querySelector(
+        ".dv-motion-div"
+      ) as HTMLDivElement;
+      const height = dvMotionDiv.clientHeight * -1.1;
+      console.log("set yInit to:", height);
+      console.log(height);
+
+      setYInit(height + "px");
+    };
+
+    setYInitAfterImageLoading();
   }, []);
 
   useEffect(() => {
@@ -174,6 +205,8 @@ function App() {
   };
 
   return (
+    imgsLoaded ? (
+
     <div
       id="mainContainer"
       ref={mainContainer}
@@ -200,6 +233,9 @@ function App() {
         */}
       </div>
     </div>
+    ) : (
+        <div>Loading...</div>
+    )
   );
 }
 
