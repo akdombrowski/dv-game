@@ -52,7 +52,7 @@ const renderings: {
 } = convertRenderingsToObj();
 
 function App() {
-  const [yInit, setYInit] = useState("0px");
+  const [yInit, setYInit] = useState("-100px");
   const [yFinal, setYFinal] = useState("1080px");
   const mainContainer = useRef<HTMLDivElement>(null);
   const dvContainers = generateDVs();
@@ -83,6 +83,11 @@ function App() {
   });
 
   useEffect(() => {
+    const dvMotionDiv = document.querySelector(
+      ".dv-motion-div"
+    ) as HTMLDivElement;
+    const height = dvMotionDiv.clientHeight * -1 - 1;
+    setYInit(height + "px");
     console.log("dvContainers");
     console.log(dvContainers);
   }, []);
