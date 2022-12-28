@@ -53,7 +53,7 @@ const renderings: {
 
 const precacheAllImagesNeeded = async () => {
   if (!renderings) {
-    return new Promise(() => new Error("didn't get renderings info"));
+    return new Promise<Error>(() => new Error("didn't get renderings info"));
   }
 
   const proms: Promise<void>[] = [];
@@ -66,7 +66,24 @@ const precacheAllImagesNeeded = async () => {
       imgsSet.add(r.img);
       const img = new Image();
       img.src = r.img;
-      proms.push(img.decode());
+      // proms.push(img.decode());
+
+      const ev = new Event("imgLoaded");
+      img.addEventListener(
+        ev.type,
+        () => new Promise(() => console.log("image" + r.img + "loaded"))
+      );
+
+      img.onload = () => new Event("imgLoaded");
+      img.onerror = () => new Event("imgLoadFailed");
+
+      proms.push(
+        new Promise((resolve, reject) => {
+          img.addEventListener("imgLoaded", () => resolve());
+          img.addEventListener("imgLoadFailed", () => reject(r.img + " loadingg failed"));
+
+        })
+      );
     }
   }
 
