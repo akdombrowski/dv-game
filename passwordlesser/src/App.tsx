@@ -10,7 +10,6 @@ import "./App.css";
 import MotionContainer from "./MotionContainer";
 import { MotionValue, useMotionValue } from "framer-motion";
 
-
 const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
 const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
 const DV_IMG_WIDTH_VW = DV_IMG_WIDTH.toString() + "vw";
@@ -84,7 +83,8 @@ function App() {
   });
 
   useEffect(() => {
-    console.log(JSON.stringify(dvContainers))
+    console.log("dvContainers");
+    console.log(dvContainers);
   }, []);
 
   useEffect(() => {
@@ -173,7 +173,7 @@ function App() {
       id="mainContainer"
       ref={mainContainer}
       className="content muscle-container sceneImg"
-      style={{ backgroundImage: bgImg }}
+      style={{ backgroundImage: "url(" + bgImg + ")" }}
     >
       <div
         id="dvColsContainer"
