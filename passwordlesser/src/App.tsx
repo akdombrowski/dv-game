@@ -83,16 +83,9 @@ function App() {
     }
   });
 
-  // useEffect(() => {
-  //   const dvMotionDiv = document.querySelector(
-  //     ".dv-motion-div"
-  //   ) as HTMLDivElement;
-  //   const h = dvMotionDiv.offsetHeight;
-  //   const hPX = -h + "px";
-
-  //   currentYValue.set(0);
-  //   setYInit(hPX);
-  // }, []);
+  useEffect(() => {
+    console.log(JSON.stringify(dvContainers))
+  }, []);
 
   useEffect(() => {
     // get the container that the main background image is displaying on
