@@ -8,7 +8,6 @@ import React, {
 } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
-import * as imgs from "./Imgs";
 import { MotionValue, useMotionValue } from "framer-motion";
 
 const bgImg = imgs.bgImg;
