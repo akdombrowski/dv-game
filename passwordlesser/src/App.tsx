@@ -57,13 +57,17 @@ const precacheAllImagesNeeded = async () => {
   }
 
   const proms = [];
+  const imgsSet = new Set();
 
   for (const r of Object.values(renderings)) {
     const imgs = [];
     imgs.push(r.img);
-    const img = new Image();
-    img.src = r.img;
-    proms.push(img.decode());
+    if (!imgsSet.has(r.img)) {
+      imgsSet.add(r.img);
+      const img = new Image();
+      img.src = r.img;
+      proms.push(img.decode());
+    }
   }
   return proms;
 };
@@ -204,9 +208,7 @@ function App() {
     );
   };
 
-  return (
-    imgsLoaded ? (
-
+  return imgsLoaded ? (
     <div
       id="mainContainer"
       ref={mainContainer}
@@ -233,9 +235,8 @@ function App() {
         */}
       </div>
     </div>
-    ) : (
-        <div>Loading...</div>
-    )
+  ) : (
+    <div>Loading...</div>
   );
 }
 
