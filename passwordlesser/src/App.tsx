@@ -10,7 +10,6 @@ import "./App.css";
 import MotionContainer from "./MotionContainer";
 import { MotionValue, useMotionValue } from "framer-motion";
 
-const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
 
 const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
 const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
@@ -19,6 +18,8 @@ const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DURATION = 4;
 const MAX_DURATION = 7;
 const IMG_Y_INIT = "0px";
+
+const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
 
 /**
  * It generates an array of random numbers between MIN_DURATION and
