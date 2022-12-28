@@ -10,7 +10,7 @@ import "./App.css";
 import MotionContainer from "./MotionContainer";
 import { MotionValue, useMotionValue } from "framer-motion";
 
-const bgImg = imgs.bgImg;
+const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
 
 const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
 const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
@@ -135,7 +135,6 @@ function App() {
     return (
       <>
         {dvContainers.map((dur, i) => {
-
           const props: {
             yInit: string | number;
             yFinal: string | number;
@@ -180,7 +179,7 @@ function App() {
       id="mainContainer"
       ref={mainContainer}
       className="content muscle-container sceneImg"
-      style={{ backgroundImage: "url(data:image/png;base64," + bgImg + ")" }}
+      style={{ backgroundImage: bgImg }}
     >
       <div
         id="dvColsContainer"
