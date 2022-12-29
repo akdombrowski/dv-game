@@ -8,13 +8,22 @@ interface Props {
 
 export const EmailInputFormGroup = (props: Props) => {
   return (
-    <FloatingLabel controlId="floatingEmailInput" label="Username">
+    <FloatingLabel
+      controlId="floatingEmailInput"
+      label="Username"
+      style={{ color: "var(--bs-light)" }}
+    >
       <Form.Control
         required
         type="email"
         autoComplete="email"
         placeholder="name@example.com"
         onChange={props.updateEmail}
+        style={{
+          color: "var(--bs-cyan)",
+          backgroundColor: "var(--bs-dark)",
+          borderColor: "var(--bs-gray-600)",
+        }}
       />
       <Form.Text
         className="help-text"
