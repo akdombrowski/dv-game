@@ -5,11 +5,11 @@
 @import "../node_modules/bootstrap/scss/functions";
 
 // 2. Include any default variable overrides here
-$primary: rgb(128, 0, 0);
-$secondary: #ff6039;
+$primary: cyan;
+$secondary: var(--bs-gray-500);
 $danger: #ff4136;
-$body-bg: #000;
-$body-color: rgb(158, 158, 158);
+$body-bg: var(--bs-dark);
+$body-color: var(--bs-light);
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "../node_modules/bootstrap/scss/variables";

@@ -32,40 +32,6 @@ export const GameDifficultyLevelSelectionFormGroup = (props: Props) => {
         max={25}
         onChange={handleChange}
       ></Form.Range>
-      {/* <ToggleButtonGroup
-        as={Col}
-        xs={6}
-        sm
-        type="radio"
-        name="difficultySelectionRadioBtnGroup"
-        defaultValue="easy"
-        onChange={props.difficultySelectedFn}
-      >
-        <ToggleButton
-          id="radio-difficulty-easy"
-          name="radio-difficulty-easy"
-          variant="outline-secondary"
-          value="easy"
-        >
-          easy
-        </ToggleButton>
-        <ToggleButton
-          id="radio-difficulty-medium"
-          name="radio-difficulty-medium"
-          variant="outline-secondary"
-          value="medium"
-        >
-          medium
-        </ToggleButton>
-        <ToggleButton
-          id="radio-difficulty-hard"
-          name="radio-difficulty-hard"
-          variant="outline-secondary"
-          value="hard"
-        >
-          hard
-        </ToggleButton>
-      </ToggleButtonGroup> */}
     </Form.Group>
   );
 };

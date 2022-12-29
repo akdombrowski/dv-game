@@ -14,6 +14,7 @@ import { ThemeChooser } from "./ThemeChooser";
 import "./App.css";
 
 const includeRegistration: string = "{{global.variables.includeRegistration}}";
+const themes = JSON.parse("{{global.variables.themes}}");
 
 const SignOnPage = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState(1);
@@ -113,7 +114,6 @@ const SignOnPage = () => {
     const target = e.target as HTMLInputElement;
     setTheme(target.value);
     console.log("target.value");
-
   };
 
   const handleReg = (e: SyntheticEvent) => {
@@ -130,7 +130,7 @@ const SignOnPage = () => {
   return (
     <Container
       fluid
-      className="col-md-8 col-lg-6 mx-auto my-5"
+      className="col-md-8 col-lg-6 mx-auto my-5 py-5"
       style={{ backgroundColor: "var(--bs-dark)" }}
     >
       <Row className="mb-4">
@@ -188,8 +188,12 @@ const SignOnPage = () => {
                 )}
               </ButtonGroup>
             </Row>
-            <Row>
-              <ThemeChooser updateTheme={handleThemeUpdate}></ThemeChooser>
+            <Row className="py-3">
+              <ThemeChooser
+                updateTheme={handleThemeUpdate}
+                theme={theme}
+                bgImg={"theme"}
+              ></ThemeChooser>
             </Row>
           </Form>
         </Col>
