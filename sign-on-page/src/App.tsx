@@ -120,12 +120,17 @@ const SignOnPage = () => {
   return (
     <Container
       fluid
-      className="col-md-8 col-lg-6 mx-auto my-5 dark"
+      className="col-md-8 col-lg-6 mx-auto my-5"
       style={{ backgroundColor: "var(--bs-dark)" }}
     >
       <Row className="mb-4">
         <Col className="col-md-10 col-lg-8 mx-auto">
-          <h1 className="display-5 text-center font-monospace">Sign on</h1>
+          <h1
+            className="display-5 text-center font-monospace"
+            style={{ color: "var(--bs-cyan)" }}
+          >
+            Sign on
+          </h1>
         </Col>
       </Row>
 
@@ -141,7 +146,16 @@ const SignOnPage = () => {
 
             <Row>
               <ButtonGroup id="signOnFormActionBtns" vertical className="gap-1">
-                <Button id="signOnBtn" variant="outline-primary" type="submit">
+                <Button
+                  id="signOnBtn"
+                  variant="outline-dark"
+                  size="lg"
+                  type="submit"
+                  style={{
+                    color: "var(--bs-cyan)",
+                    borderColor: "var(--bs-cyan)",
+                  }}
+                >
                   Sign on
                 </Button>
 
@@ -149,9 +163,13 @@ const SignOnPage = () => {
                 {includeRegistration ? (
                   <Button
                     id="createNewAcctBtn"
-                    variant="outline-secondary"
+                    variant="outline-dark"
                     type="button"
                     onClick={handleReg}
+                    style={{
+                      color: "var(--bs-gray-500)",
+                      borderColor: "var(--bs-gray-600)",
+                    }}
                   >
                     Register a new account
                   </Button>

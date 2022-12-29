@@ -16,8 +16,12 @@ export const EmailInputFormGroup = (props: Props) => {
         placeholder="name@example.com"
         onChange={props.updateEmail}
       />
-      <Form.Text muted className="help-text" id="emailIsUsernameHelpText">
-        Use an email address that you own.
+      <Form.Text
+        className="help-text"
+        id="emailIsUsernameHelpText"
+        style={{ color: "var(--bs-gray-500)" }}
+      >
+        Use an email address that you've registered with.
       </Form.Text>
     </FloatingLabel>
   );
