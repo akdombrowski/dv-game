@@ -9,6 +9,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { useState, SyntheticEvent, useEffect, ChangeEvent } from "react";
 import { GameDifficultyLevelSelectionFormGroup } from "./GameDifficultyLevelSelectionFormGroup";
 import { EmailInputFormGroup } from "./EmailInputFormGroup";
+import "./App.css";
 
 const includeRegistration: string = "{{global.variables.includeRegistration}}";
 
