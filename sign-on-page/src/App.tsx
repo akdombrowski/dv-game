@@ -130,8 +130,8 @@ const SignOnPage = () => {
   return (
     <Container
       fluid
-      className="col-md-8 col-lg-6 mx-auto my-5 py-5"
-      style={{ backgroundColor: "var(--bs-dark)" }}
+      className="col-xs-10 col-md-8 col-lg-6 mx-auto my-5 py-5 align-content-around"
+      style={{ height: "100vh", backgroundColor: "var(--bs-dark)" }}
     >
       <Row className="mb-4">
         <Col className="col-md-10 col-lg-8 mx-auto">
@@ -154,8 +154,12 @@ const SignOnPage = () => {
               />
             </Stack>
 
-            <Row>
-              <ButtonGroup id="signOnFormActionBtns" vertical className="gap-1">
+            <ButtonGroup
+              as={Row}
+              id="signOnFormActionBtns"
+              className="align-content-between d-flex"
+            >
+              <Col xs={12} className="mb-3">
                 <Button
                   id="signOnBtn"
                   variant="outline-dark"
@@ -164,13 +168,16 @@ const SignOnPage = () => {
                   style={{
                     color: "var(--bs-cyan)",
                     borderColor: "var(--bs-cyan)",
+                    width: "100%",
                   }}
                 >
                   Sign on
                 </Button>
+              </Col>
 
-                {/* Only show register button if registration hasn't been done already */}
-                {includeRegistration ? (
+              {/* Only show register button if registration hasn't been done already */}
+              {includeRegistration ? (
+                <Col xs={12} className="mb-3">
                   <Button
                     id="createNewAcctBtn"
                     variant="outline-dark"
@@ -179,15 +186,17 @@ const SignOnPage = () => {
                     style={{
                       color: "var(--bs-gray-500)",
                       borderColor: "var(--bs-gray-600)",
+                      width: "100%",
                     }}
                   >
                     Register a new account
                   </Button>
-                ) : (
-                  <></>
-                )}
-              </ButtonGroup>
-            </Row>
+                </Col>
+              ) : (
+                <></>
+              )}
+            </ButtonGroup>
+
             <Row className="py-3">
               <ThemeChooser
                 updateTheme={handleThemeUpdate}
