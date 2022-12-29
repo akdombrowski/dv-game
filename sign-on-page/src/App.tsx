@@ -21,7 +21,7 @@ const SignOnPage = () => {
   useEffect(() => {
     const body = document.body as HTMLElement;
 
-    body.style.backgroundColor = "black";
+    body.style.backgroundColor = "var(--bs-dark)";
   }, []);
 
   useEffect(() => {
@@ -118,9 +118,11 @@ const SignOnPage = () => {
   };
 
   return (
-    <Container fluid className="col-md-8 col-lg-6 mx-auto my-5">
-      {/* style={{ */}
-      {/* backgroundColor: "black", color: "white"}}> */}
+    <Container
+      fluid
+      className="col-md-8 col-lg-6 mx-auto my-5 dark"
+      style={{ backgroundColor: "var(--bs-dark)" }}
+    >
       <Row className="mb-4">
         <Col className="col-md-10 col-lg-8 mx-auto">
           <h1 className="display-5 text-center font-monospace">Sign on</h1>
