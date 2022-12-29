@@ -9,6 +9,8 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { useState, SyntheticEvent, useEffect, ChangeEvent } from "react";
 import { GameDifficultyLevelSelectionFormGroup } from "./GameDifficultyLevelSelectionFormGroup";
 import { EmailInputFormGroup } from "./EmailInputFormGroup";
+import { ThemeChooser } from "./ThemeChooser";
+
 import "./App.css";
 
 const includeRegistration: string = "{{global.variables.includeRegistration}}";
@@ -16,6 +18,7 @@ const includeRegistration: string = "{{global.variables.includeRegistration}}";
 const SignOnPage = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState(1);
   const [emailInputValue, setEmailInputValue] = useState("");
+  const [theme, setTheme] = useState("");
 
   // run on after first render
   useEffect(() => {
@@ -106,6 +109,13 @@ const SignOnPage = () => {
     setSelectedDifficulty(Number(target.value));
   };
 
+  const handleThemeUpdate = (e: ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    setTheme(target.value);
+    console.log("target.value");
+
+  };
+
   const handleReg = (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -177,6 +187,9 @@ const SignOnPage = () => {
                   <></>
                 )}
               </ButtonGroup>
+            </Row>
+            <Row>
+              <ThemeChooser updateTheme={handleThemeUpdate}></ThemeChooser>
             </Row>
           </Form>
         </Col>
