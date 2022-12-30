@@ -18,11 +18,6 @@ const MotionContainer = (props: {
 
   const yMV = props.yMotionValue;
 
-  console.log("idNumber");
-  console.log(props.idNumber);
-  console.log("duration");
-  console.log(props.duration);
-
   return (
     <motion.div
       className="dv-motion-div muscle-container"

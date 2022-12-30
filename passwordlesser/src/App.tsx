@@ -9,9 +9,10 @@ import React, {
 import "./App.css";
 import MotionContainer from "./MotionContainer";
 import { MotionValue, useMotionValue } from "framer-motion";
+import { debug } from "util";
 
-const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
-const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
+const NUMBER_OF_DAVINCIS = 14; //Number("{{global.variables.difficulty}}");
+const DV_IMG_WIDTH = 5; //Number("{{global.variables.DV_IMG_WIDTH}}");
 const DV_IMG_WIDTH_VW = DV_IMG_WIDTH.toString() + "vw";
 const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DURATION = 4;
@@ -33,9 +34,6 @@ const generateDVs = (): number[] => {
       Math.random() * (MAX_DURATION - MIN_DURATION) + MIN_DURATION;
     dvs.push(duration);
   }
-
-  console.log("dvs");
-  console.log(dvs);
 
   return dvs;
 };
@@ -97,10 +95,10 @@ function App() {
   const [imgsLoaded, setImgsLoaded] = useState(false);
   const [yInit, setYInit] = useState("-100px");
   const [yFinal, setYFinal] = useState("1080px");
-  const mainContainer = useRef<HTMLDivElement>(null);
   const dvMotionDiv = useRef<HTMLDivElement>(null);
   const dvContainers = generateDVs();
   const currentYValue: MotionValue<number> = useMotionValue(0);
+  let mainContainer = useRef<HTMLDivElement | null>(null);
 
   const waitForImages = async () => {
     await precacheAllImagesNeeded();
@@ -130,6 +128,7 @@ function App() {
   // };
 
   const resizeObserver = new ResizeObserver((entries) => {
+    // entry is a ResizeObserverEntry
     for (const entry of entries) {
       if (entry.contentBoxSize) {
         const contentBoxSize = entry.contentBoxSize[0];
@@ -138,9 +137,9 @@ function App() {
         ) as HTMLDivElement;
         const h = dvMotionDiv.offsetHeight;
         const top = h * -1.1;
-        const bottom = contentBoxSize.blockSize * 1.1;
-        const topPX = top + "px";
-        const bottomPX = bottom + "px";
+        const bottom = Math.floor(contentBoxSize.blockSize /100) * 10 * 1.1;
+        const topPX = -10 + "%";
+        const bottomPX = 110 + "%";
 
         console.log("entry");
         console.log(entry);
@@ -178,26 +177,29 @@ function App() {
       if (height) {
         setYInit(height + "px");
       }
+    } else {
+      const bgImageContainer = document.getElementById(
+        "mainContainer"
+      ) as HTMLDivElement;
+      console.log("mainContainer");
+      console.log(mainContainer);
+      console.log("bgImageContainer");
+      console.log(bgImageContainer);
+
+      // const bgImageContainer = mainContainer.current as HTMLDivElement;
+      // const bgImageContainer = mainContainer; //.current as HTMLDivElement;
+
+      if (bgImageContainer) {
+        resizeObserver.observe(bgImageContainer);
+        // resizeObserver.observe();
+        return () => {
+          resizeObserver.unobserve(bgImageContainer);
+        };
+      } else {
+        console.error("main bg img container not found");
+      }
     }
   }, [imgsLoaded]);
-
-  useEffect(() => {
-    // get the container that the main background image is displaying on
-    // const bgImageContainer = document.getElementById(
-    //   "mainContainer"
-    // ) as HTMLDivElement;
-    const bgImageContainer = mainContainer.current as HTMLDivElement;
-
-    if (bgImageContainer) {
-      resizeObserver.observe(bgImageContainer);
-    } else {
-      console.error("main bg img container not found");
-    }
-
-    return () => {
-      resizeObserver.unobserve(bgImageContainer);
-    };
-  }, []);
 
   const updateValueAndAdvanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();

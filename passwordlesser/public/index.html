@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="description" content="Web site created using create-react-app" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -24,11 +22,93 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>passwordlesser</title>
+    <title>kaptcha-me</title>
   </head>
+
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="mainRoot" class="container">
+      <div id="reactRoot"></div>
+      <div id="renderings" name="renderings" class="hidden">
+        {
+        "0": {
+        "value": "Rri913Iz8OsQtG-HapcIY-qWlDuca0Iy-gto8eofvkBWOLVysDbUHZJ8LoQKqyIR-HA9dm-mGrOBCcMopqShNw",
+        "pos": 46,
+        "img": "https://i.ibb.co/19rZRGg/f5.png"
+        },
+        "1": {
+        "value": "ZSUtPo7y0S_lJtiUugAzVUK1jvdw8tBAO7xTdYLk3KcEK4e3vDK2A6tkEaQCLGFM4iQxFx3oMnSiIURe_PzRLg",
+        "pos": 66,
+        "img": "https://i.ibb.co/C8qzwkn/g1.png"
+        },
+        "2": {
+        "value": "P8Y-fGwN2LiJPtnsudT_OqNmn_9R-NlISJ8grK_pxvfqHGHP4h3zJamMhe6OWVfvpsb-EaExcuke6PHBUTZwhg",
+        "pos": 60,
+        "img": " https://i.ibb.co/j6SmfCv/anthony7.png"
+        },
+        "3": {
+        "value": "tpt4fvq6CPDyfdz3VxiNAmDoiOgRtQvPouB7TFRHGrzX--O01pIlf9rr9ImIzNgc0uu70y647PYRgqXDKNLLVg",
+        "pos": 30,
+        "img": "https://i.ibb.co/19rZRGg/f5.png"
+        },
+        "4": {
+        "value": "Q3XhK-I-SgFbGv3Yum4uFCtX9PkmC2mVK_bs2bcDlduCMo1FWIx-F3JTib-n8EsJ0TAC_ZI6-H_8Jtoj_UOzDQ",
+        "pos": 41,
+        "img": "https://i.ibb.co/19rZRGg/f5.png"
+        },
+        "5": {
+        "value": "bcrHObl1pPl-utz-3wtr-xUvgw7zKJ6tgIFLJYL7G0r9fh_LCiH6O7rKPYd3t8N0P_q_H_At49Y31xOyaCDnrw",
+        "pos": 84,
+        "img": "https://i.ibb.co/C8qzwkn/g1.png"
+        },
+        "6": {
+        "value": "Pr-Qd4TriZnQUQ9zqqQsahIjSiOj3skzfxgJ23q196YQ3H5pGod4cfbrRyT8Wo6pSjGU7OR4H9bFeQOoR8ZEhQ",
+        "pos": 16,
+        "img": "https://i.ibb.co/19rZRGg/f5.png"
+        },
+        "7": {
+        "value": "-PmrRTudr24Pk5X4O94AtfYFMKPMd1QEXtSmNW8Ig04utPcEIMrRs2YumBq9TWmguFTTkYso8jtOkbi0HEbnVw",
+        "pos": 25,
+        "img": "https://i.ibb.co/19rZRGg/f5.png"
+        },
+        "8": {
+        "value": "a-9D9WtQrM4gC_uYa5n4Vo7cofxrUn31heXqsVS_4knoFKJFEVMYGInKTwCLYz8ZFkUo32SgBV51VXu465N9aA",
+        "pos": 86,
+        "img": "https://i.ibb.co/4TrWJFY/anthony8.png"
+        },
+        "9": {
+        "value": "ZxakGf2ihSBt6yeDg3SBgcNEsjzo5Q23RnDFH5bffTfMRRWERKMcGRvtl2TFcKdoLAUifkkwC_TZ6Iq52f5zdA",
+        "pos": 75,
+        "img": "https://i.ibb.co/MpG6RFQ/anthony3.png"
+        },
+        "10": {
+        "value": "2cjEg4i8BayS9IGVQVzsvMV6NcOQGtcYzVnyeOK_WwCQFtSCeB_RXN4HvqPDNr_kZQ2htiCxP_jpjRNmoWuOOQ",
+        "pos": 52,
+        "img": "https://i.ibb.co/19rZRGg/f5.png"
+        },
+        "11": {
+        "value": "FomwrOfn8-055eDudFyYs0VRTLg7vENqP7_12KOM0abCBmb42ZHJGakT67P70O22jDjEzZOk21Aq9NlLofs-LA",
+        "pos": 90,
+        "img": "https://i.ibb.co/C8qzwkn/g1.png"
+        },
+        "12": {
+        "value": "RLybdwfvhEfpk8b_kLZIH6bwdfI5uSBvw54y5M3Wr4-fSnLUP5dTtptxk7yviKii3MYAWlC8blBjX_rFLVnzMQ",
+        "pos": 32,
+        "img": "https://i.ibb.co/19rZRGg/f5.png"
+        },
+        "13": {
+        "value": "PiGib9N8mxRbA8T_iHLlxqUdDKJLF3_ls82pKoITSq_T3m27VVDRFKWhKZhR3MuovV7iai3HgvjMGQJ3a8wnkw",
+        "pos": 36,
+        "img": "https://i.ibb.co/19rZRGg/f5.png"
+        }
+        }
+
+      </div>
+      <form id="advFlowForm">
+        <input type="hidden" name="advFlowValue" id="advFlowValue" class="hidden" />
+        <button id="advFlowSubmitBtn" data-id="advFlowSubmitBtn" type="submit" data-skcomponent="skbutton" data-skbuttontype="form-submit" data-skbuttonvalue="submit" data-skform="advFlowForm" class="hidden"></button>
+      </form>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -40,4 +120,5 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+
 </html>
