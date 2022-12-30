@@ -19,7 +19,7 @@ const themes = JSON.parse("{{global.variables.themes}}");
 const SignOnPage = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState(1);
   const [emailInputValue, setEmailInputValue] = useState("");
-  const [theme, setTheme] = useState("");
+  const [theme, setTheme] = useState();
 
   // run on after first render
   useEffect(() => {
@@ -111,9 +111,9 @@ const SignOnPage = () => {
   };
 
   const handleThemeUpdate = (e: ChangeEvent) => {
-    const target = e.target as HTMLInputElement;
-    setTheme(target.value);
-    console.log("target.value");
+    // const target = e.target as HTMLInputElement;
+    console.log("theme update event");
+    console.log("theme chosen:", e.target.id);
   };
 
   const handleReg = (e: SyntheticEvent) => {
@@ -200,8 +200,7 @@ const SignOnPage = () => {
             <Row className="py-3">
               <ThemeChooser
                 updateTheme={handleThemeUpdate}
-                theme={theme}
-                bgImg={"theme"}
+                themes={themes}
               ></ThemeChooser>
             </Row>
           </Form>
