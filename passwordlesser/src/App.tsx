@@ -137,16 +137,16 @@ function App() {
       ".dv-motion-div"
     ) as HTMLDivElement;
     const h = dvMotionDiv.offsetHeight;
-    const top = Math.max(h, convert5VWToPX) * -1.1;
+    const top = Math.max(h, convert5VWToPX) * -1.5;
 
     // entry is a ResizeObserverEntry
     for (const entry of entries) {
       if (entry.contentBoxSize) {
         const contentBoxSize = entry.contentBoxSize[0];
-        const bottom = Math.floor(contentBoxSize.blockSize / 100) * 10 * 1.1;
-        const topPX = top + "vh";
-        // const bottomPX = 1080 + "px";
-        const bottomPX = bottom + "vh";
+        const bottom = Math.ceil(contentBoxSize.blockSize / 10) * 1.1;
+        const topPX = top + "px";
+        const bottomPX = ((bottom * windowH) / 100) * 1.1 + "px";
+        // const bottomPX = bottom + "vh";
 
         console.log("currentYValue");
         console.log(yMotionValue);
@@ -169,29 +169,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!imgsLoaded) {
-      const dvMotionDiv = document.querySelector(
-        ".dv-motion-div"
-      ) as HTMLDivElement;
-      const height = dvMotionDiv?.clientHeight * -1.1;
-
-      console.log("set yInit to:", height);
-      console.log(height);
-
-      if (height) {
-        setYInit(height + "px");
-      }
-    } else {
+    if (imgsLoaded) {
       const bgImageContainer = document.getElementById(
         "mainContainer"
       ) as HTMLDivElement;
-      console.log("mainContainer");
-      console.log(mainContainer);
-      console.log("bgImageContainer");
-      console.log(bgImageContainer);
-
-      // const bgImageContainer = mainContainer.current as HTMLDivElement;
-      // const bgImageContainer = mainContainer; //.current as HTMLDivElement;
 
       if (bgImageContainer) {
         resizeObserver.observe(bgImageContainer);
