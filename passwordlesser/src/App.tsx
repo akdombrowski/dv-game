@@ -97,7 +97,7 @@ function App() {
   const [yFinal, setYFinal] = useState("1080px");
   const dvMotionDiv = useRef<HTMLDivElement>(null);
   const dvContainers = generateDVs();
-  const currentYValue: MotionValue<number> = useMotionValue(0);
+  const yMotionValue: MotionValue<number> = useMotionValue(0);
   let mainContainer = useRef<HTMLDivElement | null>(null);
 
   const waitForImages = async () => {
@@ -145,10 +145,10 @@ function App() {
         console.log(entry);
 
         console.log("currentYValue");
-        console.log(currentYValue);
+        console.log(yMotionValue);
         console.log("topPX");
         console.log(topPX);
-        currentYValue.set(top);
+        yMotionValue.set(top);
         console.log("setYInit:", topPX);
         console.log("setYFinal:", bottomPX);
         setYInit(topPX);
@@ -237,7 +237,7 @@ function App() {
           } = {
             yInit: yInit,
             yFinal: yFinal,
-            yMotionValue: currentYValue,
+            yMotionValue: yMotionValue,
             idNumber: i,
             duration: dur,
             challenge: renderings[i].value,
