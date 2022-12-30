@@ -93,11 +93,14 @@ const precacheAllImagesNeeded = async () => {
 
 function App() {
   const [imgsLoaded, setImgsLoaded] = useState(false);
-  const [yInit, setYInit] = useState("-100px");
-  const [yFinal, setYFinal] = useState("1080px");
+  const [yInit, setYInit] = useState("-5vw");
+  const [yFinal, setYFinal] = useState("100vh");
   const dvMotionDiv = useRef<HTMLDivElement>(null);
-  const dvContainers = generateDVs();
   const yMotionValue: MotionValue<number> = useMotionValue(0);
+  const windowH = window.innerHeight;
+  const windowW = window.innerWidth;
+  const convert5VWToPX = (windowW / 100) * 5;
+  const dvContainers = generateDVs();
   let mainContainer = useRef<HTMLDivElement | null>(null);
 
   const waitForImages = async () => {
@@ -128,21 +131,22 @@ function App() {
   // };
 
   const resizeObserver = new ResizeObserver((entries) => {
+    const containerH = document.getElementById("mainContainer")?.clientHeight;
+    const containerW = document.getElementById("mainContainer")?.clientWidth;
+    const dvMotionDiv = document.querySelector(
+      ".dv-motion-div"
+    ) as HTMLDivElement;
+    const h = dvMotionDiv.offsetHeight;
+    const top = Math.max(h, convert5VWToPX) * -1.1;
+
     // entry is a ResizeObserverEntry
     for (const entry of entries) {
       if (entry.contentBoxSize) {
         const contentBoxSize = entry.contentBoxSize[0];
-        const dvMotionDiv = document.querySelector(
-          ".dv-motion-div"
-        ) as HTMLDivElement;
-        const h = dvMotionDiv.offsetHeight;
-        const top = h * -1.1;
-        const bottom = Math.floor(contentBoxSize.blockSize /100) * 10 * 1.1;
-        const topPX = -10 + "%";
-        const bottomPX = 110 + "%";
-
-        console.log("entry");
-        console.log(entry);
+        const bottom = Math.floor(contentBoxSize.blockSize / 100) * 10 * 1.1;
+        const topPX = top + "vh";
+        // const bottomPX = 1080 + "px";
+        const bottomPX = bottom + "vh";
 
         console.log("currentYValue");
         console.log(yMotionValue);
