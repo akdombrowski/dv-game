@@ -34,6 +34,9 @@ const generateDVs = (): number[] => {
     dvs.push(duration);
   }
 
+  console.log("dvs");
+  console.log(dvs);
+
   return dvs;
 };
 
@@ -79,8 +82,9 @@ const precacheAllImagesNeeded = async () => {
       proms.push(
         new Promise((resolve, reject) => {
           img.addEventListener("imgLoaded", () => resolve());
-          img.addEventListener("imgLoadFailed", () => reject(r.img + " loadingg failed"));
-
+          img.addEventListener("imgLoadFailed", () =>
+            reject(r.img + " loadingg failed")
+          );
         })
       );
     }
@@ -94,6 +98,7 @@ function App() {
   const [yInit, setYInit] = useState("-100px");
   const [yFinal, setYFinal] = useState("1080px");
   const mainContainer = useRef<HTMLDivElement>(null);
+  const dvMotionDiv = useRef<HTMLDivElement>(null);
   const dvContainers = generateDVs();
   const currentYValue: MotionValue<number> = useMotionValue(0);
 
@@ -102,6 +107,28 @@ function App() {
     setImgsLoaded(true);
   };
 
+  // const setInitialAndFinalYPositions = () => {
+  //   const contentBoxSize = entry.contentBoxSize[0];
+  //   const dvMotionDiv = document.querySelector(
+  //     ".dv-motion-div"
+  //   ) as HTMLDivElement;
+  //   const h = dvMotionDiv.offsetHeight;
+  //   const top = h * -1.1;
+  //   const bottom = contentBoxSize.blockSize * 1.1;
+  //   const topPX = top + "px";
+  //   const bottomPX = bottom + "px";
+
+  //   console.log("currentYValue");
+  //   console.log(currentYValue);
+  //   console.log("topPX");
+  //   console.log(topPX);
+  //   currentYValue.set(top);
+  //   console.log("setYInit:", topPX);
+  //   console.log("setYFinal:", bottomPX);
+  //   setYInit(topPX);
+  //   setYFinal(bottomPX);
+  // };
+
   const resizeObserver = new ResizeObserver((entries) => {
     for (const entry of entries) {
       if (entry.contentBoxSize) {
@@ -109,16 +136,24 @@ function App() {
         const dvMotionDiv = document.querySelector(
           ".dv-motion-div"
         ) as HTMLDivElement;
-        const h = dvMotionDiv.offsetHeight * -1.1;
-        const hPX = h + "px";
+        const h = dvMotionDiv.offsetHeight;
+        const top = h * -1.1;
+        const bottom = contentBoxSize.blockSize * 1.1;
+        const topPX = top + "px";
+        const bottomPX = bottom + "px";
+
+        console.log("entry");
+        console.log(entry);
 
         console.log("currentYValue");
         console.log(currentYValue);
-        console.log("hPX");
-        console.log(hPX);
-        currentYValue.set(h);
-        setYInit(hPX);
-        setYFinal(contentBoxSize.blockSize + "px");
+        console.log("topPX");
+        console.log(topPX);
+        currentYValue.set(top);
+        console.log("setYInit:", topPX);
+        console.log("setYFinal:", bottomPX);
+        setYInit(topPX);
+        setYFinal(bottomPX);
       }
     }
   });
@@ -127,22 +162,24 @@ function App() {
     console.log("dvContainers");
     console.log(dvContainers);
 
-    const setYInitAfterImageLoading = async () => {
-      // load images
-      await waitForImages();
+    waitForImages();
+  }, []);
 
+  useEffect(() => {
+    if (!imgsLoaded) {
       const dvMotionDiv = document.querySelector(
         ".dv-motion-div"
       ) as HTMLDivElement;
-      const height = dvMotionDiv.clientHeight * -1.1;
+      const height = dvMotionDiv?.clientHeight * -1.1;
+
       console.log("set yInit to:", height);
       console.log(height);
 
-      setYInit(height + "px");
-    };
-
-    setYInitAfterImageLoading();
-  }, []);
+      if (height) {
+        setYInit(height + "px");
+      }
+    }
+  }, [imgsLoaded]);
 
   useEffect(() => {
     // get the container that the main background image is displaying on

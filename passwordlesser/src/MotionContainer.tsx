@@ -11,25 +11,17 @@ const MotionContainer = (props: {
   img: string;
   handleClick: Function;
 }) => {
-  const variants = {
-    init: {
-      y: props.yInit,
-      transition: {
-        when: "beforeChildren",
-        staggerChildren: 1,
-      },
-    },
-    final: {
-      y: props.yFinal,
-    },
-  };
-
   const handleClick = (e: SyntheticEvent) => {
     e.preventDefault();
     props.handleClick(e);
   };
 
   const yMV = props.yMotionValue;
+
+  console.log("idNumber");
+  console.log(props.idNumber);
+  console.log("duration");
+  console.log(props.duration);
 
   return (
     <motion.div
@@ -39,17 +31,19 @@ const MotionContainer = (props: {
       animate={{
         y: props.yFinal,
       }}
-      style={{ y: yMV }}
       transition={{
         repeat: Infinity,
         duration: props.duration,
         repeatType: "reverse",
+        type: "tween",
       }}
       whileHover={{
-        scale: 1.2,
+        scale: 1.5,
+        translateY: 0,
         transition: { duration: 0.1 },
       }}
-      whileTap={{ scale: 2, transition: { duration: 0.1 } }}
+      whileTap={{ scale: 2, translateY: 0, transition: { duration: 0.5 } }}
+      exit={{ scale: 10, transition: { duration: 0.1 } }}
     >
       <input
         id={"dvBtn" + props.idNumber}
