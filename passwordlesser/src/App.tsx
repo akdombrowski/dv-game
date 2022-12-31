@@ -95,12 +95,15 @@ const precacheAllImagesNeeded = async () => {
 
 function App() {
   const [imgsLoaded, setImgsLoaded] = useState(false);
-  const [yInit, setYInit] = useState("-100px");
-  const [yFinal, setYFinal] = useState("1080px");
-  const mainContainer = useRef<HTMLDivElement>(null);
+  const [yInit, setYInit] = useState("-5vw");
+  const [yFinal, setYFinal] = useState("100vh");
   const dvMotionDiv = useRef<HTMLDivElement>(null);
+  const yMotionValue: MotionValue<number> = useMotionValue(0);
+  const windowH = window.innerHeight;
+  const windowW = window.innerWidth;
+  const convert5VWToPX = (windowW / 100) * 5;
   const dvContainers = generateDVs();
-  const currentYValue: MotionValue<number> = useMotionValue(0);
+  let mainContainer = useRef<HTMLDivElement | null>(null);
 
   const waitForImages = async () => {
     await precacheAllImagesNeeded();
@@ -130,26 +133,28 @@ function App() {
   // };
 
   const resizeObserver = new ResizeObserver((entries) => {
+    const containerH = document.getElementById("mainContainer")?.clientHeight;
+    const containerW = document.getElementById("mainContainer")?.clientWidth;
+    const dvMotionDiv = document.querySelector(
+      ".dv-motion-div"
+    ) as HTMLDivElement;
+    const h = dvMotionDiv.offsetHeight;
+    const top = Math.max(h, convert5VWToPX) * -1.5;
+
+    // entry is a ResizeObserverEntry
     for (const entry of entries) {
       if (entry.contentBoxSize) {
         const contentBoxSize = entry.contentBoxSize[0];
-        const dvMotionDiv = document.querySelector(
-          ".dv-motion-div"
-        ) as HTMLDivElement;
-        const h = dvMotionDiv.offsetHeight;
-        const top = h * -1.1;
-        const bottom = contentBoxSize.blockSize * 1.1;
+        const bottom = Math.ceil(contentBoxSize.blockSize / 10);
         const topPX = top + "px";
-        const bottomPX = bottom + "px";
-
-        console.log("entry");
-        console.log(entry);
+        const bottomPX = ((bottom * windowH) / 100) * 1.1 + "px";
+        // const bottomPX = bottom + "vh";
 
         console.log("currentYValue");
-        console.log(currentYValue);
+        console.log(yMotionValue);
         console.log("topPX");
         console.log(topPX);
-        currentYValue.set(top);
+        yMotionValue.set(top);
         console.log("setYInit:", topPX);
         console.log("setYFinal:", bottomPX);
         setYInit(topPX);
@@ -166,38 +171,22 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!imgsLoaded) {
-      const dvMotionDiv = document.querySelector(
-        ".dv-motion-div"
+    if (imgsLoaded) {
+      const bgImageContainer = document.getElementById(
+        "mainContainer"
       ) as HTMLDivElement;
-      const height = dvMotionDiv?.clientHeight * -1.1;
 
-      console.log("set yInit to:", height);
-      console.log(height);
-
-      if (height) {
-        setYInit(height + "px");
+      if (bgImageContainer) {
+        resizeObserver.observe(bgImageContainer);
+        // resizeObserver.observe();
+        return () => {
+          resizeObserver.unobserve(bgImageContainer);
+        };
+      } else {
+        console.error("main bg img container not found");
       }
     }
   }, [imgsLoaded]);
-
-  useEffect(() => {
-    // get the container that the main background image is displaying on
-    // const bgImageContainer = document.getElementById(
-    //   "mainContainer"
-    // ) as HTMLDivElement;
-    const bgImageContainer = mainContainer.current as HTMLDivElement;
-
-    if (bgImageContainer) {
-      resizeObserver.observe(bgImageContainer);
-    } else {
-      console.error("main bg img container not found");
-    }
-
-    return () => {
-      resizeObserver.unobserve(bgImageContainer);
-    };
-  }, []);
 
   const updateValueAndAdvanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -235,7 +224,7 @@ function App() {
           } = {
             yInit: yInit,
             yFinal: yFinal,
-            yMotionValue: currentYValue,
+            yMotionValue: yMotionValue,
             idNumber: i,
             duration: dur,
             challenge: renderings[i].value,
@@ -247,7 +236,7 @@ function App() {
             <div
               id={"imgCol" + i}
               key={"imgCol" + i}
-              className="dv-col flex-child"
+              className="dv-col"
               style={{
                 left: renderings[i].pos.toString() + "%",
                 maxWidth: DV_IMG_WIDTH_VW,
