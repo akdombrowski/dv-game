@@ -106,13 +106,20 @@ body {
 }
 
 .dv-col {
+  position: absolute;
+  display: flex;
+  flex: 10 1 auto;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+  flex-wrap: nowrap;
   height: 100%;
 }
 
 .dv-motion-div {
   height: auto;
   flex: 1 1;
-  overflow: hidden;
+  overflow: visible;
   top: 0px;
 }
 
