@@ -143,7 +143,7 @@ function App() {
     for (const entry of entries) {
       if (entry.contentBoxSize) {
         const contentBoxSize = entry.contentBoxSize[0];
-        const bottom = Math.ceil(contentBoxSize.blockSize / 10) * 1.1;
+        const bottom = Math.ceil(contentBoxSize.blockSize / 10);
         const topPX = top + "px";
         const bottomPX = ((bottom * windowH) / 100) * 1.1 + "px";
         // const bottomPX = bottom + "vh";
