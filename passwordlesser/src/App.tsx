@@ -4,9 +4,9 @@ import "./App.css";
 import MotionContainer from "./MotionContainer";
 import { MotionValue, useMotionValue } from "framer-motion";
 
-const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
-const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
-const DV_IMG_WIDTH_VW = DV_IMG_WIDTH.toString() + "vw";
+const NUMBER_OF_DAVINCIS = 14 //Number("{{global.variables.difficulty}}");
+// const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
+const DV_IMG_WIDTH_VW = "5vw" //DV_IMG_WIDTH.toString() + "vw";
 const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DURATION = 4;
 const MAX_DURATION = 7;
@@ -77,7 +77,7 @@ const precacheAllImagesNeeded = async () => {
         new Promise((resolve, reject) => {
           img.addEventListener("imgLoaded", () => resolve());
           img.addEventListener("imgLoadFailed", () =>
-            reject(r.img + " loadingg failed")
+            reject(r.img + " loading failed")
           );
         })
       );
@@ -90,7 +90,7 @@ const precacheAllImagesNeeded = async () => {
 function App() {
   const [imgsLoaded, setImgsLoaded] = useState(false);
   const yInit = "-5vw";
-  const yFinal = "100vh";
+  const yFinal = "105vh";
   const dvContainers = generateDVs();
 
   const waitForImages = async () => {
