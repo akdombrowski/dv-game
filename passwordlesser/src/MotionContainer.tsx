@@ -13,9 +13,9 @@ const MotionContainer = (props: {
 }) => {
   const containerH = document.getElementById("mainContainer")?.clientHeight;
   const containerW = document.getElementById("mainContainer")?.clientWidth;
-  const dvMotionDiv = document.querySelector(
-    ".dv-motion-div"
-  ) as HTMLDivElement;
+  // const dvMotionDiv = document.querySelector(
+  //   ".dv-motion-div"
+  // ) as HTMLDivElement;
   const dvMotionDiv = useRef<HTMLDivElement>(null);
   const yMotionValue: MotionValue<number> = useMotionValue(0);
   const windowH = window.innerHeight;
@@ -30,6 +30,7 @@ const MotionContainer = (props: {
 
   return (
     <motion.div
+      ref={dvMotionDiv}
       className="dv-motion-div muscle-container"
       id={"motionDV" + props.idNumber}
       initial={{ y: props.yInit }}
