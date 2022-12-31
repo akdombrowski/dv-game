@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { SyntheticEvent, useEffect, useRef, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
-import { MotionValue, useMotionValue } from "framer-motion";
 
-const NUMBER_OF_DAVINCIS = 14 //Number("{{global.variables.difficulty}}");
+const NUMBER_OF_DAVINCIS = 14; //Number("{{global.variables.difficulty}}");
 // const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
-const DV_IMG_WIDTH_VW = "5vw" //DV_IMG_WIDTH.toString() + "vw";
+const DV_IMG_WIDTH_VW = "5vw"; //DV_IMG_WIDTH.toString() + "vw";
 const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DURATION = 4;
 const MAX_DURATION = 7;
