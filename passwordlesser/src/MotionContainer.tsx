@@ -1,5 +1,5 @@
 import { MotionValue, motion, useMotionValue } from "framer-motion";
-import { SyntheticEvent, useRef } from "react";
+import { SyntheticEvent, useEffect, useRef } from "react";
 
 const MotionContainer = (props: {
   yInit: string | number;
@@ -11,18 +11,56 @@ const MotionContainer = (props: {
   handleClick: Function;
   imgsLoaded: boolean;
 }) => {
-  const containerH = document.getElementById("mainContainer")?.clientHeight;
-  const containerW = document.getElementById("mainContainer")?.clientWidth;
-  // const dvMotionDiv = document.querySelector(
-  //   ".dv-motion-div"
-  // ) as HTMLDivElement;
   const dvMotionDiv = useRef<HTMLDivElement>(null);
-  const yMotionValue: MotionValue<number> = useMotionValue(0);
   const windowH = window.innerHeight;
   const windowW = window.innerWidth;
-  const convert5VWToPX = (windowW / 100) * 5;
-  const h = dvMotionDiv.offsetHeight;
-  const top = Math.max(h, convert5VWToPX) * -1.5;
+  const convert5VWToNumValue = (windowW / 100) * 5;
+  const initYPos = convert5VWToNumValue * -1.5;
+  const y = useMotionValue(0);
+
+  const resizeObserver = new ResizeObserver((entries) => {
+    const containerH = document.getElementById("mainContainer")?.clientHeight;
+    const containerW = document.getElementById("mainContainer")?.clientWidth;
+    const h = y.get();
+    const top =
+      (h ? Math.max(h, convert5VWToNumValue) : convert5VWToNumValue) * -1.5;
+
+    // entry is a ResizeObserverEntry
+    for (const entry of entries) {
+      if (entry.contentBoxSize) {
+        const contentBoxSize = entry.contentBoxSize[0];
+        const bottom = Math.ceil(contentBoxSize.blockSize / 10);
+        const topPX = top + "px";
+        const bottomPX = ((bottom * windowH) / 100) * 1.1 + "px";
+        // const bottomPX = bottom + "vh";
+
+        console.log("topPX:", topPX);
+        console.log("bottomPX:", bottomPX);
+        console.log("yMotionValue.get():", h);
+        console.log("yMotionValue.set(top):", top);
+        y.set(top);
+      }
+    }
+  });
+
+  useEffect(() => {
+    if (props.imgsLoaded) {
+      const bgImageContainer = document.getElementById(
+        "mainContainer"
+      ) as HTMLDivElement;
+
+      if (bgImageContainer) {
+        resizeObserver.observe(bgImageContainer);
+        // resizeObserver.observe();
+        return () => {
+          resizeObserver.unobserve(bgImageContainer);
+        };
+      } else {
+        console.error("main bg img container not found");
+      }
+    }
+  }, [props.imgsLoaded]);
+
   const handleClick = (e: SyntheticEvent) => {
     e.preventDefault();
     props.handleClick(e);
@@ -33,7 +71,8 @@ const MotionContainer = (props: {
       ref={dvMotionDiv}
       className="dv-motion-div muscle-container"
       id={"motionDV" + props.idNumber}
-      initial={{ y: props.yInit }}
+      style={{ y }}
+      // initial={{ y: props.yInit }}
       animate={{
         y: props.yFinal,
       }}

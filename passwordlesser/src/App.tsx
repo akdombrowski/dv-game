@@ -125,61 +125,12 @@ function App() {
   //   setYFinal(bottomPX);
   // };
 
-  const resizeObserver = new ResizeObserver((entries) => {
-    const containerH = document.getElementById("mainContainer")?.clientHeight;
-    const containerW = document.getElementById("mainContainer")?.clientWidth;
-    const dvMotionDiv = document.querySelector(
-      ".dv-motion-div"
-    ) as HTMLDivElement;
-    const h = dvMotionDiv.offsetHeight;
-    const top = Math.max(h, convert5VWToPX) * -1.5;
-
-    // entry is a ResizeObserverEntry
-    for (const entry of entries) {
-      if (entry.contentBoxSize) {
-        const contentBoxSize = entry.contentBoxSize[0];
-        const bottom = Math.ceil(contentBoxSize.blockSize / 10);
-        const topPX = top + "px";
-        const bottomPX = ((bottom * windowH) / 100) * 1.1 + "px";
-        // const bottomPX = bottom + "vh";
-
-        console.log("currentYValue");
-        console.log(yMotionValue);
-        console.log("topPX");
-        console.log(topPX);
-        yMotionValue.set(top);
-        console.log("setYInit:", topPX);
-        console.log("setYFinal:", bottomPX);
-        setYInit(topPX);
-        setYFinal(bottomPX);
-      }
-    }
-  });
-
   useEffect(() => {
     console.log("dvContainers");
     console.log(dvContainers);
 
     waitForImages();
   }, []);
-
-  useEffect(() => {
-    if (imgsLoaded) {
-      const bgImageContainer = document.getElementById(
-        "mainContainer"
-      ) as HTMLDivElement;
-
-      if (bgImageContainer) {
-        resizeObserver.observe(bgImageContainer);
-        // resizeObserver.observe();
-        return () => {
-          resizeObserver.unobserve(bgImageContainer);
-        };
-      } else {
-        console.error("main bg img container not found");
-      }
-    }
-  }, [imgsLoaded]);
 
   const updateValueAndAdvanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -208,7 +159,6 @@ function App() {
           const props: {
             yInit: string | number;
             yFinal: string | number;
-            yMotionValue: MotionValue<number>;
             idNumber: number;
             duration: number;
             challenge: string;
@@ -218,7 +168,6 @@ function App() {
           } = {
             yInit: yInit,
             yFinal: yFinal,
-            yMotionValue: yMotionValue,
             idNumber: i,
             duration: dur,
             challenge: renderings[i].value,
