@@ -18,11 +18,6 @@ const MotionContainer = (props: {
 
   const yMV = props.yMotionValue;
 
-  console.log("idNumber");
-  console.log(props.idNumber);
-  console.log("duration");
-  console.log(props.duration);
-
   return (
     <motion.div
       className="dv-motion-div muscle-container"
@@ -32,18 +27,20 @@ const MotionContainer = (props: {
         y: props.yFinal,
       }}
       transition={{
-        repeat: Infinity,
-        duration: props.duration,
-        repeatType: "reverse",
-        type: "tween",
+        y: {
+          repeat: Infinity,
+          duration: props.duration,
+          repeatType: "reverse",
+          type: "tween",
+        },
       }}
       whileHover={{
-        scale: 1.5,
+        scale: 3,
         translateY: 0,
         transition: { duration: 0.1 },
       }}
-      whileTap={{ scale: 2, translateY: 0, transition: { duration: 0.5 } }}
-      exit={{ scale: 10, transition: { duration: 0.1 } }}
+      whileTap={{ scale: 10, translateY: 0, transition: { duration: 0.01 } }}
+      exit={{ scale: 100, transition: { duration: 0.01 } }}
     >
       <input
         id={"dvBtn" + props.idNumber}
