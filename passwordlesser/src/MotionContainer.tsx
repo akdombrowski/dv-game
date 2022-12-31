@@ -28,8 +28,6 @@ const MotionContainer = (props: {
     props.handleClick(e);
   };
 
-  const yMV = props.yMotionValue;
-
   return (
     <motion.div
       className="dv-motion-div muscle-container"
