@@ -234,7 +234,7 @@ function App() {
             <div
               id={"imgCol" + i}
               key={"imgCol" + i}
-              className="dv-col flex-child"
+              className="dv-col"
               style={{
                 left: renderings[i].pos.toString() + "%",
                 maxWidth: DV_IMG_WIDTH_VW,
