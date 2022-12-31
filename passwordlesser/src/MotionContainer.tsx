@@ -40,7 +40,7 @@ const MotionContainer = (props: {
         transition: { duration: 0.1 },
       }}
       whileTap={{ scale: 10, translateY: 0, transition: { duration: 0.01 } }}
-      exit={{ scale: 100, transition: { duration: 0.5 } }}
+      exit={{ scale: 100, transition: { duration: 0.01 } }}
     >
       <input
         id={"dvBtn" + props.idNumber}
