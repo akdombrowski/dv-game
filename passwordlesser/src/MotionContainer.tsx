@@ -1,16 +1,28 @@
-import { MotionValue, motion } from "framer-motion";
-import { SyntheticEvent } from "react";
+import { MotionValue, motion, useMotionValue } from "framer-motion";
+import { SyntheticEvent, useRef } from "react";
 
 const MotionContainer = (props: {
   yInit: string | number;
   yFinal: string | number;
-  yMotionValue: MotionValue<number>;
   idNumber: number;
   duration: number;
   challenge: string;
   img: string;
   handleClick: Function;
+  imgsLoaded: boolean;
 }) => {
+  const containerH = document.getElementById("mainContainer")?.clientHeight;
+  const containerW = document.getElementById("mainContainer")?.clientWidth;
+  const dvMotionDiv = document.querySelector(
+    ".dv-motion-div"
+  ) as HTMLDivElement;
+  const dvMotionDiv = useRef<HTMLDivElement>(null);
+  const yMotionValue: MotionValue<number> = useMotionValue(0);
+  const windowH = window.innerHeight;
+  const windowW = window.innerWidth;
+  const convert5VWToPX = (windowW / 100) * 5;
+  const h = dvMotionDiv.offsetHeight;
+  const top = Math.max(h, convert5VWToPX) * -1.5;
   const handleClick = (e: SyntheticEvent) => {
     e.preventDefault();
     props.handleClick(e);

@@ -1,10 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {
-  SyntheticEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
 import { MotionValue, useMotionValue } from "framer-motion";
@@ -97,7 +92,6 @@ function App() {
   const [yInit, setYInit] = useState("-5vw");
   const [yFinal, setYFinal] = useState("100vh");
   const dvMotionDiv = useRef<HTMLDivElement>(null);
-  const yMotionValue: MotionValue<number> = useMotionValue(0);
   const windowH = window.innerHeight;
   const windowW = window.innerWidth;
   const convert5VWToPX = (windowW / 100) * 5;
@@ -220,6 +214,7 @@ function App() {
             challenge: string;
             img: string;
             handleClick: Function;
+            imgsLoaded: boolean;
           } = {
             yInit: yInit,
             yFinal: yFinal,
@@ -229,6 +224,7 @@ function App() {
             challenge: renderings[i].value,
             img: renderings[i].img,
             handleClick: updateValueAndAdvanceFlow,
+            imgsLoaded: imgsLoaded,
           };
 
           return (
