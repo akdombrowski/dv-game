@@ -89,14 +89,9 @@ const precacheAllImagesNeeded = async () => {
 
 function App() {
   const [imgsLoaded, setImgsLoaded] = useState(false);
-  const [yInit, setYInit] = useState("-5vw");
-  const [yFinal, setYFinal] = useState("100vh");
-  const dvMotionDiv = useRef<HTMLDivElement>(null);
-  const windowH = window.innerHeight;
-  const windowW = window.innerWidth;
-  const convert5VWToPX = (windowW / 100) * 5;
+  const yInit = "-5vw";
+  const yFinal = "100vh";
   const dvContainers = generateDVs();
-  let mainContainer = useRef<HTMLDivElement | null>(null);
 
   const waitForImages = async () => {
     await precacheAllImagesNeeded();
@@ -198,7 +193,6 @@ function App() {
   return imgsLoaded ? (
     <div
       id="mainContainer"
-      ref={mainContainer}
       className="content muscle-container sceneImg"
       style={{ backgroundImage: "url(" + bgImg + ")" }}
     >
