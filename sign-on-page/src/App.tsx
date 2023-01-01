@@ -57,7 +57,7 @@ const SignOnPage = () => {
         advanceFlowInputTheme as HTMLInputElement;
       advanceFlowInputThemeInputElement.value = theme as string;
     }
-  }, [emailInputValue, selectedDifficulty]);
+  }, [emailInputValue, selectedDifficulty, theme]);
 
   const clickAdvFlowBtn = () => {
     const advFlowBtn = document.getElementById(
