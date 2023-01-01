@@ -16,7 +16,7 @@ const images = {
     "https://i.ibb.co/4TrWJFY/anthony8.png",
   ],
   pointA: [
-    "    https://i.ibb.co/MScVdHf/f1.png",
+    "https://i.ibb.co/MScVdHf/f1.png",
     "https://i.ibb.co/R73Q0ZS/f2.png",
     "https://i.ibb.co/7kb35j9/f3.png",
     "https://i.ibb.co/pK5spvT/f4.png",
@@ -26,7 +26,7 @@ const images = {
     "https://i.ibb.co/X3VyxVW/f8.png",
   ],
   pointB: [
-    "    https://i.ibb.co/PWMGTtM/g8.png",
+    "https://i.ibb.co/PWMGTtM/g8.png",
     "https://i.ibb.co/fHJXxp3/g7.png",
     "https://i.ibb.co/SxS5jTb/g6.png",
     "https://i.ibb.co/Z2s6x4s/g5.png",
