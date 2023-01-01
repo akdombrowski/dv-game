@@ -4,10 +4,18 @@ const a = require("./localRunCustomFunction.js");
  * Testing so far showing a little under 15% chance of direct overlap
  */
 
+// old numbers
 // 10000 ~ 35s
 // 50000 ~ 3min
-const iterations = 10000;
-// const iterations = 10;
+// 14% chance of direct overlap
+//
+// new numbers
+// 10000 ~ 12s
+// 50000 ~ 1min
+// 4% chance of direct overlap
+//
+// const iterations = 10000;
+const iterations = 50000;
 let count = 0;
 console.time("totalScriptRuntime");
 for (let i = 0; i < iterations; i++) {
@@ -21,5 +29,6 @@ for (let i = 0; i < iterations; i++) {
   }
 }
 console.log("count:", count);
-console.log("% with overlap:", (count / iterations) * 100);
+console.log("runs:", iterations);
+console.log("% with direct overlap:", (count / iterations) * 100);
 console.timeEnd("totalScriptRuntime");
