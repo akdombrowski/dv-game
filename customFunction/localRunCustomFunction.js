@@ -110,8 +110,17 @@ const noLuckFallback = (
   noLuck,
   dvImgWidth
 ) => {
-  const rnd = rndPos(dvImgWidth);
+  const lastDitchIterations = 100;
+  let rnd = rndPos(dvImgWidth);
 
+  // just try to avoid direct overlap
+  for (let i = 0; i < lastDitchIterations; i++) {
+    if (dvColPosArrayPositions[rnd]) {
+      rnd = rndPos(dvImgWidth);
+    } else {
+      break;
+    }
+  }
   // add to set to try to avoid overlapping
   dvColPosSet.add(rnd);
   // add to array to return
@@ -162,7 +171,7 @@ const getPositionWithMinOverlap = (
     let foundOverlap = false;
 
     if (
-      rndPosFromLeft >= 100 - dvImgWidth - 1 &&
+      rndPosFromLeft > 100 - dvImgWidth - 1 ||
       dvColPosArrayPositions[rndPosFromLeft]
     ) {
       rndPosFromLeft = rndPos(dvImgWidth);
@@ -170,16 +179,29 @@ const getPositionWithMinOverlap = (
       continue;
     }
 
-    loop2: for (
-      let pos = rndPosFromLeft;
-      pos < rndPosFromLeft + dvImgWidth - overlap;
-      pos++
-    ) {
-      // if we already have this position (disallowing overlap), try again by
-      // breaking out
-      if (dvColVisualizePositionsArray[pos]) {
-        foundOverlap = true;
-        break loop2;
+    if (dvColPosArrayPositions.length < dvImgWidth * 2) {
+      loop2: for (
+        let i = rndPosFromLeft - dvImgWidth;
+        i < rndPosFromLeft + dvImgWidth;
+        i++
+      ) {
+        if (dvColVisualizePositionsArray[i]) {
+          foundOverlap = true;
+          break loop2;
+        }
+      }
+    } else {
+      loop3: for (
+        let pos = rndPosFromLeft - dvImgWidth + overlap;
+        pos < rndPosFromLeft + dvImgWidth - overlap;
+        pos++
+      ) {
+        // if we already have this position (disallowing overlap), try again by
+        // breaking out
+        if (dvColVisualizePositionsArray[pos]) {
+          foundOverlap = true;
+          break loop3;
+        }
       }
     }
 
@@ -602,7 +624,7 @@ const combineCodesAndPosArrayAndImgs = (
 
 const deft = { numDVs: 14, dvImgWidth: 5, theme: "seeingDouble" };
 
-module.exports = a = async (params = deft) => {
+module.exports = a = (params = deft) => {
   const numOfDVs = Number(params.numDVs);
   const dvImgWidth = Number(params.dvImgWidth);
   const bgImgSrc = images.bg[params.theme];
@@ -623,7 +645,15 @@ module.exports = a = async (params = deft) => {
     dvColPosArrayPositions.length -
     dvColVisualizePositionsArray.filter((pos) => pos).length;
 
-  const positionsSorted = dvColPosArrayPositions.sort();
+  const positionsSorted = dvColPosArrayPositions.sort((a, b) => {
+    if (a < b) {
+      return -1;
+    } else if (a > b) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
 
   const output = {
     themeSrc: bgImgSrc,
@@ -639,10 +669,10 @@ module.exports = a = async (params = deft) => {
     numDirectOverlaps: numDirectOverlaps,
   };
 
-  console.log("output:");
-  console.log(output);
+  // console.log("output:");
+  // console.log(output);
 
   return output;
 };
 
-a();
+// a();
