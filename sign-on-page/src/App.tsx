@@ -117,6 +117,7 @@ const SignOnPage = () => {
   };
 
   const handleThemeUpdate = (e: ChangeEvent) => {
+    e.preventDefault();
     // const target = e.target as HTMLInputElement;
     console.log("theme update event");
     console.log("theme chosen:", e.target.id);
