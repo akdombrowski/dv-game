@@ -41,6 +41,10 @@ const SignOnPage = () => {
     const advanceFlowInputDifficulty: HTMLElement | null =
       document.getElementById("advanceFlowInputDifficulty");
 
+    const advanceFlowInputTheme: HTMLElement | null = document.getElementById(
+      "advanceFlowInputTheme"
+    );
+
     if (advanceFlowInputEmail) {
       const advanceFlowInputEmailInputElement =
         advanceFlowInputEmail as HTMLInputElement;
@@ -52,6 +56,12 @@ const SignOnPage = () => {
         advanceFlowInputDifficulty as HTMLInputElement;
       advanceFlowInputDifficultyInputElement.value =
         selectedDifficulty.toString();
+    }
+
+    if (advanceFlowInputTheme) {
+      const advanceFlowInputThemeInputElement =
+        advanceFlowInputTheme as HTMLInputElement;
+      advanceFlowInputThemeInputElement.value = theme as string;
     }
   }, [emailInputValue, selectedDifficulty]);
 
