@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "advanceFlowInputEmail": {
+      "type": "string",
+      "displayName": "advanceFlowInputEmail",
+      "preferredControlType": "textField",
+      "propertyName": "advanceFlowInputEmail"
+    },
+    "advanceFlowInputDifficulty": {
+      "type": "string",
+      "displayName": "advanceFlowInputDifficulty",
+      "preferredControlType": "textField",
+      "propertyName": "advanceFlowInputDifficulty"
+    },
+    "advanceFlowInputTheme": {
+      "type": "string",
+      "displayName": "advanceFlowInputTheme",
+      "preferredControlType": "textField",
+      "propertyName": "advanceFlowInputTheme"
+    },
+    "advFlowAction": {
+      "type": "string",
+      "displayName": "advFlowAction",
+      "preferredControlType": "textField",
+      "propertyName": "advFlowAction"
+    }
+  }
+}
