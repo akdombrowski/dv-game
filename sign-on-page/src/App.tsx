@@ -21,11 +21,19 @@ const SignOnPage = () => {
   const [emailInputValue, setEmailInputValue] = useState("");
   const [theme, setTheme] = useState<string>();
 
-  // run on after first render
+  // run only after first render
   useEffect(() => {
     const body = document.body as HTMLElement;
 
     body.style.backgroundColor = "var(--bs-dark)";
+  }, []);
+
+  useEffect(() => {
+    const radioInput = document.querySelector(
+      "input[type=radio]"
+    ) as HTMLInputElement;
+
+    radioInput.checked = true;
   }, []);
 
   useEffect(() => {
