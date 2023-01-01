@@ -13,8 +13,14 @@ import { ThemeChooser } from "./ThemeChooser";
 
 import "./App.css";
 
-const includeRegistration: string = "{{global.variables.includeRegistration}}";
-const themes = JSON.parse("{{global.variables.themes}}");
+const includeRegistration: string = "true"; //"{{global.variables.includeRegistration}}";
+const themes = {
+  0: {
+    name: "seeingDouble",
+    src: "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png",
+  },
+  1: { name: "ahhhhhh", src: "https://i.ibb.co/4dgrH9T/groupphoto3.png" },
+}; //JSON.parse("{{global.variables.themes}}");
 
 const SignOnPage = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState(1);
