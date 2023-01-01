@@ -1,15 +1,8 @@
 import Form from "react-bootstrap/Form";
 import Image from "react-bootstrap/Image";
 import Col from "react-bootstrap/Col";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  SyntheticEvent,
-  useState,
-} from "react";
-import InputGroup from "react-bootstrap/InputGroup";
-import { FormControl, FormGroup, Row } from "react-bootstrap";
+import { ChangeEventHandler } from "react";
+import { FormGroup, Row } from "react-bootstrap";
 
 interface Props {
   updateTheme: ChangeEventHandler;
@@ -17,22 +10,35 @@ interface Props {
   // bgImg: string;
 }
 
-const FEEDBACK = ["Oh... I like your taste!", "Hey. I like your style."];
+const FEEDBACK = [
+  "Oh... I like your taste!",
+  "Hey. I like your style.",
+  "Are you sure?",
+];
+
 export const ThemeChooser = (props: Props) => {
   const options = () => {
     const themes = Object.values(props.themes);
     const numThemes = themes.length;
-    const colWidth = Math.floor(12 / numThemes); // if want them all in one line
+    const numThemesPerRow = 2;
+    const colWidth = Math.floor(12 / numThemesPerRow);
+    const numRows = 12 / colWidth / numThemes;
+
     return themes.map((theme, i) => {
       return (
-        <Col xs={6} className="flex-fill">
+        <Col key={theme.name + "Col"} xs={6} className="flex-fill">
           <Form.Check type="radio" id={theme.name}>
             <Form.Check.Input
               type="radio"
               onChange={props.updateTheme}
               name="theme"
+              aria-describedby={theme.name + "Label"}
             />
-            <Form.Check.Label style={{ color: "var(--bs-light)" }}>
+            <Form.Check.Label
+              id={theme.name + "Label"}
+              style={{ color: "var(--bs-light)" }}
+              htmlFor={theme.name}
+            >
               {theme.name}
             </Form.Check.Label>
             <Image fluid src={theme.src}></Image>
@@ -40,7 +46,7 @@ export const ThemeChooser = (props: Props) => {
               type="valid"
               style={{ color: "var(--bs-light)" }}
             >
-              {FEEDBACK[i]}
+              {FEEDBACK[i % FEEDBACK.length]}
             </Form.Control.Feedback>
           </Form.Check>
         </Col>
@@ -50,7 +56,7 @@ export const ThemeChooser = (props: Props) => {
 
   return (
     <FormGroup>
-      <Row>{options()}</Row>
+      <Row className="flex-wrap">{options()}</Row>
     </FormGroup>
   );
 };
