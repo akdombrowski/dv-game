@@ -25,7 +25,7 @@ const themes = {
 const SignOnPage = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState(1);
   const [emailInputValue, setEmailInputValue] = useState("");
-  const [theme, setTheme] = useState();
+  const [theme, setTheme] = useState<string>();
 
   // run on after first render
   useEffect(() => {
@@ -121,6 +121,7 @@ const SignOnPage = () => {
     // const target = e.target as HTMLInputElement;
     console.log("theme update event");
     console.log("theme chosen:", e.target.id);
+    setTheme(e.target.id);
   };
 
   const handleReg = (e: SyntheticEvent) => {
