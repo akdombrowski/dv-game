@@ -1,9 +1,7 @@
 import { MotionValue, motion, useMotionValue } from "framer-motion";
-import { SyntheticEvent, useEffect, useRef } from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
 
 const MotionContainer = (props: {
-  yInit: string | number;
-  yFinal: string | number;
   idNumber: number;
   duration: number;
   challenge: string;
@@ -15,40 +13,134 @@ const MotionContainer = (props: {
   const windowH = window.innerHeight;
   const windowW = window.innerWidth;
   const convert5VWToNumValue = (windowW / 100) * 5;
-  const initYPos = convert5VWToNumValue * -1.5;
   const y = useMotionValue(0);
+  const [yInitial, setYInitial] = useState(0);
+  const [yFinal, setYFinal] = useState(0);
+  const bgImageContainer = document.getElementById(
+    "mainContainer"
+  ) as HTMLDivElement;
+
+  const calculateYInitial = () => {
+    const curr = dvMotionDiv.current;
+    const yPos = y.get();
+    if (curr) {
+      if (yPos < 0) {
+        console.log("id:", props.idNumber);
+        console.log("y:", y.get());
+        console.log("curr.clientHeight:", curr.clientHeight);
+        console.log("formula:", "curr.clientHeight * -1.05");
+        console.log("setYInitial:", curr.clientHeight * -1.05);
+        setYInitial(curr.clientHeight * -1.05);
+      } else {
+        console.log("id:", props.idNumber);
+        console.log("y:", y.get());
+        console.log("curr.clientHeight:", curr.clientHeight);
+        console.log("formula:", "yPos * -1 + curr.clientHeight * -1.05");
+        console.log("setYInitial:", yPos * -1 + curr.clientHeight * -1.05);
+        setYInitial(yPos * -1 + curr.clientHeight * -1.05);
+      }
+    } else {
+      console.log("id:", props.idNumber);
+      console.log("y:", y.get());
+      console.log("convert5VWToNumValue:", convert5VWToNumValue);
+      console.log("formula:", "convert5VWToNumValue * -1.05");
+      console.log("setYInitial:", convert5VWToNumValue * -1.05);
+      setYInitial(convert5VWToNumValue * -1.05);
+    }
+  };
+
+  const calculateYFinal = () => {
+    const mainContainer = document.getElementById("mainContainer");
+
+    if (mainContainer) {
+      if (y.get() < 0) {
+        console.log("id:", props.idNumber);
+        console.log("y:", y.get());
+        console.log("mainContainer.clientHeight:", mainContainer.clientHeight);
+        if (dvMotionDiv.current) {
+          console.log(
+            "formula:",
+            "mainContainer.clientHeight + dvMotionDiv.current.clientHeight"
+          );
+          console.log(
+            "setYFinal:",
+            mainContainer.clientHeight + dvMotionDiv.current.clientHeight
+          );
+          setYFinal(
+            mainContainer.clientHeight + dvMotionDiv.current.clientHeight
+          );
+        } else {
+          console.log("formula:", "mainContainer.clientHeight * 1.05");
+          console.log("setYFinal:", mainContainer.clientHeight * 1.05);
+          setYFinal(mainContainer.clientHeight * 1.05);
+        }
+      } else {
+        console.log("id:", props.idNumber);
+        console.log("y:", y.get());
+        console.log("mainContainer.clientHeight:", mainContainer.clientHeight);
+        console.log(
+          "formula:",
+          "(mainContainer.clientHeight - y.get()) * 1.05"
+        );
+        console.log(
+          "setYFinal:",
+          (mainContainer.clientHeight - y.get()) * 1.05
+        );
+        setYFinal((mainContainer.clientHeight - y.get()) * 1.05);
+      }
+    } else {
+      console.log("id:", props.idNumber);
+      console.log("y:", y.get());
+      console.log("windowH:", windowH);
+      console.log("formula:", "windowH * 1.05");
+      console.log("setYFinal:", windowH * 1.05);
+      setYFinal(windowH * 1.05);
+    }
+  };
+
+  useEffect(() => {
+    calculateYInitial();
+    calculateYFinal();
+  }, [dvMotionDiv, bgImageContainer]);
 
   const resizeObserver = new ResizeObserver((entries) => {
     const containerH = document.getElementById("mainContainer")?.clientHeight;
     const containerW = document.getElementById("mainContainer")?.clientWidth;
     const h = y.get();
-    const top =
-      (h ? Math.max(h, convert5VWToNumValue) : convert5VWToNumValue) * -1.5;
+    const top = convert5VWToNumValue
+      ? Math.max(h, convert5VWToNumValue) * -1.5
+      : -100;
 
     // entry is a ResizeObserverEntry
     for (const entry of entries) {
       if (entry.contentBoxSize) {
         const contentBoxSize = entry.contentBoxSize[0];
-        const bottom = Math.ceil(contentBoxSize.blockSize / 10);
+        const bottom = contentBoxSize.blockSize;
         const topPX = top + "px";
-        const bottomPX = ((bottom * windowH) / 100) * 1.1 + "px";
+        const bottomPX = bottom * 1.1 + "px";
         // const bottomPX = bottom + "vh";
 
-        console.log("topPX:", topPX);
-        console.log("bottomPX:", bottomPX);
-        console.log("yMotionValue.get():", h);
-        console.log("yMotionValue.set(top):", top);
-        y.set(top);
+        // console.log("h:", h);
+
+        // console.log("convert5VWToNumValue", convert5VWToNumValue);
+
+        // console.log("windowH:", windowH);
+        // console.log("windowW:", windowW);
+
+        // console.log("id:", props.idNumber);
+        // console.log("topPX:", topPX);
+        // console.log("bottomPX:", bottomPX);
+        // console.log("yMotionValue.get():", h);
+        // console.log("yMotionValue.set(top):", top);
+        // calculateYInitial();
+        // calculateYFinal();
+        y.set(0);
       }
     }
   });
 
   useEffect(() => {
     if (props.imgsLoaded) {
-      const bgImageContainer = document.getElementById(
-        "mainContainer"
-      ) as HTMLDivElement;
-
       if (bgImageContainer) {
         resizeObserver.observe(bgImageContainer);
         // resizeObserver.observe();
@@ -66,15 +158,15 @@ const MotionContainer = (props: {
     props.handleClick(e);
   };
 
-  return (
+  return props.imgsLoaded ? (
     <motion.div
       ref={dvMotionDiv}
       className="dv-motion-div muscle-container"
       id={"motionDV" + props.idNumber}
       style={{ y }}
-      // initial={{ y: props.yInit }}
+      // initial={{ y: "0vh" }}
       animate={{
-        y: props.yFinal,
+        y: document.getElementById("mainContainer")?.clientHeight || "100vh",
       }}
       transition={{
         y: {
@@ -102,8 +194,9 @@ const MotionContainer = (props: {
         value={props.challenge}
         src={props.img}
       ></input>
-      {/* style={{ backgroundImage: props.bgImg }} */}
     </motion.div>
+  ) : (
+    <div>Loading...</div>
   );
 };
 
