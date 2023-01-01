@@ -1,15 +1,10 @@
 import Form from "react-bootstrap/Form";
 import Image from "react-bootstrap/Image";
 import Col from "react-bootstrap/Col";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
 import {
-  ChangeEvent,
   ChangeEventHandler,
-  SyntheticEvent,
-  useState,
 } from "react";
-import InputGroup from "react-bootstrap/InputGroup";
-import { FormControl, FormGroup, Row } from "react-bootstrap";
+import { FormGroup, Row } from "react-bootstrap";
 
 interface Props {
   updateTheme: ChangeEventHandler;
