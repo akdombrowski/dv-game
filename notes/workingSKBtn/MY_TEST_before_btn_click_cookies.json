@@ -1,0 +1,57 @@
+[
+{
+    "domain": "auth.pingone.com",
+    "expirationDate": 1667911024.471173,
+    "hostOnly": true,
+    "httpOnly": true,
+    "name": "interactionId",
+    "path": "/",
+    "sameSite": "unspecified",
+    "secure": false,
+    "session": false,
+    "storeId": "0",
+    "value": "00a02098-efcc-4b35-a3ed-5feddc47a7e7",
+    "id": 1
+},
+{
+    "domain": "auth.pingone.com",
+    "expirationDate": 1667911024.471183,
+    "hostOnly": true,
+    "httpOnly": true,
+    "name": "interactionToken",
+    "path": "/",
+    "sameSite": "unspecified",
+    "secure": false,
+    "session": false,
+    "storeId": "0",
+    "value": "43630516f678dedf4a1e225f881ac148f3e0644bf555b6f6eb4e665e8cbf9abf74a6f082c93220c4b5e6a7daec7877ad5e3a75e694d8123832ddac5259c3ac70b9904630dce9d084d97847be0bd3d0b851fe1bea973f9b84a719b2b19673865ba735f822cd8afe548bf52fcea723d904cade4626d0b3215e962812903c6015a6",
+    "id": 2
+},
+{
+    "domain": "auth.pingone.com",
+    "expirationDate": 1667911024.471192,
+    "hostOnly": true,
+    "httpOnly": true,
+    "name": "skProxyApiEnvironmentId",
+    "path": "/",
+    "sameSite": "unspecified",
+    "secure": false,
+    "session": false,
+    "storeId": "0",
+    "value": "us-east-2",
+    "id": 3
+},
+{
+    "domain": "auth.pingone.com",
+    "hostOnly": true,
+    "httpOnly": false,
+    "name": "XSRF-TOKEN",
+    "path": "/",
+    "sameSite": "unspecified",
+    "secure": true,
+    "session": true,
+    "storeId": "0",
+    "value": "Ql3QLFP0-JbvWjQnWELiLhayXvmQwGYFHjJk",
+    "id": 4
+}
+]

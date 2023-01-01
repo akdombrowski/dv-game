@@ -1,0 +1,170 @@
+{
+	"id": "473dmw489w",
+	"companyId": "d0dd90cf-dbb9-42aa-89c5-56fefdba73c9",
+	"flowId": "b93dd32facdf84051c09bae98f84a8ea",
+	"connectionId": "481e952e6b11db8360587b8711620786",
+	"capabilityName": "customHtmlMessage",
+	"screen": {
+		"name": "HTTP",
+		"properties": {
+			"messageIcon": {
+				"type": "string",
+				"displayName": "Message Icon URL",
+				"createdDate": 1661888956072,
+				"customerId": "ecb9bf8a2fab854e65045d02cb6bab50",
+				"companyId": "singularkey",
+				"preferredControlType": "textField",
+				"enableParameters": true
+			},
+			"messageIconHeight": {
+				"type": "number",
+				"displayName": "Message Icon Height (in pixels)",
+				"createdDate": 1661888956021,
+				"customerId": "ecb9bf8a2fab854e65045d02cb6bab50",
+				"companyId": "singularkey",
+				"preferredControlType": "textField"
+			},
+			"messageTitle": {
+				"type": "string",
+				"displayName": "Message Title",
+				"createdDate": 1661888956071,
+				"customerId": "ecb9bf8a2fab854e65045d02cb6bab50",
+				"companyId": "singularkey",
+				"preferredControlType": "textField",
+				"enableParameters": true,
+				"value": "Success",
+				"cssValue": ""
+			},
+			"message": {
+				"type": "string",
+				"displayName": "Message",
+				"createdDate": 1661888956007,
+				"customerId": "ecb9bf8a2fab854e65045d02cb6bab50",
+				"companyId": "singularkey",
+				"preferredControlType": "textArea",
+				"value": "You've Made It!",
+				"enableParameters": true,
+				"cssValue": ""
+			},
+			"showFooter": {
+				"type": "boolean",
+				"displayName": "Show Footer",
+				"value": true,
+				"createdDate": 1661888956016,
+				"customerId": "ecb9bf8a2fab854e65045d02cb6bab50",
+				"companyId": "singularkey",
+				"preferredControlType": "toggleSwitch"
+			},
+			"button": {
+				"constructType": "button",
+				"displayName": "Submit",
+				"createdDate": 1661888955897,
+				"customerId": "ecb9bf8a2fab854e65045d02cb6bab50",
+				"companyId": "singularkey",
+				"logo": "",
+				"showLogo": true,
+				"preferredControlType": "button",
+				"css": { "backgroundColor": "#1CAB42", "color": "#ffffff" },
+				"onClick": {
+					"constructType": "skEvent",
+					"eventName": "continue",
+					"params": [],
+					"eventType": "post",
+					"postProcess": {}
+				}
+			},
+			"challenge": {
+				"type": "string",
+				"displayName": "Challenge",
+				"createdDate": 1661888956012,
+				"customerId": "ecb9bf8a2fab854e65045d02cb6bab50",
+				"companyId": "singularkey",
+				"preferredControlType": "textField",
+				"enableParameters": true
+			},
+			"enablePolling": {
+				"type": "boolean",
+				"displayName": "Enable Polling?",
+				"createdDate": 1661888956016,
+				"customerId": "ecb9bf8a2fab854e65045d02cb6bab50",
+				"companyId": "singularkey",
+				"preferredControlType": "toggleSwitch",
+				"value": false,
+				"constructType": "skEvent",
+				"eventName": "polling",
+				"params": [],
+				"eventType": "post"
+			},
+			"pollInterval": {
+				"type": "number",
+				"displayName": "Poll Interval (ms)",
+				"value": 2000,
+				"visibility": [{ "enablePolling": true }],
+				"createdDate": 1661888955879,
+				"customerId": "ecb9bf8a2fab854e65045d02cb6bab50",
+				"companyId": "singularkey",
+				"preferredControlType": "textField"
+			},
+			"pollRetries": {
+				"type": "number",
+				"displayName": "Number of Poll Retries",
+				"value": 60,
+				"visibility": [{ "enablePolling": true }],
+				"createdDate": 1661888956065,
+				"customerId": "ecb9bf8a2fab854e65045d02cb6bab50",
+				"companyId": "singularkey",
+				"preferredControlType": "textField"
+			},
+			"pollChallengeStatus": {
+				"type": "boolean",
+				"displayName": "Poll Challenge Status",
+				"value": true,
+				"info": "By default, poll challenge status. If set to false, it'll continue to the next node and poll if continue polling node is encountered.",
+				"visibility": [{ "enablePolling": true }],
+				"createdDate": 1661888956010,
+				"customerId": "ecb9bf8a2fab854e65045d02cb6bab50",
+				"companyId": "singularkey",
+				"preferredControlType": "toggleSwitch"
+			},
+			"showContinueButton": {
+				"type": "boolean",
+				"displayName": "Show Continue Button?",
+				"value": false,
+				"createdDate": 1661888956015,
+				"customerId": "ecb9bf8a2fab854e65045d02cb6bab50",
+				"companyId": "singularkey",
+				"preferredControlType": "toggleSwitch"
+			}
+		},
+		"userViews": [
+			{
+				"screenTemplateName": "MessageScreen",
+				"items": [
+					{ "propertyName": "messageIcon" },
+					{ "propertyName": "messageIconHeight" },
+					{ "propertyName": "messageTitle" },
+					{ "propertyName": "message" },
+					{ "propertyName": "showFooter" },
+					{ "propertyName": "button" },
+					{ "propertyName": "challenge" },
+					{ "propertyName": "enablePolling" },
+					{ "propertyName": "pollInterval" },
+					{ "propertyName": "pollRetries" },
+					{ "propertyName": "pollChallengeStatus" },
+					{ "propertyName": "showContinueButton" }
+				]
+			}
+		],
+		"metadata": {
+			"colors": {
+				"canvas": "#AFD5FF",
+				"canvasText": "#253746",
+				"dark": "#2E5EA6"
+			},
+			"logos": { "canvas": { "imageFileName": "http.svg" } }
+		}
+	},
+	"interactionId": "002af059-d4b8-436b-8a2c-4049e6e32df9",
+	"interactionToken": "a56cae8dc9f24422114e87f925c094bf99ddff20c4db0302ada96464a5a09001abe87249eb4cd868c5fed07e452926324299d19681be7c6b7571df6c84c62438484a7178faf9720603a89d9c9687fd9fc1c82d5072c1365189e051ebd395e2d97a2bac98edaff01122ff8a246544486357ba43c2eebc67924a3040dffe7d4bd8",
+	"skProxyApiEnvironmentId": "us-east-2"
+}

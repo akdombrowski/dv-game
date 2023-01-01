@@ -1,0 +1,12 @@
+.hidden {
+  display: none;
+}
+
+.dark-mode {
+  background-color: black;
+}
+
+body {
+  color: white;
+  background-color: black;
+}

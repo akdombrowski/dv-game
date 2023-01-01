@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "displayName": "email",
+      "preferredControlType": "textField",
+      "enableParameters": true,
+      "propertyName": "email"
+    },
+    "difficulty": {
+      "type": "string",
+      "displayName": "difficulty",
+      "preferredControlType": "textField",
+      "enableParameters": true,
+      "propertyName": "difficulty"
+    },
+    "email": {
+      "type": "string",
+      "displayName": "email",
+      "preferredControlType": "textField",
+      "enableParameters": true,
+      "propertyName": "email"
+    }
+  }
+}

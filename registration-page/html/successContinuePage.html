@@ -1,0 +1,40 @@
+<div
+  class="bg-light d-flex flex-column justify-content-center align-items-center position-absolute top-0 start-0 bottom-0 end-0"
+>
+  <div style="max-width: 400px; width: 100%">
+    <div class="card shadow mb-5">
+      <div class="card-body p-5 d-flex flex-column">
+        <img
+          class="align-self-center mb-5"
+          src="{{global.variables.companyLogo}}"
+          alt="{{global.variables.companyName}}"
+          style="height: 65px; width: 65px"
+        />
+        <h1 class="text-center mb-4">Account Created</h1>
+        <div
+          data-skcomponent="skerror"
+          class="feedback feedback--error sk-alert sk-alert-danger has-text-danger has-background-danger-light"
+          data-id="feedback"
+          data-skvisibility=""
+        ></div>
+        <p class="text-center text-muted">
+          Thanks for signing up. Your account has been created. You may now use
+          your registered device to sign on.
+        </p>
+        <div class="d-flex flex-column">
+            <button
+              data-id="submit-button"
+              type="submit"
+              class="btn btn-primary mb-3"
+              data-skcomponent="skbutton"
+              data-skbuttontype="form-submit"
+              data-skform="emailForm"
+              data-skbuttonvalue="submit"
+            >
+              Continue
+            </button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
