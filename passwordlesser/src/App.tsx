@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
 
@@ -26,9 +26,6 @@ const generateDVs = (): number[] => {
       Math.random() * (MAX_DURATION - MIN_DURATION) + MIN_DURATION;
     dvs.push(duration);
   }
-
-  console.log("dvs");
-  console.log(dvs);
 
   return dvs;
 };
@@ -88,8 +85,7 @@ const precacheAllImagesNeeded = async () => {
 
 function App() {
   const [imgsLoaded, setImgsLoaded] = useState(false);
-  const yInit = "-5vw";
-  const yFinal = "105vh";
+  const mainContainerRef = useRef<HTMLDivElement | null>(null);
   const dvContainers = generateDVs();
 
   const waitForImages = async () => {
@@ -120,9 +116,6 @@ function App() {
   // };
 
   useEffect(() => {
-    console.log("dvContainers");
-    console.log(dvContainers);
-
     waitForImages();
   }, []);
 
@@ -151,8 +144,6 @@ function App() {
       <>
         {dvContainers.map((dur, i) => {
           const props: {
-            yInit: string | number;
-            yFinal: string | number;
             idNumber: number;
             duration: number;
             challenge: string;
@@ -160,8 +151,6 @@ function App() {
             handleClick: Function;
             imgsLoaded: boolean;
           } = {
-            yInit: yInit,
-            yFinal: yFinal,
             idNumber: i,
             duration: dur,
             challenge: renderings[i].value,
@@ -189,9 +178,10 @@ function App() {
     );
   };
 
-  return imgsLoaded ? (
+  return (
     <div
       id="mainContainer"
+      ref={mainContainerRef}
       className="content muscle-container sceneImg"
       style={{ backgroundImage: "url(" + bgImg + ")" }}
     >
@@ -215,8 +205,6 @@ function App() {
         */}
       </div>
     </div>
-  ) : (
-    <div>Loading...</div>
   );
 }
 
