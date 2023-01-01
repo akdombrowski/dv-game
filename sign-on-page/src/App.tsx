@@ -19,7 +19,7 @@ const themes = JSON.parse("{{global.variables.themes}}");
 const SignOnPage = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState(1);
   const [emailInputValue, setEmailInputValue] = useState("");
-  const [theme, setTheme] = useState();
+  const [theme, setTheme] = useState<string>();
 
   // run on after first render
   useEffect(() => {
@@ -35,6 +35,10 @@ const SignOnPage = () => {
     const advanceFlowInputDifficulty: HTMLElement | null =
       document.getElementById("advanceFlowInputDifficulty");
 
+    const advanceFlowInputTheme: HTMLElement | null = document.getElementById(
+      "advanceFlowInputTheme"
+    );
+
     if (advanceFlowInputEmail) {
       const advanceFlowInputEmailInputElement =
         advanceFlowInputEmail as HTMLInputElement;
@@ -46,6 +50,12 @@ const SignOnPage = () => {
         advanceFlowInputDifficulty as HTMLInputElement;
       advanceFlowInputDifficultyInputElement.value =
         selectedDifficulty.toString();
+    }
+
+    if (advanceFlowInputTheme) {
+      const advanceFlowInputThemeInputElement =
+        advanceFlowInputTheme as HTMLInputElement;
+      advanceFlowInputThemeInputElement.value = theme as string;
     }
   }, [emailInputValue, selectedDifficulty]);
 
@@ -101,19 +111,20 @@ const SignOnPage = () => {
   };
 
   const handleEmailUpdate = (e: ChangeEvent) => {
+    e.preventDefault();
     const target = e.target as HTMLInputElement;
     setEmailInputValue(target.value);
   };
 
   const difficultySelectedFn = (e: ChangeEvent) => {
+    e.preventDefault();
     const target = e.target as HTMLInputElement;
     setSelectedDifficulty(Number(target.value));
   };
 
   const handleThemeUpdate = (e: ChangeEvent) => {
-    // const target = e.target as HTMLInputElement;
-    console.log("theme update event");
-    console.log("theme chosen:", e.target.id);
+    e.preventDefault();
+    setTheme(e.target.id);
   };
 
   const handleReg = (e: SyntheticEvent) => {
