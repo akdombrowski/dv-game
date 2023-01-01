@@ -34,6 +34,7 @@ const SignOnPage = () => {
     ) as HTMLInputElement;
 
     radioInput.checked = true;
+    setTheme(radioInput.id);
   }, []);
 
   useEffect(() => {
