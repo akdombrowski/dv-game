@@ -600,12 +600,12 @@ const combineCodesAndPosArrayAndImgs = (
   return { code: initCode, renderings: renderingsString };
 };
 
-const deft = { numDVs: 14, dvImgWidth: 5, bgImg: "seeingDouble" };
+const deft = { numDVs: 14, dvImgWidth: 5, theme: "seeingDouble" };
 
 module.exports = a = async (params = deft) => {
   const numOfDVs = Number(params.numDVs);
   const dvImgWidth = Number(params.dvImgWidth);
-  const bgImgSrc = images.bg[params.bgImg];
+  const bgImgSrc = images.bg[params.theme];
   let {
     dvColVisualizePositionsArray,
     dvColPosArrayPositions,
@@ -626,6 +626,7 @@ module.exports = a = async (params = deft) => {
   const positionsSorted = dvColPosArrayPositions.sort();
 
   const output = {
+    themeSrc: bgImgSrc,
     code: code,
     renderings: renderings,
     posArray: dvColVisualizePositionsArray,
