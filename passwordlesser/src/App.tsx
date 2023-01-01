@@ -28,9 +28,6 @@ const generateDVs = (): number[] => {
     dvs.push(duration);
   }
 
-  console.log("dvs");
-  console.log(dvs);
-
   return dvs;
 };
 
@@ -77,7 +74,7 @@ const precacheAllImagesNeeded = async () => {
         new Promise((resolve, reject) => {
           img.addEventListener("imgLoaded", () => resolve());
           img.addEventListener("imgLoadFailed", () =>
-            reject(r.img + " loadingg failed")
+            reject(r.img + " loading failed")
           );
         })
       );
@@ -89,8 +86,7 @@ const precacheAllImagesNeeded = async () => {
 
 function App() {
   const [imgsLoaded, setImgsLoaded] = useState(false);
-  const yInit = "-5vw";
-  const yFinal = "100vh";
+  const mainContainerRef = useRef<HTMLDivElement | null>(null);
   const dvContainers = generateDVs();
 
   const waitForImages = async () => {
@@ -121,9 +117,6 @@ function App() {
   // };
 
   useEffect(() => {
-    console.log("dvContainers");
-    console.log(dvContainers);
-
     waitForImages();
   }, []);
 
@@ -152,8 +145,6 @@ function App() {
       <>
         {dvContainers.map((dur, i) => {
           const props: {
-            yInit: string | number;
-            yFinal: string | number;
             idNumber: number;
             duration: number;
             challenge: string;
@@ -161,8 +152,6 @@ function App() {
             handleClick: Function;
             imgsLoaded: boolean;
           } = {
-            yInit: yInit,
-            yFinal: yFinal,
             idNumber: i,
             duration: dur,
             challenge: renderings[i].value,
@@ -190,9 +179,10 @@ function App() {
     );
   };
 
-  return imgsLoaded ? (
+  return (
     <div
       id="mainContainer"
+      ref={mainContainerRef}
       className="content muscle-container sceneImg"
       style={{ backgroundImage: "url(" + bgImg + ")" }}
     >
@@ -216,8 +206,6 @@ function App() {
         */}
       </div>
     </div>
-  ) : (
-    <div>Loading...</div>
   );
 }
 
