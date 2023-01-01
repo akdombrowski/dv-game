@@ -7,6 +7,7 @@ const a = require("./localRunCustomFunction.js");
 // 10000 ~ 35s
 // 50000 ~ 3min
 const iterations = 10000;
+// const iterations = 10;
 let count = 0;
 console.time("totalScriptRuntime");
 for (let i = 0; i < iterations; i++) {

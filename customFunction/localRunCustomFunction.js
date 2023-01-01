@@ -156,16 +156,19 @@ const getMinOverlapNeeded = (
   return overlap;
 };
 
-const getPositionWithMinOverlap = (
+const getPositionWithNoOverlap = (
   maxIterationsBeforePickingAnyRND,
   dvColVisualizePositionsArray,
   dvColPosArrayPositions,
+  dvColPosSetAvailable,
   dvImgWidth,
   overlap,
   rndPosFromLeft,
   dvColPosSet
 ) => {
   let iteration = 0;
+
+  const numPosAvailable = dvColPosSetAvailable.size;
 
   loop1: while (iteration < maxIterationsBeforePickingAnyRND) {
     let foundOverlap = false;
@@ -217,6 +220,7 @@ const getPositionWithMinOverlap = (
       dvColPosSet.add(rndPosFromLeft);
       dvColVisualizePositionsArray[rndPosFromLeft] = true;
       dvColPosArrayPositions.push(rndPosFromLeft);
+      dvColPosSetAvailable.delete(rndPosFromLeft);
 
       // we can end the outer loop since we found our non-overlapping position
       break loop1;
@@ -230,6 +234,112 @@ const getPositionWithMinOverlap = (
     dvColPosSet,
     dvColVisualizePositionsArray,
     dvColPosArrayPositions,
+    dvColPosSetAvailable,
+  };
+};
+
+const getPositionWithMinOverlap = (
+  maxIterationsBeforePickingAnyRND,
+  dvColVisualizePositionsArray,
+  dvColPosArrayPositions,
+  dvColPosSetAvailable,
+  dvImgWidth,
+  overlap,
+  dvColPosSet
+) => {
+  let iteration = 0;
+
+  let numPosAvailable = dvColPosSetAvailable.size;
+
+  if (numPosAvailable > 0) {
+    rndPosFromLeft = Array.from(dvColPosSetAvailable.values())[
+      floorRND(numPosAvailable)
+    ];
+    dvColPosSet.add(rndPosFromLeft);
+    dvColVisualizePositionsArray[rndPosFromLeft] = true;
+    dvColPosArrayPositions.push(rndPosFromLeft);
+    for (
+      let i = rndPosFromLeft - dvImgWidth + overlap;
+      i < rndPosFromLeft + dvImgWidth - overlap;
+      i++
+    ) {
+      dvColPosSetAvailable.delete(i);
+    }
+  } else {
+    loop1: while (iteration < maxIterationsBeforePickingAnyRND) {
+      let rndPosFromLeft;
+
+      let foundOverlap = false;
+      rndPosFromLeft = rndPos(dvImgWidth);
+
+      if (
+        rndPosFromLeft > 100 - dvImgWidth - 1 ||
+        dvColPosArrayPositions[rndPosFromLeft]
+      ) {
+        dvColPosSetAvailable.delete(rndPosFromLeft);
+        rndPosFromLeft = rndPos(dvImgWidth);
+        iteration++;
+        continue;
+      }
+
+      if (dvColPosArrayPositions.length < dvImgWidth * 2) {
+        loop2: for (
+          let i = rndPosFromLeft - dvImgWidth;
+          i < rndPosFromLeft + dvImgWidth;
+          i++
+        ) {
+          if (dvColVisualizePositionsArray[i]) {
+            dvColPosSetAvailable.delete(rndPosFromLeft);
+            foundOverlap = true;
+            break loop2;
+          }
+        }
+      } else {
+        loop3: for (
+          let pos = rndPosFromLeft - dvImgWidth + overlap;
+          pos < rndPosFromLeft + dvImgWidth - overlap;
+          pos++
+        ) {
+          // if we already have this position (disallowing overlap), try again by
+          // breaking out
+          if (dvColVisualizePositionsArray[pos]) {
+            dvColPosSetAvailable.delete(rndPosFromLeft);
+            foundOverlap = true;
+            break loop3;
+          }
+        }
+      }
+
+      if (foundOverlap) {
+        // overlap found!
+        // the rnd value overlaps one(+) of the positions
+        // get a new random value
+        if (dvColPosSetAvailable) {
+        }
+        rndPosFromLeft = rndPos(dvImgWidth);
+      } else {
+        // NO overlap found!
+        // keep track to try to avoid overlapping and to use for position
+        // renderings
+        dvColPosSet.add(rndPosFromLeft);
+        dvColVisualizePositionsArray[rndPosFromLeft] = true;
+        dvColPosArrayPositions.push(rndPosFromLeft);
+        dvColPosSetAvailable.delete(rndPosFromLeft);
+
+        // we can end the outer loop since we found our non-overlapping position
+        break loop1;
+      }
+
+      iteration++;
+    }
+  }
+
+  return {
+    rndPosFromLeft,
+    dvColPosSet,
+    dvColVisualizePositionsArray,
+    dvColPosArrayPositions,
+    dvColPosSetAvailable,
   };
 };
 
@@ -272,6 +382,7 @@ const addPosWithAllowableOverlap = (
   dvColPosSet,
   dvColVisualizePositionsArray,
   dvColPosArrayPositions,
+  dvColPosSetAvailable,
   dvImgWidth,
   maxPositionsWithoutOverlap,
   allowOverlap,
@@ -280,8 +391,6 @@ const addPosWithAllowableOverlap = (
   const maxIterationsBeforePickingAnyRND = 100000;
   const initialPosArrayLength = dvColPosArrayPositions.length;
   let overlap = 0;
-  // initialize rndLeft
-  let rndPosFromLeft = rndPos(dvImgWidth);
 
   if (allowOverlap) {
     overlap = getMinOverlapNeeded(
@@ -296,13 +405,14 @@ const addPosWithAllowableOverlap = (
     dvColPosSet,
     dvColVisualizePositionsArray,
     dvColPosArrayPositions,
+    dvColPosSetAvailable,
   } = getPositionWithMinOverlap(
     maxIterationsBeforePickingAnyRND,
     dvColVisualizePositionsArray,
     dvColPosArrayPositions,
+    dvColPosSetAvailable,
     dvImgWidth,
     overlap,
-    rndPosFromLeft,
     dvColPosSet
   ));
 
@@ -326,6 +436,7 @@ const addPosWithAllowableOverlap = (
     dvColPosSet,
     dvColVisualizePositionsArray,
     dvColPosArrayPositions,
+    dvColPosSetAvailable,
     noLuck,
   };
 };
@@ -405,7 +516,12 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
   let dvColPosSet = new Set();
   let dvColVisualizePositionsArray = new Array(100);
   let dvColPosArrayPositions = new Array();
+  let dvColPosSetAvailable = new Set();
   dvColVisualizePositionsArray = dvColVisualizePositionsArray.fill(0);
+
+  for (let i = 0; i < 100 - dvImgWidth; i++) {
+    dvColPosSetAvailable.add(i);
+  }
 
   while (posCreated < numOfDVs) {
     if (posCreated > 100) {
@@ -420,11 +536,13 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
         dvColPosSet,
         dvColVisualizePositionsArray,
         dvColPosArrayPositions,
+        dvColPosSetAvailable,
         noLuck,
       } = addPosWithAllowableOverlap(
         dvColPosSet,
         dvColVisualizePositionsArray,
         dvColPosArrayPositions,
+        dvColPosSetAvailable,
         dvImgWidth,
         maxPositionsWithoutOverlap,
         false,
