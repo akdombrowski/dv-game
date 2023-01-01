@@ -1,9 +1,7 @@
 import Form from "react-bootstrap/Form";
 import Image from "react-bootstrap/Image";
 import Col from "react-bootstrap/Col";
-import {
-  ChangeEventHandler,
-} from "react";
+import { ChangeEventHandler } from "react";
 import { FormGroup, Row } from "react-bootstrap";
 
 interface Props {
@@ -28,7 +26,7 @@ export const ThemeChooser = (props: Props) => {
 
     return themes.map((theme, i) => {
       return (
-        <Col xs={6} className="flex-fill">
+        <Col key={theme.name + "Col"} xs={6} className="flex-fill">
           <Form.Check type="radio" id={theme.name}>
             <Form.Check.Input
               type="radio"
