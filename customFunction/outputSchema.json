@@ -2,11 +2,35 @@
   "output": {
     "type": "object",
     "properties": {
+      "themeSrc": {
+        "type": "string"
+      },
       "code": {
         "type": "string"
       },
       "renderings": {
         "type": "string"
+      },
+      "posArray": {
+        "type": "array"
+      },
+      "positions": {
+        "type": "array"
+      },
+      "posArrayLength": {
+        "type": "number"
+      },
+      "noLuck": {
+        "type": "number"
+      },
+      "positionsOverlapping": {
+        "type": "object"
+      },
+      "maxPositionsWithoutOverlap": {
+        "type": "number"
+      },
+      "numDirectOverlaps": {
+        "type": "number"
       }
     }
   }
