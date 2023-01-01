@@ -132,8 +132,9 @@ const MotionContainer = (props: {
         // console.log("bottomPX:", bottomPX);
         // console.log("yMotionValue.get():", h);
         // console.log("yMotionValue.set(top):", top);
-        calculateYInitial();
-        calculateYFinal();
+        // calculateYInitial();
+        // calculateYFinal();
+        y.set(0);
       }
     }
   });
@@ -163,9 +164,9 @@ const MotionContainer = (props: {
       className="dv-motion-div muscle-container"
       id={"motionDV" + props.idNumber}
       style={{ y }}
-      initial={{ y: yInitial }}
+      // initial={{ y: "0vh" }}
       animate={{
-        y: yFinal,
+        y: document.getElementById("mainContainer")?.clientHeight || "100vh",
       }}
       transition={{
         y: {
