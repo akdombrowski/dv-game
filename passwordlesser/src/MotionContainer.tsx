@@ -30,8 +30,6 @@ const MotionContainer = (props: {
   const bgImageContainerHeight = props.bgImageContainerHeight;
 
   const calculateYInitial = () => {
-    const curr = dvMotionDiv.current;
-    const yPos = y.get();
     y.set(0);
   };
 
@@ -39,7 +37,6 @@ const MotionContainer = (props: {
     dvMotionDiv: MutableRefObject<HTMLDivElement | null>,
     bgImageContainerHeight: number
   ) => {
-    const mainContainer = document.getElementById("mainContainer");
     setYFinal(bgImageContainerHeight);
   };
 
