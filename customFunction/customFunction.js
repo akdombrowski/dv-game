@@ -47,16 +47,6 @@ const images = {
     "https://i.ibb.co/YQfmZ9p/g2.png",
   ],
   pointC: [
-    "https://i.ibb.co/9hx26Jk/d8.png",
-    "https://i.ibb.co/DpM9Sk4/d7.png",
-    "https://i.ibb.co/RP2S6w8/d6.png",
-    "https://i.ibb.co/2ZNx07G/d5.png",
-    "https://i.ibb.co/C85m2zz/d4.png",
-    "https://i.ibb.co/nf4LRBL/d3.png",
-    "https://i.ibb.co/C7v2hb0/d2.png",
-    "https://i.ibb.co/sK30tCP/d1.png",
-  ],
-  pointD: [
     "https://i.ibb.co/0jTWN5L/e8.png",
     "https://i.ibb.co/Fz1rLFm/e7.png",
     "https://i.ibb.co/Ny8y9nH/e6.png",
@@ -65,6 +55,16 @@ const images = {
     "https://i.ibb.co/ZMYR9vy/e3.png",
     "https://i.ibb.co/JmRsVLT/e2.png",
     "https://i.ibb.co/SxGQ4c8/e1.png",
+  ],
+  pointD: [
+    "https://i.ibb.co/9hx26Jk/d8.png",
+    "https://i.ibb.co/DpM9Sk4/d7.png",
+    "https://i.ibb.co/RP2S6w8/d6.png",
+    "https://i.ibb.co/2ZNx07G/d5.png",
+    "https://i.ibb.co/C85m2zz/d4.png",
+    "https://i.ibb.co/nf4LRBL/d3.png",
+    "https://i.ibb.co/C7v2hb0/d2.png",
+    "https://i.ibb.co/sK30tCP/d1.png",
   ],
 };
 
@@ -710,7 +710,7 @@ const combineCodesAndPosArrayAndImgs = (
 module.exports = a = async ({ params }) => {
   const numOfDVs = Number(params.numDVs);
   const dvImgWidth = Number(params.dvImgWidth);
-  const theme = images.bg[params.theme];
+  const theme = params.theme;
   const bgImgSrc = images.bg[theme];
   let {
     dvColVisualizePositionsArray,
