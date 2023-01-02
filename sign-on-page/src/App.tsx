@@ -134,7 +134,6 @@ const SignOnPage = () => {
   };
 
   const handleThemeUpdate = (e: ChangeEvent) => {
-    e.preventDefault();
     setTheme(e.target.id);
   };
 
