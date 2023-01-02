@@ -56,7 +56,7 @@ const MotionContainer = (props: {
       className="dv-motion-div muscle-container"
       id={"motionDV" + props.idNumber}
       style={{ y }}
-      // initial={{ y: "0vh" }}
+      // initial={{ y: yInitial }}
       animate={{
         y: yFinal,
       }}
