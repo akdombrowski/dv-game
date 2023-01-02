@@ -21,13 +21,15 @@ const SignOnPage = () => {
   const [emailInputValue, setEmailInputValue] = useState("");
   const [theme, setTheme] = useState<string>();
 
-  // run only after first render
+  // sets background to dark color. run only after first render
   useEffect(() => {
     const body = document.body as HTMLElement;
 
     body.style.backgroundColor = "var(--bs-dark)";
   }, []);
 
+  // sets one of the radio buttons as default (doesn't determine which one
+  // specifically)
   useEffect(() => {
     const radioInput = document.querySelector(
       "input[type=radio]"
