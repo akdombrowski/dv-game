@@ -1,5 +1,12 @@
 import { MotionValue, motion, useMotionValue } from "framer-motion";
-import { SyntheticEvent, useEffect, useRef, useState } from "react";
+import {
+  MutableRefObject,
+  SyntheticEvent,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
 const MotionContainer = (props: {
   idNumber: number;
@@ -8,6 +15,7 @@ const MotionContainer = (props: {
   img: string;
   handleClick: Function;
   imgsLoaded: boolean;
+  bgImageContainerHeight: number;
 }) => {
   const dvMotionDiv = useRef<HTMLDivElement>(null);
   const windowH = window.innerHeight;
@@ -19,6 +27,7 @@ const MotionContainer = (props: {
   const bgImageContainer = document.getElementById(
     "mainContainer"
   ) as HTMLDivElement;
+  const bgImageContainerHeight = props.bgImageContainerHeight;
 
   const calculateYInitial = () => {
     const curr = dvMotionDiv.current;
@@ -49,44 +58,39 @@ const MotionContainer = (props: {
     }
   };
 
-  const calculateYFinal = () => {
+  const calculateYFinal = (
+    dvMotionDiv: MutableRefObject<HTMLDivElement | null>,
+    bgImageContainerHeight: number
+  ) => {
     const mainContainer = document.getElementById("mainContainer");
 
     if (mainContainer) {
       if (y.get() < 0) {
         console.log("id:", props.idNumber);
         console.log("y:", y.get());
-        console.log("mainContainer.clientHeight:", mainContainer.clientHeight);
+        console.log("bgImageContainerHeight:", bgImageContainerHeight);
         if (dvMotionDiv.current) {
           console.log(
             "formula:",
-            "mainContainer.clientHeight + dvMotionDiv.current.clientHeight"
+            "bgImageContainerHeight + dvMotionDiv.current.clientHeight"
           );
           console.log(
             "setYFinal:",
-            mainContainer.clientHeight + dvMotionDiv.current.clientHeight
+            bgImageContainerHeight + dvMotionDiv.current.clientHeight
           );
-          setYFinal(
-            mainContainer.clientHeight + dvMotionDiv.current.clientHeight
-          );
+          setYFinal(bgImageContainerHeight + dvMotionDiv.current.clientHeight);
         } else {
-          console.log("formula:", "mainContainer.clientHeight * 1.05");
-          console.log("setYFinal:", mainContainer.clientHeight * 1.05);
-          setYFinal(mainContainer.clientHeight * 1.05);
+          console.log("formula:", "bgImageContainerHeight * 1.05");
+          console.log("setYFinal:", bgImageContainerHeight * 1.05);
+          setYFinal(bgImageContainerHeight * 1.05);
         }
       } else {
         console.log("id:", props.idNumber);
         console.log("y:", y.get());
-        console.log("mainContainer.clientHeight:", mainContainer.clientHeight);
-        console.log(
-          "formula:",
-          "(mainContainer.clientHeight - y.get()) * 1.05"
-        );
-        console.log(
-          "setYFinal:",
-          (mainContainer.clientHeight - y.get()) * 1.05
-        );
-        setYFinal((mainContainer.clientHeight - y.get()) * 1.05);
+        console.log("bgImageContainerHeight:", bgImageContainerHeight);
+        console.log("formula:", "(bgImageContainerHeight - y.get()) * 1.05");
+        console.log("setYFinal:", (bgImageContainerHeight - y.get()) * 1.05);
+        setYFinal((bgImageContainerHeight - y.get()) * 1.05);
       }
     } else {
       console.log("id:", props.idNumber);
@@ -98,60 +102,10 @@ const MotionContainer = (props: {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     calculateYInitial();
-    calculateYFinal();
-  }, [dvMotionDiv, bgImageContainer]);
-
-  const resizeObserver = new ResizeObserver((entries) => {
-    const containerH = document.getElementById("mainContainer")?.clientHeight;
-    const containerW = document.getElementById("mainContainer")?.clientWidth;
-    const h = y.get();
-    const top = convert5VWToNumValue
-      ? Math.max(h, convert5VWToNumValue) * -1.5
-      : -100;
-
-    // entry is a ResizeObserverEntry
-    for (const entry of entries) {
-      if (entry.contentBoxSize) {
-        const contentBoxSize = entry.contentBoxSize[0];
-        const bottom = contentBoxSize.blockSize;
-        const topPX = top + "px";
-        const bottomPX = bottom * 1.1 + "px";
-        // const bottomPX = bottom + "vh";
-
-        // console.log("h:", h);
-
-        // console.log("convert5VWToNumValue", convert5VWToNumValue);
-
-        // console.log("windowH:", windowH);
-        // console.log("windowW:", windowW);
-
-        // console.log("id:", props.idNumber);
-        // console.log("topPX:", topPX);
-        // console.log("bottomPX:", bottomPX);
-        // console.log("yMotionValue.get():", h);
-        // console.log("yMotionValue.set(top):", top);
-        // calculateYInitial();
-        // calculateYFinal();
-        y.set(0);
-      }
-    }
+    calculateYFinal(dvMotionDiv, bgImageContainerHeight);
   });
-
-  useEffect(() => {
-    if (props.imgsLoaded) {
-      if (bgImageContainer) {
-        resizeObserver.observe(bgImageContainer);
-        // resizeObserver.observe();
-        return () => {
-          resizeObserver.unobserve(bgImageContainer);
-        };
-      } else {
-        console.error("main bg img container not found");
-      }
-    }
-  }, [props.imgsLoaded]);
 
   const handleClick = (e: SyntheticEvent) => {
     e.preventDefault();

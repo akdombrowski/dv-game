@@ -1,5 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { SyntheticEvent, useEffect, useRef, useState } from "react";
+import {
+  MutableRefObject,
+  SyntheticEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
 import { MotionValue, useMotionValue } from "framer-motion";
@@ -11,6 +17,8 @@ const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DURATION = 4;
 const MAX_DURATION = 7;
 const IMG_Y_INIT = "0px";
+const windowW = window.innerWidth;
+const convert5VWToNumValue = (windowW / 100) * 5;
 
 const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
 
@@ -86,6 +94,7 @@ const precacheAllImagesNeeded = async () => {
 
 function App() {
   const [imgsLoaded, setImgsLoaded] = useState(false);
+  const [bgImageContainerHeight, setBgImageContainerHeight] = useState(0);
   const mainContainerRef = useRef<HTMLDivElement | null>(null);
   const dvContainers = generateDVs();
 
@@ -94,31 +103,56 @@ function App() {
     setImgsLoaded(true);
   };
 
-  // const setInitialAndFinalYPositions = () => {
-  //   const contentBoxSize = entry.contentBoxSize[0];
-  //   const dvMotionDiv = document.querySelector(
-  //     ".dv-motion-div"
-  //   ) as HTMLDivElement;
-  //   const h = dvMotionDiv.offsetHeight;
-  //   const top = h * -1.1;
-  //   const bottom = contentBoxSize.blockSize * 1.1;
-  //   const topPX = top + "px";
-  //   const bottomPX = bottom + "px";
-
-  //   console.log("currentYValue");
-  //   console.log(currentYValue);
-  //   console.log("topPX");
-  //   console.log(topPX);
-  //   currentYValue.set(top);
-  //   console.log("setYInit:", topPX);
-  //   console.log("setYFinal:", bottomPX);
-  //   setYInit(topPX);
-  //   setYFinal(bottomPX);
-  // };
-
   useEffect(() => {
     waitForImages();
   }, []);
+
+  const resizeObserver = new ResizeObserver((entries) => {
+    const containerH = document.getElementById("mainContainer")?.clientHeight;
+    const containerW = document.getElementById("mainContainer")?.clientWidth;
+    const top = convert5VWToNumValue * -1.05;
+
+    // entry is a ResizeObserverEntry
+    for (const entry of entries) {
+      if (entry.contentBoxSize) {
+        const contentBoxSize = entry.contentBoxSize[0];
+        const bottom = contentBoxSize.blockSize;
+        const topPX = top + "px";
+        const bottomPX = bottom * 1.1 + "px";
+        // const bottomPX = bottom + "vh";
+
+        // console.log("h:", h);
+
+        // console.log("convert5VWToNumValue", convert5VWToNumValue);
+
+        // console.log("windowH:", windowH);
+        // console.log("windowW:", windowW);
+
+        // console.log("id:", props.idNumber);
+        // console.log("topPX:", topPX);
+        // console.log("bottomPX:", bottomPX);
+        // console.log("yMotionValue.get():", h);
+        // console.log("yMotionValue.set(top):", top);
+        // calculateYInitial();
+        // calculateYFinal();
+        setBgImageContainerHeight(bottom);
+      }
+    }
+  });
+
+  useEffect(() => {
+    if (imgsLoaded) {
+      if (mainContainerRef?.current) {
+        const curr = mainContainerRef.current as HTMLDivElement;
+        resizeObserver.observe(curr);
+        return () => {
+          resizeObserver.unobserve(curr);
+        };
+      } else {
+        console.error("main bg img container not found");
+      }
+    }
+  }, [imgsLoaded]);
 
   const updateValueAndAdvanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -151,6 +185,7 @@ function App() {
             img: string;
             handleClick: Function;
             imgsLoaded: boolean;
+            bgImageContainerHeight: number;
           } = {
             idNumber: i,
             duration: dur,
@@ -158,6 +193,7 @@ function App() {
             img: renderings[i].img,
             handleClick: updateValueAndAdvanceFlow,
             imgsLoaded: imgsLoaded,
+            bgImageContainerHeight: bgImageContainerHeight,
           };
 
           return (
