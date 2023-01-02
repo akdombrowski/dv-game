@@ -1,10 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {
-  SyntheticEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
 
