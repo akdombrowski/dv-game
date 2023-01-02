@@ -15,6 +15,17 @@ const images = {
     "https://i.ibb.co/h908XF4/anthony1.png",
     "https://i.ibb.co/4TrWJFY/anthony8.png",
   ],
+  mee: [
+    "https://i.ibb.co/8c5nL0Z/anthony9.png",
+    "https://i.ibb.co/DtvDnYh/anthony10.png",
+    "https://i.ibb.co/RBNSnhp/anthony11.png",
+    "https://i.ibb.co/1vHDJnc/anthony12.png",
+    "https://i.ibb.co/SrNh0rM/anthony13.png",
+    "https://i.ibb.co/L6xnHN2/anthony14.png",
+    "https://i.ibb.co/k5wYc84/anthony15.png",
+    "https://i.ibb.co/jZNRYP2/anthony16.png",
+    "https://i.ibb.co/GswJDk9/anthony17.png",
+  ],
   pointA: [
     "https://i.ibb.co/MScVdHf/f1.png",
     "https://i.ibb.co/R73Q0ZS/f2.png",
@@ -34,6 +45,26 @@ const images = {
     "https://i.ibb.co/1nGCXD3/g4.png",
     "https://i.ibb.co/C8qzwkn/g1.png",
     "https://i.ibb.co/YQfmZ9p/g2.png",
+  ],
+  pointC: [
+    "https://i.ibb.co/9hx26Jk/d8.png",
+    "https://i.ibb.co/DpM9Sk4/d7.png",
+    "https://i.ibb.co/RP2S6w8/d6.png",
+    "https://i.ibb.co/2ZNx07G/d5.png",
+    "https://i.ibb.co/C85m2zz/d4.png",
+    "https://i.ibb.co/nf4LRBL/d3.png",
+    "https://i.ibb.co/C7v2hb0/d2.png",
+    "https://i.ibb.co/sK30tCP/d1.png",
+  ],
+  pointD: [
+    "https://i.ibb.co/0jTWN5L/e8.png",
+    "https://i.ibb.co/Fz1rLFm/e7.png",
+    "https://i.ibb.co/Ny8y9nH/e6.png",
+    "https://i.ibb.co/dtKFSnG/e5.png",
+    "https://i.ibb.co/YTTwQWK/e4.png",
+    "https://i.ibb.co/ZMYR9vy/e3.png",
+    "https://i.ibb.co/JmRsVLT/e2.png",
+    "https://i.ibb.co/SxGQ4c8/e1.png",
   ],
 };
 
@@ -607,16 +638,33 @@ const fillRenderings = (
   return renderings;
 };
 
-const getImgOptions = () => {
-  const ohs = images.me;
-  const ones = images.pointA;
-  const twos = images.pointB;
+const getImgOptions = (theme) => {
+  const mes = images.me;
+  const mees = images.mee;
+  const as = images.pointA;
+  const bs = images.pointB;
+  const cs = images.pointC;
+  const ds = images.pointD;
+  // percentage chance for having another "oh" image show up
   const chanceForOh = 10;
 
   // shuffle
-  shuffleArray(ohs);
-  shuffleArray(ones);
-  shuffleArray(twos);
+  let ohs;
+  let ones;
+  let twos;
+  if (theme === "seeingDouble") {
+    ohs = shuffleArray(mes);
+    ones = shuffleArray(as);
+    twos = shuffleArray(bs);
+  } else if (theme === "ahhhhhh") {
+    ohs = shuffleArray(mees);
+    ones = shuffleArray(cs);
+    twos = shuffleArray(ds);
+  } else {
+    ohs = shuffleArray(mes);
+    ones = shuffleArray(as);
+    twos = shuffleArray(bs);
+  }
 
   return { chanceForOh, ohs, ones, twos };
 };
@@ -624,10 +672,11 @@ const getImgOptions = () => {
 const combineCodesAndPosArrayAndImgs = (
   numOfDVs,
   codes,
-  dvColPosArrayPositions
+  dvColPosArrayPositions,
+  theme
 ) => {
   // img options
-  const { chanceForOh, ohs, ones, twos } = getImgOptions();
+  const { chanceForOh, ohs, ones, twos } = getImgOptions(theme);
 
   // init
   let renderings = {};
@@ -661,7 +710,8 @@ const combineCodesAndPosArrayAndImgs = (
 module.exports = a = async ({ params }) => {
   const numOfDVs = Number(params.numDVs);
   const dvImgWidth = Number(params.dvImgWidth);
-  const bgImgSrc = images.bg[params.theme];
+  const theme = images.bg[params.theme];
+  const bgImgSrc = images.bg[theme];
   let {
     dvColVisualizePositionsArray,
     dvColPosArrayPositions,
@@ -673,7 +723,8 @@ module.exports = a = async ({ params }) => {
   const { code, renderings } = combineCodesAndPosArrayAndImgs(
     numOfDVs,
     codes,
-    dvColPosArrayPositions
+    dvColPosArrayPositions,
+    theme
   );
   const numDirectOverlaps =
     dvColPosArrayPositions.length -
