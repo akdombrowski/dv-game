@@ -46,7 +46,7 @@ export const ThemeChooser = (props: Props) => {
               type="valid"
               style={{ color: "var(--bs-light)" }}
             >
-              {FEEDBACK[i % FEEDBACK.length]}
+              <p>{FEEDBACK[i % FEEDBACK.length]}</p>
             </Form.Control.Feedback>
           </Form.Check>
         </Col>
