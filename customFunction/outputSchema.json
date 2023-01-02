@@ -17,6 +17,9 @@
       "positions": {
         "type": "array"
       },
+      "positionsSorted": {
+        "type": "array"
+      },
       "posArrayLength": {
         "type": "number"
       },
