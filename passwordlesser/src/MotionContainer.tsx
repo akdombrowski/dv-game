@@ -8,6 +8,11 @@ import {
   useState,
 } from "react";
 
+const convert5WToPx = () => {
+  const windowW = window.innerWidth;
+  return (windowW / 100) * 5;
+};
+
 const MotionContainer = (props: {
   idNumber: number;
   duration: number;
@@ -18,9 +23,6 @@ const MotionContainer = (props: {
   bgImageContainerHeight: number;
 }) => {
   const dvMotionDiv = useRef<HTMLDivElement>(null);
-  const windowH = window.innerHeight;
-  const windowW = window.innerWidth;
-  const convert5VWToNumValue = (windowW / 100) * 5;
   const y = useMotionValue(0);
   const [yInitial, setYInitial] = useState(0);
   const [yFinal, setYFinal] = useState(0);
@@ -29,21 +31,20 @@ const MotionContainer = (props: {
   ) as HTMLDivElement;
   const bgImageContainerHeight = props.bgImageContainerHeight;
 
-  const calculateYInitial = () => {
-    y.set(0);
+  const calculateYInitial = (pxSizeOf5W: number) => {
+    y.set(pxSizeOf5W * -1);
   };
 
-  const calculateYFinal = (
-    dvMotionDiv: MutableRefObject<HTMLDivElement | null>,
-    bgImageContainerHeight: number
-  ) => {
+  const calculateYFinal = (bgImageContainerHeight: number) => {
     setYFinal(bgImageContainerHeight);
   };
 
   useLayoutEffect(() => {
-    calculateYInitial();
-    calculateYFinal(dvMotionDiv, bgImageContainerHeight);
-  }, [dvMotionDiv, bgImageContainerHeight]);
+    const pxSizeOf5W = convert5WToPx();
+
+    calculateYInitial(pxSizeOf5W);
+    calculateYFinal(bgImageContainerHeight);
+  }, [bgImageContainerHeight]);
 
   const handleClick = (e: SyntheticEvent) => {
     e.preventDefault();
