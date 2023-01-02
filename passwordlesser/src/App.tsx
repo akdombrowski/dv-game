@@ -20,7 +20,7 @@ const IMG_Y_INIT = "0px";
 const windowW = window.innerWidth;
 const convert5VWToNumValue = (windowW / 100) * 5;
 
-const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
+const bgImg = "{{global.variables.themeSrc}}";
 
 /**
  * It generates an array of random numbers between MIN_DURATION and
