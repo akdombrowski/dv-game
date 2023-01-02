@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {
-  MutableRefObject,
   SyntheticEvent,
   useEffect,
   useRef,
@@ -8,7 +7,6 @@ import {
 } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
-import { MotionValue, useMotionValue } from "framer-motion";
 
 const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
 const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
@@ -16,7 +14,6 @@ const DV_IMG_WIDTH_VW = DV_IMG_WIDTH.toString() + "vw";
 const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DURATION = 4;
 const MAX_DURATION = 7;
-const IMG_Y_INIT = "0px";
 const windowW = window.innerWidth;
 const convert5VWToNumValue = (windowW / 100) * 5;
 
