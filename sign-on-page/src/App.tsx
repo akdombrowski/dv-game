@@ -122,13 +122,11 @@ const SignOnPage = () => {
   };
 
   const handleEmailUpdate = (e: ChangeEvent) => {
-    e.preventDefault();
     const target = e.target as HTMLInputElement;
     setEmailInputValue(target.value);
   };
 
   const difficultySelectedFn = (e: ChangeEvent) => {
-    e.preventDefault();
     const target = e.target as HTMLInputElement;
     setSelectedDifficulty(Number(target.value));
   };
