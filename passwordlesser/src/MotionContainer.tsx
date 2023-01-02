@@ -58,7 +58,7 @@ const MotionContainer = (props: {
       style={{ y }}
       // initial={{ y: "0vh" }}
       animate={{
-        y: document.getElementById("mainContainer")?.clientHeight || "100vh",
+        y: yFinal,
       }}
       transition={{
         y: {
