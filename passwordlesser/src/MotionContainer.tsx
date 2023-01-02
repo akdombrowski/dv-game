@@ -34,26 +34,32 @@ const MotionContainer = (props: {
     const yPos = y.get();
     if (curr) {
       if (yPos < 0) {
-        console.log("id:", props.idNumber);
-        console.log("y:", y.get());
-        console.log("curr.clientHeight:", curr.clientHeight);
-        console.log("formula:", "curr.clientHeight * -1.05");
-        console.log("setYInitial:", curr.clientHeight * -1.05);
+        if (props.idNumber === 0) {
+          console.log("id:", props.idNumber);
+          console.log("y:", y.get());
+          console.log("curr.clientHeight:", curr.clientHeight);
+          console.log("formula:", "curr.clientHeight * -1.05");
+          console.log("setYInitial:", curr.clientHeight * -1.05);
+        }
         setYInitial(curr.clientHeight * -1.05);
       } else {
-        console.log("id:", props.idNumber);
-        console.log("y:", y.get());
-        console.log("curr.clientHeight:", curr.clientHeight);
-        console.log("formula:", "yPos * -1 + curr.clientHeight * -1.05");
-        console.log("setYInitial:", yPos * -1 + curr.clientHeight * -1.05);
+        if (props.idNumber === 0) {
+          console.log("id:", props.idNumber);
+          console.log("y:", y.get());
+          console.log("curr.clientHeight:", curr.clientHeight);
+          console.log("formula:", "yPos * -1 + curr.clientHeight * -1.05");
+          console.log("setYInitial:", yPos * -1 + curr.clientHeight * -1.05);
+        }
         setYInitial(yPos * -1 + curr.clientHeight * -1.05);
       }
     } else {
-      console.log("id:", props.idNumber);
-      console.log("y:", y.get());
-      console.log("convert5VWToNumValue:", convert5VWToNumValue);
-      console.log("formula:", "convert5VWToNumValue * -1.05");
-      console.log("setYInitial:", convert5VWToNumValue * -1.05);
+      if (props.idNumber === 0) {
+        console.log("id:", props.idNumber);
+        console.log("y:", y.get());
+        console.log("convert5VWToNumValue:", convert5VWToNumValue);
+        console.log("formula:", "convert5VWToNumValue * -1.05");
+        console.log("setYInitial:", convert5VWToNumValue * -1.05);
+      }
       setYInitial(convert5VWToNumValue * -1.05);
     }
   };
@@ -66,38 +72,49 @@ const MotionContainer = (props: {
 
     if (mainContainer) {
       if (y.get() < 0) {
-        console.log("id:", props.idNumber);
-        console.log("y:", y.get());
-        console.log("bgImageContainerHeight:", bgImageContainerHeight);
+        if (props.idNumber === 0) {
+          console.log("id:", props.idNumber);
+          console.log("y:", y.get());
+          console.log("bgImageContainerHeight:", bgImageContainerHeight);
+        }
+
         if (dvMotionDiv.current) {
-          console.log(
-            "formula:",
-            "bgImageContainerHeight + dvMotionDiv.current.clientHeight"
-          );
-          console.log(
-            "setYFinal:",
-            bgImageContainerHeight + dvMotionDiv.current.clientHeight
-          );
+          if (props.idNumber === 0) {
+            console.log(
+              "formula:",
+              "bgImageContainerHeight + dvMotionDiv.current.clientHeight"
+            );
+            console.log(
+              "setYFinal:",
+              bgImageContainerHeight + dvMotionDiv.current.clientHeight
+            );
+          }
           setYFinal(bgImageContainerHeight + dvMotionDiv.current.clientHeight);
         } else {
-          console.log("formula:", "bgImageContainerHeight * 1.05");
-          console.log("setYFinal:", bgImageContainerHeight * 1.05);
+          if (props.idNumber === 0) {
+            console.log("formula:", "bgImageContainerHeight * 1.05");
+            console.log("setYFinal:", bgImageContainerHeight * 1.05);
+          }
           setYFinal(bgImageContainerHeight * 1.05);
         }
       } else {
-        console.log("id:", props.idNumber);
-        console.log("y:", y.get());
-        console.log("bgImageContainerHeight:", bgImageContainerHeight);
-        console.log("formula:", "(bgImageContainerHeight - y.get()) * 1.05");
-        console.log("setYFinal:", (bgImageContainerHeight - y.get()) * 1.05);
+        if (props.idNumber === 0) {
+          console.log("id:", props.idNumber);
+          console.log("y:", y.get());
+          console.log("bgImageContainerHeight:", bgImageContainerHeight);
+          console.log("formula:", "(bgImageContainerHeight - y.get()) * 1.05");
+          console.log("setYFinal:", (bgImageContainerHeight - y.get()) * 1.05);
+        }
         setYFinal((bgImageContainerHeight - y.get()) * 1.05);
       }
     } else {
-      console.log("id:", props.idNumber);
-      console.log("y:", y.get());
-      console.log("windowH:", windowH);
-      console.log("formula:", "windowH * 1.05");
-      console.log("setYFinal:", windowH * 1.05);
+      if (props.idNumber === 0) {
+        console.log("id:", props.idNumber);
+        console.log("y:", y.get());
+        console.log("windowH:", windowH);
+        console.log("formula:", "windowH * 1.05");
+        console.log("setYFinal:", windowH * 1.05);
+      }
       setYFinal(windowH * 1.05);
     }
   };
@@ -105,7 +122,7 @@ const MotionContainer = (props: {
   useLayoutEffect(() => {
     calculateYInitial();
     calculateYFinal(dvMotionDiv, bgImageContainerHeight);
-  });
+  }, [bgImageContainerHeight]);
 
   const handleClick = (e: SyntheticEvent) => {
     e.preventDefault();
