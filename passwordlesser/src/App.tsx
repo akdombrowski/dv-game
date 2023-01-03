@@ -12,7 +12,7 @@ const MAX_DURATION = 7;
 const windowW = window.innerWidth;
 const convert5VWToNumValue = (windowW / 100) * 5;
 
-const bgImg = "{{global.variables.themeSrc}}";
+const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png"; //"{{global.variables.themeSrc}}";
 
 /**
  * It generates an array of random numbers between MIN_DURATION and
