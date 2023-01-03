@@ -3,8 +3,8 @@ import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
 
-const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
-const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
+const NUMBER_OF_DAVINCIS = 14; //Number("{{global.variables.difficulty}}");
+const DV_IMG_WIDTH = 5; //Number("{{global.variables.DV_IMG_WIDTH}}");
 const DV_IMG_WIDTH_VW = DV_IMG_WIDTH.toString() + "vw";
 const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DURATION = 4;
