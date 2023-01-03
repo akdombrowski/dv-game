@@ -13,7 +13,7 @@ import { ThemeChooser } from "./ThemeChooser";
 
 import "./App.css";
 
-const includeRegistration = "{{global.variables.includeRegistration}}";
+const includeRegistration = "true";//"{{global.variables.includeRegistration}}";
 const themes = JSON.parse("{{global.variables.themes}}");
 
 const SignOnPage = () => {

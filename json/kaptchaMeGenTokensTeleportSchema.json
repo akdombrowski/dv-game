@@ -1,0 +1,19 @@
+{
+	"type": "object",
+	"properties": {
+		"username": {
+			"type": "string",
+			"displayName": "username",
+			"preferredControlType": "textField",
+			"enableParameters": true,
+			"propertyName": "username"
+		},
+		"userID": {
+			"type": "string",
+			"displayName": "userID",
+			"preferredControlType": "textField",
+			"enableParameters": true,
+			"propertyName": "userID"
+		}
+	}
+}
