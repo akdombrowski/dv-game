@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "advFlowSubmitBtn": {
+      "type": "string",
+      "displayName": "advFlowSubmitBtn",
+      "preferredControlType": "textField",
+      "propertyName": "advFlowSubmitBtn"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "output": {
+    "type": "object",
+    "additionalProperties": true,
+    "properties": {
+      "userID": {
+        "type": "string"
+      },
+      "username": {
+        "type": "string"
+      }
+    }
+  }
+}
