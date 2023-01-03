@@ -263,8 +263,6 @@ const getPositionWithMinOverlap = (
         // overlap found!
         // the rnd value overlaps one(+) of the positions
         // get a new random value
-        if (dvColPosSetAvailable) {
-        }
         rndPosFromLeft = rndPos(dvImgWidth);
       } else {
         // NO overlap found!
