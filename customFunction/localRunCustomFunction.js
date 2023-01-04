@@ -69,9 +69,9 @@ const images = {
 };
 
 /**
- * Return a random integer between 0 and the provided max value (max value is
- *  exclusive).
- * @param max - the maximum value to return
+ * Return a random integer between 0 and the provided max value (exclusive of
+ *  max value).
+ * @param max - the maximum value to use in Math.random()
  * @returns A random number between 0 and the max value provided.
  */
 const floorRND = (max) => {
