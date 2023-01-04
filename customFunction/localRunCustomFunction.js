@@ -608,14 +608,14 @@ const fillRenderings = (
   let position = 0;
   let image = "";
 
-  if (ones.length === twos.length) {
-    rnd = floorRND(ones.length);
-  }
-
   for (let i = 0; i < numOfDVs; i++) {
     // skip the "chosen one" index (the one we used for initializing renderings)
     if (i === initRND) {
       continue;
+    }
+
+    if (ones.length === twos.length) {
+      rnd = floorRND(ones.length);
     }
 
     code = codes[i];
