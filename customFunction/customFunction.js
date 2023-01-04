@@ -137,6 +137,7 @@ const rndPos = (dvImgWidth) => {
 const noLuckFallback = (
   dvColVisualizePositionsArray,
   dvColPosArrayPositions,
+  dvColPosSetAvailable,
   dvColPosSet,
   noLuck,
   dvImgWidth
@@ -157,6 +158,10 @@ const noLuckFallback = (
   // add to array to return
   dvColVisualizePositionsArray[rnd] = true;
   dvColPosArrayPositions.push(rnd);
+
+  if (dvColPosSetAvailable && dvColPosSetAvailable.size > 0) {
+    dvColPosSetAvailable.delete(i);
+  }
   noLuck++;
 
   return {
@@ -164,6 +169,7 @@ const noLuckFallback = (
     dvColPosSet,
     dvColVisualizePositionsArray,
     dvColPosArrayPositions,
+    dvColPosSetAvailable,
   };
 };
 
@@ -277,6 +283,7 @@ const getPositionWithMinOverlap = (
         dvColPosSet.add(rndPosFromLeft);
         dvColVisualizePositionsArray[rndPosFromLeft] = true;
         dvColPosArrayPositions.push(rndPosFromLeft);
+
         if (dvColPosSetAvailable && dvColPosSetAvailable.size > 0) {
           dvColPosSetAvailable.delete(rndPosFromLeft);
         }
@@ -378,9 +385,11 @@ const addPosWithAllowableOverlap = (
       dvColPosSet,
       dvColVisualizePositionsArray,
       dvColPosArrayPositions,
+      dvColPosSetAvailable,
     } = noLuckFallback(
       dvColVisualizePositionsArray,
       dvColPosArrayPositions,
+      dvColPosSetAvailable,
       dvColPosSet,
       noLuck,
       dvImgWidth
@@ -438,9 +447,11 @@ const addPosWithOverlap = (
       dvColPosSet,
       dvColVisualizePositionsArray,
       dvColPosArrayPositions,
+      dvColPosSetAvailable,
     } = noLuckFallback(
       dvColVisualizePositionsArray,
       dvColPosArrayPositions,
+      dvColPosSetAvailable,
       dvColPosSet,
       noLuck,
       dvImgWidth
@@ -511,14 +522,16 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
         dvColPosSet,
         dvColVisualizePositionsArray,
         dvColPosArrayPositions,
+        dvColPosSetAvailable,
         noLuck,
       } = addPosWithAllowableOverlap(
         dvColPosSet,
         dvColVisualizePositionsArray,
         dvColPosArrayPositions,
+        dvColPosSetAvailable,
         dvImgWidth,
         maxPositionsWithoutOverlap,
-        true,
+        false,
         noLuck
       ));
       positionsOverlapping.withPartialOverlap =
