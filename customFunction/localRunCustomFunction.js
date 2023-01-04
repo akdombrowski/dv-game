@@ -575,11 +575,13 @@ const getImgToUseAtPos = (
     const rndOhIndex = floorRND(ohs.length);
     image = ohs[rndOhIndex];
   } else if (position < initPos) {
+    // rnd will be < 0 if ones and twos arrays are of different lengths
     if (rnd < 0) {
       rnd = floorRND(ones.length);
     }
     image = ones[rnd];
   } else {
+    // rnd will be < 0 if ones and twos arrays are of different lengths
     if (rnd < 0) {
       rnd = floorRND(twos.length);
     }
