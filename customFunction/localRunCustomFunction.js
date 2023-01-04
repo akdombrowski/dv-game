@@ -137,6 +137,7 @@ const rndPos = (dvImgWidth) => {
 const noLuckFallback = (
   dvColVisualizePositionsArray,
   dvColPosArrayPositions,
+  dvColPosSetAvailable,
   dvColPosSet,
   noLuck,
   dvImgWidth
@@ -157,6 +158,10 @@ const noLuckFallback = (
   // add to array to return
   dvColVisualizePositionsArray[rnd] = true;
   dvColPosArrayPositions.push(rnd);
+
+  if (dvColPosSetAvailable && dvColPosSetAvailable.size > 0) {
+    dvColPosSetAvailable.delete(i);
+  }
   noLuck++;
 
   return {
@@ -164,6 +169,7 @@ const noLuckFallback = (
     dvColPosSet,
     dvColVisualizePositionsArray,
     dvColPosArrayPositions,
+    dvColPosSetAvailable,
   };
 };
 
@@ -198,6 +204,8 @@ const getPositionWithMinOverlap = (
 ) => {
   let iteration = 0;
 
+  console.log(typeof dvColPosSetAvailable.delete);
+
   let numPosAvailable = dvColPosSetAvailable.size;
 
   if (numPosAvailable > 0) {
@@ -212,7 +220,9 @@ const getPositionWithMinOverlap = (
       i < rndPosFromLeft + dvImgWidth - overlap;
       i++
     ) {
-      dvColPosSetAvailable.delete(i);
+      if (dvColPosSetAvailable && dvColPosSetAvailable.size > 0) {
+        dvColPosSetAvailable.delete(i);
+      }
     }
   } else {
     loop1: while (iteration < maxIterationsBeforePickingAnyRND) {
@@ -225,7 +235,11 @@ const getPositionWithMinOverlap = (
         rndPosFromLeft > 100 - dvImgWidth - 1 ||
         dvColPosArrayPositions[rndPosFromLeft]
       ) {
-        dvColPosSetAvailable.delete(rndPosFromLeft);
+        console.log(typeof dvColPosSetAvailable);
+
+        if (dvColPosSetAvailable && dvColPosSetAvailable.size > 0) {
+          dvColPosSetAvailable.delete(rndPosFromLeft);
+        }
         rndPosFromLeft = rndPos(dvImgWidth);
         iteration++;
         continue;
@@ -237,6 +251,8 @@ const getPositionWithMinOverlap = (
           i < rndPosFromLeft + dvImgWidth;
           i++
         ) {
+          console.log(typeof dvColPosSetAvailable);
+
           if (dvColVisualizePositionsArray[i]) {
             dvColPosSetAvailable.delete(rndPosFromLeft);
             foundOverlap = true;
@@ -252,7 +268,10 @@ const getPositionWithMinOverlap = (
           // if we already have this position (disallowing overlap), try again by
           // breaking out
           if (dvColVisualizePositionsArray[pos]) {
-            dvColPosSetAvailable.delete(rndPosFromLeft);
+            console.log(typeof dvColPosSetAvailable);
+            if (dvColPosSetAvailable && dvColPosSetAvailable.size > 0) {
+              dvColPosSetAvailable.delete(rndPosFromLeft);
+            }
             foundOverlap = true;
             break loop3;
           }
@@ -271,7 +290,12 @@ const getPositionWithMinOverlap = (
         dvColPosSet.add(rndPosFromLeft);
         dvColVisualizePositionsArray[rndPosFromLeft] = true;
         dvColPosArrayPositions.push(rndPosFromLeft);
-        dvColPosSetAvailable.delete(rndPosFromLeft);
+
+        console.log(typeof dvColPosSetAvailable);
+
+        if (dvColPosSetAvailable && dvColPosSetAvailable.size > 0) {
+          dvColPosSetAvailable.delete(rndPosFromLeft);
+        }
 
         // we can end the outer loop since we found our non-overlapping position
         break loop1;
@@ -370,9 +394,11 @@ const addPosWithAllowableOverlap = (
       dvColPosSet,
       dvColVisualizePositionsArray,
       dvColPosArrayPositions,
+      dvColPosSetAvailable,
     } = noLuckFallback(
       dvColVisualizePositionsArray,
       dvColPosArrayPositions,
+      dvColPosSetAvailable,
       dvColPosSet,
       noLuck,
       dvImgWidth
@@ -430,9 +456,11 @@ const addPosWithOverlap = (
       dvColPosSet,
       dvColVisualizePositionsArray,
       dvColPosArrayPositions,
+      dvColPosSetAvailable,
     } = noLuckFallback(
       dvColVisualizePositionsArray,
       dvColPosArrayPositions,
+      dvColPosSetAvailable,
       dvColPosSet,
       noLuck,
       dvImgWidth
@@ -503,14 +531,16 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
         dvColPosSet,
         dvColVisualizePositionsArray,
         dvColPosArrayPositions,
+        dvColPosSetAvailable,
         noLuck,
       } = addPosWithAllowableOverlap(
         dvColPosSet,
         dvColVisualizePositionsArray,
         dvColPosArrayPositions,
+        dvColPosSetAvailable,
         dvImgWidth,
         maxPositionsWithoutOverlap,
-        true,
+        false,
         noLuck
       ));
       positionsOverlapping.withPartialOverlap =
@@ -707,7 +737,7 @@ const combineCodesAndPosArrayAndImgs = (
   return { code: initCode, renderings: renderingsString };
 };
 
-const localParams = { numDVs: 14, dvImgWidth: 5, theme: "seeingDouble" };
+const localParams = { numDVs: 25, dvImgWidth: 5, theme: "seeingDouble" };
 
 module.exports = a = async (params = localParams) => {
   const numOfDVs = Number(params.numDVs);

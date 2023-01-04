@@ -212,7 +212,9 @@ const getPositionWithMinOverlap = (
       i < rndPosFromLeft + dvImgWidth - overlap;
       i++
     ) {
-      dvColPosSetAvailable.delete(i);
+      if (dvColPosSetAvailable && dvColPosSetAvailable.size > 0) {
+        dvColPosSetAvailable.delete(i);
+      }
     }
   } else {
     loop1: while (iteration < maxIterationsBeforePickingAnyRND) {
@@ -225,7 +227,9 @@ const getPositionWithMinOverlap = (
         rndPosFromLeft > 100 - dvImgWidth - 1 ||
         dvColPosArrayPositions[rndPosFromLeft]
       ) {
-        dvColPosSetAvailable.delete(rndPosFromLeft);
+        if (dvColPosSetAvailable && dvColPosSetAvailable.size > 0) {
+          dvColPosSetAvailable.delete(rndPosFromLeft);
+        }
         rndPosFromLeft = rndPos(dvImgWidth);
         iteration++;
         continue;
@@ -252,7 +256,9 @@ const getPositionWithMinOverlap = (
           // if we already have this position (disallowing overlap), try again by
           // breaking out
           if (dvColVisualizePositionsArray[pos]) {
-            dvColPosSetAvailable.delete(rndPosFromLeft);
+            if (dvColPosSetAvailable && dvColPosSetAvailable.size > 0) {
+              dvColPosSetAvailable.delete(rndPosFromLeft);
+            }
             foundOverlap = true;
             break loop3;
           }
@@ -271,7 +277,9 @@ const getPositionWithMinOverlap = (
         dvColPosSet.add(rndPosFromLeft);
         dvColVisualizePositionsArray[rndPosFromLeft] = true;
         dvColPosArrayPositions.push(rndPosFromLeft);
-        dvColPosSetAvailable.delete(rndPosFromLeft);
+        if (dvColPosSetAvailable && dvColPosSetAvailable.size > 0) {
+          dvColPosSetAvailable.delete(rndPosFromLeft);
+        }
 
         // we can end the outer loop since we found our non-overlapping position
         break loop1;
