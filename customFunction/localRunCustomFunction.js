@@ -204,8 +204,6 @@ const getPositionWithMinOverlap = (
 ) => {
   let iteration = 0;
 
-  console.log(typeof dvColPosSetAvailable.delete);
-
   let numPosAvailable = dvColPosSetAvailable.size;
 
   if (numPosAvailable > 0) {
@@ -235,8 +233,6 @@ const getPositionWithMinOverlap = (
         rndPosFromLeft > 100 - dvImgWidth - 1 ||
         dvColPosArrayPositions[rndPosFromLeft]
       ) {
-        console.log(typeof dvColPosSetAvailable);
-
         if (dvColPosSetAvailable && dvColPosSetAvailable.size > 0) {
           dvColPosSetAvailable.delete(rndPosFromLeft);
         }
@@ -251,8 +247,6 @@ const getPositionWithMinOverlap = (
           i < rndPosFromLeft + dvImgWidth;
           i++
         ) {
-          console.log(typeof dvColPosSetAvailable);
-
           if (dvColVisualizePositionsArray[i]) {
             dvColPosSetAvailable.delete(rndPosFromLeft);
             foundOverlap = true;
@@ -268,7 +262,6 @@ const getPositionWithMinOverlap = (
           // if we already have this position (disallowing overlap), try again by
           // breaking out
           if (dvColVisualizePositionsArray[pos]) {
-            console.log(typeof dvColPosSetAvailable);
             if (dvColPosSetAvailable && dvColPosSetAvailable.size > 0) {
               dvColPosSetAvailable.delete(rndPosFromLeft);
             }
@@ -290,8 +283,6 @@ const getPositionWithMinOverlap = (
         dvColPosSet.add(rndPosFromLeft);
         dvColVisualizePositionsArray[rndPosFromLeft] = true;
         dvColPosArrayPositions.push(rndPosFromLeft);
-
-        console.log(typeof dvColPosSetAvailable);
 
         if (dvColPosSetAvailable && dvColPosSetAvailable.size > 0) {
           dvColPosSetAvailable.delete(rndPosFromLeft);
