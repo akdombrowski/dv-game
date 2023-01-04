@@ -69,9 +69,9 @@ const images = {
 };
 
 /**
- * Return a random integer between 0 and the provided max value (max value is
- *  exclusive).
- * @param max - the maximum value to return
+ * Return a random integer between 0 and the provided max value (exclusive of
+ *  max value).
+ * @param max - the maximum value to use in Math.random()
  * @returns A random number between 0 and the max value provided.
  */
 const floorRND = (max) => {
@@ -575,11 +575,13 @@ const getImgToUseAtPos = (
     const rndOhIndex = floorRND(ohs.length);
     image = ohs[rndOhIndex];
   } else if (position < initPos) {
+    // rnd will be < 0 if ones and twos arrays are of different lengths
     if (rnd < 0) {
       rnd = floorRND(ones.length);
     }
     image = ones[rnd];
   } else {
+    // rnd will be < 0 if ones and twos arrays are of different lengths
     if (rnd < 0) {
       rnd = floorRND(twos.length);
     }
@@ -606,14 +608,14 @@ const fillRenderings = (
   let position = 0;
   let image = "";
 
-  if (ones.length === twos.length) {
-    rnd = floorRND(ones.length);
-  }
-
   for (let i = 0; i < numOfDVs; i++) {
     // skip the "chosen one" index (the one we used for initializing renderings)
     if (i === initRND) {
       continue;
+    }
+
+    if (ones.length === twos.length) {
+      rnd = floorRND(ones.length);
     }
 
     code = codes[i];
