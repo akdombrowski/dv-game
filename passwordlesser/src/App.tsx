@@ -3,8 +3,11 @@ import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
 
-const NUMBER_OF_DAVINCIS = 14; //Number("{{global.variables.difficulty}}");
-const DV_IMG_WIDTH = 5; //Number("{{global.variables.DV_IMG_WIDTH}}");
+// for local dev
+// const DV_IMG_WIDTH = 5;
+// const NUMBER_OF_DAVINCIS = 14;
+const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
+const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
 const DV_IMG_WIDTH_VW = DV_IMG_WIDTH.toString() + "vw";
 const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DURATION = 4;
@@ -12,7 +15,9 @@ const MAX_DURATION = 7;
 const windowW = window.innerWidth;
 const convert5VWToNumValue = (windowW / 100) * 5;
 
-const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png"; //"{{global.variables.themeSrc}}";
+// for local dev
+// const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
+const bgImg = "{{global.variables.themeSrc}}";
 
 /**
  * It generates an array of random numbers between MIN_DURATION and
