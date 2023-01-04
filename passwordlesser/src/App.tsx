@@ -50,12 +50,17 @@ const precacheAllImagesNeeded = async () => {
     return new Promise<Error>(() => new Error("didn't get renderings info"));
   }
 
-  const proms: Promise<void>[] = [];
+  const proms: Promise<void | string>[] = [];
   const imgsSet = new Set();
+
+  console.log("Precache images begin");
 
   for (const r of Object.values(renderings)) {
     const imgs = [];
     imgs.push(r.img);
+
+    console.log("precache:", r.img);
+
     if (!imgsSet.has(r.img)) {
       imgsSet.add(r.img);
       const img = new Image();
@@ -71,8 +76,9 @@ const precacheAllImagesNeeded = async () => {
       img.onerror = () => new Event("imgLoadFailed");
 
       proms.push(
-        new Promise((resolve, reject) => {
-          img.addEventListener("imgLoaded", () => resolve());
+        new Promise<void>((resolve, reject) => {
+          img.addEventListener("imgLoaded", () => resolve(console.log(
+          "loaded:", img.src)));
           img.addEventListener("imgLoadFailed", () =>
             reject(r.img + " loading failed")
           );
@@ -80,6 +86,9 @@ const precacheAllImagesNeeded = async () => {
       );
     }
   }
+
+  console.log("imgsSet:");
+  console.log(imgsSet);
 
   return proms;
 };
@@ -96,7 +105,11 @@ function App() {
   };
 
   useEffect(() => {
+    console.log("in useEffect b4 waitForImages");
+
     waitForImages();
+
+    console.log("in useEffect after waitForImages");
   }, []);
 
   const resizeObserver = new ResizeObserver((entries) => {
