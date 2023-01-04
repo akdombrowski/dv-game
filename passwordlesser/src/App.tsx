@@ -77,8 +77,9 @@ const precacheAllImagesNeeded = async () => {
 
       proms.push(
         new Promise<void>((resolve, reject) => {
-          img.addEventListener("imgLoaded", () => resolve(console.log(
-          "loaded:", img.src)));
+          img.addEventListener("imgLoaded", () =>
+            resolve(console.log("loaded:", img.src))
+          );
           img.addEventListener("imgLoadFailed", () =>
             reject(r.img + " loading failed")
           );
@@ -122,24 +123,7 @@ function App() {
       if (entry.contentBoxSize) {
         const contentBoxSize = entry.contentBoxSize[0];
         const bottom = contentBoxSize.blockSize;
-        const topPX = top + "px";
-        const bottomPX = bottom * 1.1 + "px";
-        // const bottomPX = bottom + "vh";
 
-        // console.log("h:", h);
-
-        // console.log("convert5VWToNumValue", convert5VWToNumValue);
-
-        // console.log("windowH:", windowH);
-        // console.log("windowW:", windowW);
-
-        // console.log("id:", props.idNumber);
-        // console.log("topPX:", topPX);
-        // console.log("bottomPX:", bottomPX);
-        // console.log("yMotionValue.get():", h);
-        // console.log("yMotionValue.set(top):", top);
-        // calculateYInitial();
-        // calculateYFinal();
         setBgImageContainerHeight(bottom);
       }
     }
@@ -147,6 +131,8 @@ function App() {
 
   useEffect(() => {
     if (imgsLoaded) {
+      console.log("images are loaded");
+
       if (mainContainerRef?.current) {
         const curr = mainContainerRef.current as HTMLDivElement;
         resizeObserver.observe(curr);
