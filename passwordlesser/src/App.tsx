@@ -3,6 +3,9 @@ import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
 
+// for local dev
+// const DV_IMG_WIDTH = 5;
+// const NUMBER_OF_DAVINCIS = 14;
 const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
 const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
 const DV_IMG_WIDTH_VW = DV_IMG_WIDTH.toString() + "vw";
@@ -12,6 +15,8 @@ const MAX_DURATION = 7;
 const windowW = window.innerWidth;
 const convert5VWToNumValue = (windowW / 100) * 5;
 
+// for local dev
+// const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
 const bgImg = "{{global.variables.themeSrc}}";
 
 /**
@@ -50,12 +55,17 @@ const precacheAllImagesNeeded = async () => {
     return new Promise<Error>(() => new Error("didn't get renderings info"));
   }
 
-  const proms: Promise<void>[] = [];
+  const proms: Promise<void | string>[] = [];
   const imgsSet = new Set();
+
+  console.log("Precache images begin");
 
   for (const r of Object.values(renderings)) {
     const imgs = [];
     imgs.push(r.img);
+
+    console.log("precache:", r.img);
+
     if (!imgsSet.has(r.img)) {
       imgsSet.add(r.img);
       const img = new Image();
@@ -71,8 +81,10 @@ const precacheAllImagesNeeded = async () => {
       img.onerror = () => new Event("imgLoadFailed");
 
       proms.push(
-        new Promise((resolve, reject) => {
-          img.addEventListener("imgLoaded", () => resolve());
+        new Promise<void>((resolve, reject) => {
+          img.addEventListener("imgLoaded", () =>
+            resolve(console.log("loaded:", img.src))
+          );
           img.addEventListener("imgLoadFailed", () =>
             reject(r.img + " loading failed")
           );
@@ -80,6 +92,9 @@ const precacheAllImagesNeeded = async () => {
       );
     }
   }
+
+  console.log("imgsSet:");
+  console.log(imgsSet);
 
   return proms;
 };
@@ -96,7 +111,11 @@ function App() {
   };
 
   useEffect(() => {
+    console.log("in useEffect b4 waitForImages");
+
     waitForImages();
+
+    console.log("in useEffect after waitForImages");
   }, []);
 
   const resizeObserver = new ResizeObserver((entries) => {
@@ -109,24 +128,7 @@ function App() {
       if (entry.contentBoxSize) {
         const contentBoxSize = entry.contentBoxSize[0];
         const bottom = contentBoxSize.blockSize;
-        const topPX = top + "px";
-        const bottomPX = bottom * 1.1 + "px";
-        // const bottomPX = bottom + "vh";
 
-        // console.log("h:", h);
-
-        // console.log("convert5VWToNumValue", convert5VWToNumValue);
-
-        // console.log("windowH:", windowH);
-        // console.log("windowW:", windowW);
-
-        // console.log("id:", props.idNumber);
-        // console.log("topPX:", topPX);
-        // console.log("bottomPX:", bottomPX);
-        // console.log("yMotionValue.get():", h);
-        // console.log("yMotionValue.set(top):", top);
-        // calculateYInitial();
-        // calculateYFinal();
         setBgImageContainerHeight(bottom);
       }
     }
@@ -134,6 +136,8 @@ function App() {
 
   useEffect(() => {
     if (imgsLoaded) {
+      console.log("images are loaded");
+
       if (mainContainerRef?.current) {
         const curr = mainContainerRef.current as HTMLDivElement;
         resizeObserver.observe(curr);

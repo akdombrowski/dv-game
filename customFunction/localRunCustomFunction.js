@@ -728,7 +728,9 @@ const combineCodesAndPosArrayAndImgs = (
   return { code: initCode, renderings: renderingsString };
 };
 
-module.exports = a = async ({ params }) => {
+const localParams = { numDVs: 25, dvImgWidth: 5, theme: "seeingDouble" };
+
+module.exports = a = async (params = localParams) => {
   const numOfDVs = Number(params.numDVs);
   const dvImgWidth = Number(params.dvImgWidth);
   const theme = params.theme;

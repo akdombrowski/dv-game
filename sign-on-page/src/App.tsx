@@ -13,7 +13,16 @@ import { ThemeChooser } from "./ThemeChooser";
 
 import "./App.css";
 
-const includeRegistration: string = "{{global.variables.includeRegistration}}";
+// for local dev
+// const includeRegistration = true;
+// const themes = {
+//   "0": {
+//     name: "seeingDouble",
+//     src: "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png",
+//   },
+//   "1": { name: "ahhhhhh", src: "https://i.ibb.co/4dgrH9T/groupphoto3.png" },
+// };
+const includeRegistration ="{{global.variables.includeRegistration}}";
 const themes = JSON.parse("{{global.variables.themes}}");
 
 const SignOnPage = () => {
