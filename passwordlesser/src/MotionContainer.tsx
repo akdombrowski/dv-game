@@ -1,8 +1,6 @@
-import { MotionValue, motion, useMotionValue } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import {
-  MutableRefObject,
   SyntheticEvent,
-  useEffect,
   useLayoutEffect,
   useRef,
   useState,
