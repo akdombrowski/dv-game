@@ -12,8 +12,6 @@ const DV_IMG_WIDTH_VW = DV_IMG_WIDTH.toString() + "vw";
 const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DURATION = 4;
 const MAX_DURATION = 7;
-const windowW = window.innerWidth;
-const convert5VWToNumValue = (windowW / 100) * 5;
 
 // for local dev
 // const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
@@ -98,18 +96,10 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("in useEffect b4 waitForImages");
-
     waitForImages();
-
-    console.log("in useEffect after waitForImages");
   }, []);
 
   const resizeObserver = new ResizeObserver((entries) => {
-    const containerH = document.getElementById("mainContainer")?.clientHeight;
-    const containerW = document.getElementById("mainContainer")?.clientWidth;
-    const top = convert5VWToNumValue * -1.05;
-
     // entry is a ResizeObserverEntry
     for (const entry of entries) {
       if (entry.contentBoxSize) {
@@ -123,8 +113,6 @@ function App() {
 
   useEffect(() => {
     if (imgsLoaded) {
-      console.log("images are loaded");
-
       if (mainContainerRef?.current) {
         const curr = mainContainerRef.current as HTMLDivElement;
         resizeObserver.observe(curr);
