@@ -55,7 +55,7 @@ const precacheAllImagesNeeded = async () => {
     return new Promise<Error>(() => new Error("didn't get renderings info"));
   }
 
-  const proms: Promise<void | string>[] = [];
+  const proms: Promise<string>[] = [];
   const imgsSet = new Set();
 
   for (const r of Object.values(renderings)) {
@@ -67,22 +67,16 @@ const precacheAllImagesNeeded = async () => {
       const img = new Image();
       img.src = r.img;
 
-      const ev = new Event("imgLoaded");
-      img.addEventListener(
-        ev.type,
-        () => new Promise(() => console.log("image" + r.img + "loaded"))
-      );
-
       img.onload = () => new Event("imgLoaded");
       img.onerror = () => new Event("imgLoadFailed");
 
       proms.push(
-        new Promise<void>((resolve, reject) => {
+        new Promise<string>((resolve, reject) => {
           img.addEventListener("imgLoaded", () =>
-            resolve(console.log("loaded:", img.src))
+            resolve("loaded: " + img.src)
           );
           img.addEventListener("imgLoadFailed", () =>
-            reject(r.img + " loading failed")
+            reject("loading failed for image: " + r.img)
           );
         })
       );
