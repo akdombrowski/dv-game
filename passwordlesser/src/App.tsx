@@ -58,13 +58,9 @@ const precacheAllImagesNeeded = async () => {
   const proms: Promise<void | string>[] = [];
   const imgsSet = new Set();
 
-  console.log("Precache images begin");
-
   for (const r of Object.values(renderings)) {
     const imgs = [];
     imgs.push(r.img);
-
-    console.log("precache:", r.img);
 
     if (!imgsSet.has(r.img)) {
       imgsSet.add(r.img);
@@ -92,9 +88,6 @@ const precacheAllImagesNeeded = async () => {
       );
     }
   }
-
-  console.log("imgsSet:");
-  console.log(imgsSet);
 
   return proms;
 };
