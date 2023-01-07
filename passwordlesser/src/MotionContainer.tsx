@@ -24,11 +24,7 @@ const MotionContainer = (props: {
 }) => {
   const dvMotionDiv = useRef<HTMLDivElement>(null);
   const y = useMotionValue(0);
-  const [yInitial, setYInitial] = useState(0);
   const [yFinal, setYFinal] = useState(0);
-  const bgImageContainer = document.getElementById(
-    "mainContainer"
-  ) as HTMLDivElement;
   const bgImageContainerHeight = props.bgImageContainerHeight;
 
   const calculateYInitial = (pxSizeOf5W: number) => {
