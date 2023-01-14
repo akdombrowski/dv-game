@@ -2,16 +2,22 @@ body {
   background-color: black;
 }
 
+input {
+  cursor: crosshair;
+}
+
 #mainRoot {
   width: 100vw;
   height: 100vh;
   position: fixed;
+  cursor: inherit;
 }
 
 #reactRoot {
   width: 100vw;
   height: 100vh;
   position: absolute;
+  cursor: crosshair;
 }
 
 .hidden {
@@ -121,6 +127,7 @@ body {
   flex: 1 1;
   overflow: visible;
   top: 0px;
+  cursor: crosshair;
 }
 
 .form-btn-wrapper {
