@@ -588,11 +588,17 @@ const getImgToUseAtPos = (
   image,
   position,
   initPos,
-  rnd
+  rnd,
+  immediateRight,
+  immediateLeft
 ) => {
   const rndChanceToUseOhImg = floorRND(chanceForOh);
 
-  if (rndChanceToUseOhImg === 0) {
+  if (
+    rndChanceToUseOhImg === 0 &&
+    position !== immediateRight &&
+    position !== immediateLeft
+  ) {
     const rndOhIndex = floorRND(ohs.length);
     image = ohs[rndOhIndex];
   } else if (position < initPos) {
@@ -621,6 +627,7 @@ const fillRenderings = (
   twos,
   codes,
   dvColPosArrayPositions,
+  dvColVisualizePositionsArray,
   initPos,
   renderings
 ) => {
@@ -628,6 +635,22 @@ const fillRenderings = (
   let code = 0;
   let position = 0;
   let image = "";
+  let immediateRight = initRND;
+  let immediateLeft = initRND;
+
+  for (let i = initRND + 1; i < dvColVisualizePositionsArray.length; i++) {
+    if (dvColVisualizePositionsArray[i]) {
+      immediateRight = i;
+      break;
+    }
+  }
+
+  for (let i = initRND - 1; i >= 0; i--) {
+    if (dvColVisualizePositionsArray[i]) {
+      immediateLeft = i;
+      break;
+    }
+  }
 
   for (let i = 0; i < numOfDVs; i++) {
     // skip the "chosen one" index (the one we used for initializing renderings)
@@ -650,7 +673,9 @@ const fillRenderings = (
       image,
       position,
       initPos,
-      rnd
+      rnd,
+      immediateRight,
+      immediateLeft
     );
 
     renderings[i] = { value: code, pos: position, img: image };
@@ -666,8 +691,6 @@ const getImgOptions = (theme) => {
   const bs = images.pointB;
   const cs = images.pointC;
   const ds = images.pointD;
-  // percentage chance for having another "oh" image show up
-  const chanceForOh = 10;
 
   // shuffle
   let ohs;
@@ -687,17 +710,20 @@ const getImgOptions = (theme) => {
     twos = shuffleArray(bs);
   }
 
-  return { chanceForOh, ohs, ones, twos };
+  return { ohs, ones, twos };
 };
 
 const combineCodesAndPosArrayAndImgs = (
   numOfDVs,
   codes,
   dvColPosArrayPositions,
+  dvColVisualizePositionsArray,
   theme
 ) => {
+  // percentage chance for having another "oh" image show up
+  let chanceForOh = 10;
   // img options
-  const { chanceForOh, ohs, ones, twos } = getImgOptions(theme);
+  const { ohs, ones, twos } = getImgOptions(theme);
 
   // init
   let renderings = {};
@@ -719,6 +745,7 @@ const combineCodesAndPosArrayAndImgs = (
     twos,
     codes,
     dvColPosArrayPositions,
+    dvColVisualizePositionsArray,
     initPos,
     renderings
   );
@@ -740,11 +767,14 @@ module.exports = a = async ({ params }) => {
     positionsOverlapping,
     maxPositionsWithoutOverlap,
   } = generateDVColPosArrays(numOfDVs, dvImgWidth);
+
   const codes = generateCodes(numOfDVs);
+
   const { code, renderings } = combineCodesAndPosArrayAndImgs(
     numOfDVs,
     codes,
     dvColPosArrayPositions,
+    dvColVisualizePositionsArray,
     theme
   );
   const numDirectOverlaps =
