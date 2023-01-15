@@ -25,7 +25,7 @@ import "./App.css";
 const includeRegistration = "{{global.variables.includeRegistration}}";
 const themes = JSON.parse("{{global.variables.themes}}");
 const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
-const maxDifficulty = Math.ceil(100 / DV_IMG_WIDTH);
+const maxDifficulty = Math.floor(100 / DV_IMG_WIDTH);
 
 const SignOnPage = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState(1);
