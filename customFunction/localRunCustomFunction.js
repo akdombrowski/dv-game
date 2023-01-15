@@ -595,9 +595,9 @@ const getImgToUseAtPos = (
   const rndChanceToUseOhImg = floorRND(chanceForOh);
 
   if (
-    rndChanceToUseOhImg === 0 &&
     position !== immediateRight &&
-    position !== immediateLeft
+    position !== immediateLeft &&
+    rndChanceToUseOhImg === 0
   ) {
     const rndOhIndex = floorRND(ohs.length);
     image = ohs[rndOhIndex];
