@@ -635,8 +635,8 @@ const fillRenderings = (
   let code = 0;
   let position = 0;
   let image = "";
-  let immediateRight = initRND;
-  let immediateLeft = initRND;
+  let immediateRight = initRND + 1;
+  let immediateLeft = initRND - 1;
 
   for (let i = initRND + 1; i < dvColVisualizePositionsArray.length; i++) {
     if (dvColVisualizePositionsArray[i]) {
