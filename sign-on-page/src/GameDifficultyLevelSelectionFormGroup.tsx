@@ -3,6 +3,7 @@ import Row from "react-bootstrap/Row";
 import { ChangeEvent, ChangeEventHandler, useState } from "react";
 
 interface Props {
+  maxDifficulty: number;
   difficultySelectedFn: ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -29,7 +30,7 @@ export const GameDifficultyLevelSelectionFormGroup = (props: Props) => {
         className="px-5"
         defaultValue={difficulty}
         min={1}
-        max={25}
+        max={props.maxDifficulty}
         onChange={handleChange}
       ></Form.Range>
     </Form.Group>

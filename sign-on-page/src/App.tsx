@@ -22,8 +22,10 @@ import "./App.css";
 //   },
 //   "1": { name: "ahhhhhh", src: "https://i.ibb.co/4dgrH9T/groupphoto3.png" },
 // };
-const includeRegistration ="{{global.variables.includeRegistration}}";
+const includeRegistration = "{{global.variables.includeRegistration}}";
 const themes = JSON.parse("{{global.variables.themes}}");
+const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
+const maxDifficulty = Math.ceil(100 / DV_IMG_WIDTH);
 
 const SignOnPage = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState(1);
@@ -178,6 +180,7 @@ const SignOnPage = () => {
             <Stack gap={2} className="mb-4">
               <EmailInputFormGroup updateEmail={handleEmailUpdate} />
               <GameDifficultyLevelSelectionFormGroup
+                maxDifficulty={maxDifficulty}
                 difficultySelectedFn={difficultySelectedFn}
               />
             </Stack>
