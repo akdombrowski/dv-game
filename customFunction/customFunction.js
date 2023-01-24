@@ -4,6 +4,7 @@ const images = {
   bg: {
     seeingDouble: "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png",
     ahhhhhh: "https://i.ibb.co/4dgrH9T/groupphoto3.png",
+    ping: "",
   },
   me: [
     "https://i.ibb.co/j6SmfCv/katpcha-me-b7e50e30-1f4e-43aa-8f6b-d82d9d7f4d32.png",
@@ -25,6 +26,16 @@ const images = {
     "https://i.ibb.co/k5wYc84/katpcha-me-cfe6156d-268f-481d-8f2f-7ce5442ef29d.png",
     "https://i.ibb.co/jZNRYP2/katpcha-me-84f00e2d-b2be-4d65-8f1f-9267997a839f.png",
     "https://i.ibb.co/GswJDk9/katpcha-me-5451de3b-f0a5-4947-a625-6b3cb6efb588.png",
+  ],
+  ping: [
+    "https://i.ibb.co/KbGWt1d/pingy1.png",
+    "https://i.ibb.co/R3qqMxD/pingy2.png",
+    "https://i.ibb.co/b2qvkFh/pingy3.png",
+    "https://i.ibb.co/BCq3tQ5/pingy4.png",
+    "https://i.ibb.co/BCq3tQ5/pingy4.png",
+    "https://i.ibb.co/1LdQCYf/pingy6.png",
+    "https://i.ibb.co/qp48x53/pingy7.png",
+    "https://i.ibb.co/vcKYDD0/pingy8.png",
   ],
   pointA: [
     "https://i.ibb.co/X3VyxVW/katpcha-me-a099cfb6-bd75-4431-b635-fa6f1f788783.png",
@@ -66,6 +77,16 @@ const images = {
     "https://i.ibb.co/DpM9Sk4/katpcha-me-83ec086a-1b79-4aae-93f3-1781efca4187.png",
     "https://i.ibb.co/9hx26Jk/katpcha-me-137b0278-10bd-4f40-982b-62d80a4131cb.png",
   ],
+  pointE: [
+    "https://i.ibb.co/vcKYDD0/pingy8.png",
+    "https://i.ibb.co/qp48x53/pingy7.png",
+    "https://i.ibb.co/1LdQCYf/pingy6.png",
+    "https://i.ibb.co/BCq3tQ5/pingy4.png",
+    "https://i.ibb.co/b2qvkFh/pingy3.png",
+    "https://i.ibb.co/R3qqMxD/pingy2.png",
+    "https://i.ibb.co/KbGWt1d/pingy1.png",
+  ],
+  pointF: [],
 };
 
 /**
