@@ -1013,6 +1013,7 @@ const combineCodesAndPosArrayAndImgs = (
 
   return { code: initCode, renderings: renderingsString };
 };
+
 const localParams = { numDVs: 25, dvImgWidth: 5, theme: "racing" };
 
 module.exports = a = async (params = localParams) => {
