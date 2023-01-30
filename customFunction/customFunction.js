@@ -707,6 +707,7 @@ const getImgToUseAtPosHorizontal = (
   twos,
   twoss,
   image,
+  image2,
   position,
   initPos,
   rnd,
@@ -722,21 +723,24 @@ const getImgToUseAtPosHorizontal = (
   ) {
     const rndOhIndex = floorRND(ohs.length);
     image = ohs[rndOhIndex];
+    image = ohhs[rndOhIndex];
   } else if (position < initPos) {
     // rnd will be < 0 if ones and twos arrays are of different lengths
     if (rnd < 0) {
       rnd = floorRND(ones.length);
     }
     image = ones[rnd];
+    image = oness[rnd];
   } else {
     // rnd will be < 0 if ones and twos arrays are of different lengths
     if (rnd < 0) {
       rnd = floorRND(twos.length);
     }
     image = twos[rnd];
+    image = twoss[rnd];
   }
 
-  return image;
+  return { image, image2 };
 };
 
 const fillRenderings = (
@@ -825,6 +829,7 @@ const fillRenderings2D = (
   let code = 0;
   let position = 0;
   let image = "";
+  let image2 = "";
   let immediateRight = initRND + 1;
   let immediateLeft = initRND - 1;
 
@@ -855,7 +860,7 @@ const fillRenderings2D = (
     code = codes[i];
     position = dvColPosArrayPositions[i];
 
-    image = getImgToUseAtPosHorizontal(
+    ({ image, image2 } = getImgToUseAtPosHorizontal(
       chanceForOh,
       ohs,
       ohhs,
@@ -864,14 +869,15 @@ const fillRenderings2D = (
       twos,
       twoss,
       image,
+      image2,
       position,
       initPos,
       rnd,
       immediateRight,
       immediateLeft
-    );
+    ));
 
-    renderings[i] = { value: code, pos: position, img: image };
+    renderings[i] = { value: code, pos: position, img: [image, image2] };
   }
 
   return renderings;
