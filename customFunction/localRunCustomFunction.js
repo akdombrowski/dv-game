@@ -1052,8 +1052,6 @@ module.exports = a = async (params = localParams) => {
     }
   });
 
-  console.log(JSON.parse(renderings));
-
   const output = {
     themeSrc: bgImgSrc,
     code: code,
