@@ -1,4 +1,4 @@
-const a = require("./localRunCustomFunction.js");
+const customFunction = require("./localRunCustomFunction.js");
 
 /**
  * Testing so far showing a little under 15% chance of direct overlap
@@ -14,24 +14,33 @@ const a = require("./localRunCustomFunction.js");
 // 50000 ~ 1min
 // 4% chance of direct overlap
 //
-const iterations = 1000;
+// const iterations = 1000;
 // const iterations = 10000;
 // const iterations = 50000;
-// const iterations = 1;
+const iterations = 1;
 let count = 0;
-console.time("totalScriptRuntime");
-for (let i = 0; i < iterations; i++) {
-  const aResults = a();
-  console.log(i);
-  if (aResults.numDirectOverlaps > 0) {
-    // || aResults.noLuck > 0) {
-    count++;
-    // console.log("numDirectOverlaps:", aResults.numDirectOverlaps);
-    // console.log("noLuck:", aResults.noLuck);
-    // console.log("positionsSorted:", aResults.positionsSorted);
+async function test() {
+  for (let i = 0; i < iterations; i++) {
+    console.time("totalScriptRuntime");
+    const customFunctionResults = await customFunction();
+
+    console.log(JSON.parse(customFunctionResults.renderings));
+    // console.log(customFunctionResults.renderings);
+    // console.log(customFunctionResults);
+    console.log(i);
+
+    if (customFunctionResults.numDirectOverlaps > 0) {
+      // || aResults.noLuck > 0) {
+      count++;
+      // console.log("numDirectOverlaps:", aResults.numDirectOverlaps);
+      // console.log("noLuck:", aResults.noLuck);
+      // console.log("positionsSorted:", aResults.positionsSorted);
+    }
   }
+  console.log("runs:", iterations);
+  console.log("count of direct overlaps:", count);
+  console.log("% with direct overlap:", (count / iterations) * 100);
+  console.timeEnd("totalScriptRuntime");
 }
-console.log("runs:", iterations);
-console.log("count of direct overlaps:", count);
-console.log("% with direct overlap:", (count / iterations) * 100);
-console.timeEnd("totalScriptRuntime");
+
+test();
