@@ -724,21 +724,21 @@ const getImgToUseAtPosHorizontal = (
   ) {
     const rndOhIndex = floorRND(ohs.length);
     image = ohs[rndOhIndex];
-    image = ohhs[rndOhIndex];
+    image2 = ohhs[rndOhIndex];
   } else if (position < initPos) {
     // rnd will be < 0 if ones and twos arrays are of different lengths
     if (rnd < 0) {
       rnd = floorRND(ones.length);
     }
     image = ones[rnd];
-    image = oness[rnd];
+    image2 = oness[rnd];
   } else {
     // rnd will be < 0 if ones and twos arrays are of different lengths
     if (rnd < 0) {
       rnd = floorRND(twos.length);
     }
     image = twos[rnd];
-    image = twoss[rnd];
+    image2 = twoss[rnd];
   }
 
   return { image, image2 };
