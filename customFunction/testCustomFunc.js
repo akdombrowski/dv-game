@@ -14,13 +14,15 @@ const a = require("./localRunCustomFunction.js");
 // 50000 ~ 1min
 // 4% chance of direct overlap
 //
+const iterations = 1000;
 // const iterations = 10000;
 // const iterations = 50000;
-const iterations = 1;
+// const iterations = 1;
 let count = 0;
 console.time("totalScriptRuntime");
 for (let i = 0; i < iterations; i++) {
   const aResults = a();
+  console.log(i);
   if (aResults.numDirectOverlaps > 0) {
     // || aResults.noLuck > 0) {
     count++;
