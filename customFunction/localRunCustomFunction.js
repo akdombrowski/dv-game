@@ -4,6 +4,7 @@ const images = {
   bg: {
     seeingDouble: "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png",
     ahhhhhh: "https://i.ibb.co/4dgrH9T/groupphoto3.png",
+    racing: "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png",
     ping: "",
   },
   me: [
@@ -943,20 +944,21 @@ const combineCodesAndPosArrayAndImgs = (
 ) => {
   // init
   let renderings = {};
+  const initRND = floorRND(numOfDVs);
+  const initCode = codes[initRND];
+  const initPos = dvColPosArrayPositions[initRND];
 
-  // percentage chance for having another "oh" image show up
+  // inverse of percentage chance (percentage chance will be equal to 1 over
+  // this number) for having another "oh" image show up
   let chanceForOh = 10;
 
   // img options
   const imgOptions = getImgOptions(theme);
 
-  if (imgOptions.length > 3) {
+  if (Object.values(imgOptions).length > 3) {
     const { ohs, ohhs, ones, oness, twos, twoss } = imgOptions;
 
     const rndOh = floorRND(ohs.length);
-    const initRND = floorRND(numOfDVs);
-    const initCode = codes[initRND];
-    const initPos = dvColPosArrayPositions[initRND];
     const initImage = ohs[rndOh];
     const initImage2 = ohhs[rndOh];
 
@@ -987,9 +989,6 @@ const combineCodesAndPosArrayAndImgs = (
     const { ohs, ones, twos } = imgOptions;
 
     const rndOh = floorRND(ohs.length);
-    const initRND = floorRND(numOfDVs);
-    const initCode = codes[initRND];
-    const initPos = dvColPosArrayPositions[initRND];
     const initImage = ohs[rndOh];
 
     // initial rendering
@@ -1014,7 +1013,6 @@ const combineCodesAndPosArrayAndImgs = (
 
   return { code: initCode, renderings: renderingsString };
 };
-
 const localParams = { numDVs: 25, dvImgWidth: 5, theme: "racing" };
 
 module.exports = a = async (params = localParams) => {
@@ -1052,6 +1050,8 @@ module.exports = a = async (params = localParams) => {
       return 0;
     }
   });
+
+  console.log(JSON.parse(renderings));
 
   const output = {
     themeSrc: bgImgSrc,
