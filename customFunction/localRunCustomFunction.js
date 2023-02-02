@@ -541,27 +541,45 @@ const fillPosWithOverlap = (
   numOfDVs
 ) => {
   let numClaimedPos = 0;
+  const maxNumPosAvail = 100 - dvImgWidth + 1;
 
-  const furthestPosWithoutWindowClipping = 100 - dvImgWidth - 1;
-  const maxPosForFirstImg = dvImgWidth - 1;
-  const firstPos = floorRND(maxPosForFirstImg);
-  ({ claimedPosSet, claimedPosVizArr, claimedPosArr } = addPosToHelperObjs(
-    firstPos,
-    {
-      claimedPosSet,
-      claimedPosVizArr,
-      claimedPosArr,
-    }
-  ));
+  // if we started at pos >= dvImgWidth we'd be leaving enough room for another
+  // img to fit in before it
+  // const maxPosForFirstImg = dvImgWidth - 1;
+  // const firstPos = floorRND(maxPosForFirstImg);
+  // ({ claimedPosSet, claimedPosVizArr, claimedPosArr } = addPosToHelperObjs(
+  //   firstPos,
+  //   {
+  //     claimedPosSet,
+  //     claimedPosVizArr,
+  //     claimedPosArr,
+  //   }
+  // ));
 
-  let prevPos = firstPos;
+  let prevPos = 0;
 
   // TODO: figure how much we can space out if we're below the next overlap number
-  let rndMaxSpacingAddition = (furthestPosWithoutWindowClipping + 1) % numOfDVs;
+  let rndMaxSpacingAddition = maxNumPosAvail % numOfDVs;
+  const minSpacing = dvImgWidth - overlap - 1;
+  let rnd = 0;
   while (numClaimedPos < numOfDVs) {
-    const rnd = floorRND(rndMaxSpacingAddition);
-    const currPos = rnd + prevPos + dvImgWidth - overlap;
+    // if we've got greater than 1 extra space left to work with,
+    // divide it by 2 so we don't use all the extra space up in the first couple
+    // of positions
+    const rndChanceOfAddingXtraSpacing = floorRND(numOfDVs) % 2 === 0;
+    if (rndChanceOfAddingXtraSpacing && rndMaxSpacingAddition > 0) {
+      if (rndMaxSpacingAddition > 1) {
+        rnd = floorRND(Math.floor(rndMaxSpacingAddition / 2) + 1);
+      } else {
+        rnd = floorRND(rndMaxSpacingAddition + 1);
+      }
+    } else {
+      rnd = 0;
+    }
+    // calc the pos
+    const currPos = prevPos + minSpacing + 1 + rnd;
     rndMaxSpacingAddition -= rnd;
+    const extraSpacingUsed = currPos - (prevPos + dvImgWidth - overlap);
 
     ({ claimedPosSet, claimedPosVizArr, claimedPosArr } = addPosToHelperObjs(
       currPos,
@@ -1309,7 +1327,7 @@ const combineCodesAndPosArrayAndImgs = (
   return { code: initCode, renderings: renderingsString };
 };
 
-const localParams = { numDVs: 20, dvImgWidth: 5, theme: "racing" };
+const localParams = { numDVs: 2, dvImgWidth: 5, theme: "ahhhhhh" };
 
 module.exports = a = async (params = localParams) => {
   const numOfDVs = Number(params.numDVs);

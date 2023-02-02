@@ -20,14 +20,16 @@ const customFunction = require("./localRunCustomFunction.js");
 const iterations = 1;
 let count = 0;
 async function test() {
+  console.time("totalScriptRuntime");
+  let arr = [];
   for (let i = 0; i < iterations; i++) {
-    console.time("totalScriptRuntime");
     const customFunctionResults = await customFunction();
 
+    // console.log(JSON.parse(customFunctionResults.renderings)["19"].pos);
+    arr.push(JSON.parse(customFunctionResults.renderings)["19"].pos);
     console.log(JSON.parse(customFunctionResults.renderings));
-    // console.log(customFunctionResults.renderings);
     // console.log(customFunctionResults);
-    console.log(i);
+    // console.log(i);
 
     if (customFunctionResults.numDirectOverlaps > 0) {
       // || aResults.noLuck > 0) {
@@ -37,6 +39,8 @@ async function test() {
       // console.log("positionsSorted:", aResults.positionsSorted);
     }
   }
+  arr.sort();
+  console.log(arr[arr.length - 1]);
   console.log("runs:", iterations);
   console.log("count of direct overlaps:", count);
   console.log("% with direct overlap:", (count / iterations) * 100);
