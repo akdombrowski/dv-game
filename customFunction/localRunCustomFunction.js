@@ -654,169 +654,172 @@ const fillPosWOOverlap = (
   const maxIterationsBeforePickingAnyRND = 100000;
   const beforeNumOfPosUsedAlready = claimedPosArr.length;
 
-  while (claimedPosArr.length < numOfDVs) {
-    let j = 0;
-    while (j < maxIterationsBeforePickingAnyRND) {
-      let numPosAvailable = unclaimedPosSet.size;
+  let j = 0;
+  while (
+    j < maxIterationsBeforePickingAnyRND &&
+    claimedPosArr.length < numOfDVs
+  ) {
+    let numPosAvailable = unclaimedPosSet.size;
 
-      // should only hit this first conditional block
-      if (numPosAvailable > 0) {
-        // get a rnd num to choose a pos from the unclaimed positions
-        const rnd = floorRND(numPosAvailable);
-        // this returns an iterator obj
-        const availPos = unclaimedPosSet.values();
-        // convert iterator obj to array
-        const arrayOfAvailPos = Array.from(availPos);
-        const rndPos = arrayOfAvailPos[rnd];
+    // should only hit this first conditional block
+    if (numPosAvailable > 0) {
+      // get a rnd num to choose a pos from the unclaimed positions
+      const rnd = floorRND(numPosAvailable);
+      // this returns an iterator obj
+      const availPos = unclaimedPosSet.values();
+      // convert iterator obj to array
+      const arrayOfAvailPos = Array.from(availPos);
+      const rndPos = arrayOfAvailPos[rnd];
 
-        ({ claimedPosSet, claimedPosVizArr, claimedPosArr } =
-          addPosToHelperObjs(rndPos, {
-            claimedPosSet,
-            claimedPosVizArr,
-            claimedPosArr,
-          }));
-
-        // walk positions from leftmost position that would be overlapping too much
-        // to the rightmost position that would be overlapping too much
-        const leftEdgeImgBufferWOverlap = getLeftImgBufferEdge(
-          rndPos,
-          dvImgWidth,
-          overlap
-        );
-        const rightEdgeImgBufferWOverlap = getRightImgBufferEdge(
-          rndPos,
-          dvImgWidth,
-          overlap
-        );
-        for (
-          let i = leftEdgeImgBufferWOverlap;
-          i < rightEdgeImgBufferWOverlap;
-          i++
-        ) {
-          const numAvailPosLeft = unclaimedPosSet.size;
-          if (unclaimedPosSet && numAvailPosLeft > 0) {
-            unclaimedPosSet.delete(i);
-          }
+      ({ claimedPosSet, claimedPosVizArr, claimedPosArr } = addPosToHelperObjs(
+        rndPos,
+        {
+          claimedPosSet,
+          claimedPosVizArr,
+          claimedPosArr,
         }
-      } else {
-        // we're out of unclaimed pos without overlap
-        // try rnd pos with just the min overlap we can get away with
-        // stop after a number of tries at random numbers
-        let iteration = 0;
-        const furthestPosWithoutWindowClipping = 100 - dvImgWidth - 1;
-        loop1: while (iteration < maxIterationsBeforePickingAnyRND) {
-          // reset vars
-          let rndPos;
-          let foundOverlap = false;
+      ));
+
+      // walk positions from leftmost position that would be overlapping too much
+      // to the rightmost position that would be overlapping too much
+      const leftEdgeImgBufferWOverlap = getLeftImgBufferEdge(
+        rndPos,
+        dvImgWidth,
+        overlap
+      );
+      const rightEdgeImgBufferWOverlap = getRightImgBufferEdge(
+        rndPos,
+        dvImgWidth,
+        overlap
+      );
+      for (
+        let i = leftEdgeImgBufferWOverlap;
+        i <= rightEdgeImgBufferWOverlap;
+        i++
+      ) {
+        const numAvailPosLeft = unclaimedPosSet.size;
+        if (unclaimedPosSet && numAvailPosLeft > 0) {
+          unclaimedPosSet.delete(i);
+        }
+      }
+    } else {
+      // we're out of unclaimed pos without overlap
+      // try rnd pos with just the min overlap we can get away with
+      // stop after a number of tries at random numbers
+      let iteration = 0;
+      const furthestPosWithoutWindowClipping = 100 - dvImgWidth - 1;
+      loop1: while (iteration < maxIterationsBeforePickingAnyRND) {
+        // reset vars
+        let rndPos;
+        let foundOverlap = false;
+        rndPos = getRNDPos(dvImgWidth);
+
+        const isPosClaimed = claimedPosVizArr[rndPos];
+        if (isPosClaimed) {
+          // this pos is claimed move on to generating the next rnd num
+          continue;
+        }
+
+        if (rndPos > furthestPosWithoutWindowClipping) {
+          const numUnclaimedPos = unclaimedPosSet.size;
+          if (unclaimedPosSet && numUnclaimedPos > 0) {
+            unclaimedPosSet.delete(rndPos);
+          }
           rndPos = getRNDPos(dvImgWidth);
-
-          const isPosClaimed = claimedPosVizArr[rndPos];
-          if (isPosClaimed) {
-            // this pos is claimed move on to generating the next rnd num
-            continue;
-          }
-
-          if (rndPos > furthestPosWithoutWindowClipping) {
-            const numUnclaimedPos = unclaimedPosSet.size;
-            if (unclaimedPosSet && numUnclaimedPos > 0) {
-              unclaimedPosSet.delete(rndPos);
-            }
-            rndPos = getRNDPos(dvImgWidth);
-            iteration++;
-
-            // we've got our position move on to generating the next position
-            continue;
-          }
-
-          const numClaimedPos = claimedPosArr.length;
-          if (numClaimedPos < numOfDVs) {
-            const leftEdgeImgBufferWOverlap = getLeftImgBufferEdge(
-              rndPos,
-              dvImgWidth,
-              overlap
-            );
-            const rightEdgeImgBufferWOverlap = getRightImgBufferEdge(
-              rndPos,
-              dvImgWidth,
-              overlap
-            );
-            loop2: for (
-              let i = leftEdgeImgBufferWOverlap;
-              i < rightEdgeImgBufferWOverlap;
-              i++
-            ) {
-              const isPosAtIClaimed = claimedPosVizArr[i];
-              if (isPosAtIClaimed) {
-                unclaimedPosSet.delete(rndPos);
-                foundOverlap = true;
-                break loop2;
-              }
-            }
-          } else {
-            // Check if we've already used a position in between the current rnd
-            // number minus the image width minus the allowed overlap
-            // Basically, check if the current rnd pos would overlapping too much
-            // Start from the leftmost edge of our image buffer and walking to the
-            // rightmost edge of the image buffer with the image in the center
-            const leftEdgeImgBuffer = rndPos - dvImgWidth - 1 + overlap;
-            const rightEdgeImgBuffer = rndPos + dvImgWidth - 1 - overlap;
-            loop3: for (let pos = leftEdgeImgBuffer; pos < rndPos; pos++) {
-              // if we already have this position (disallowing overlap), try again
-              // by breaking out
-              const isPosUsed = claimedPosVizArr[pos];
-              const numOfClaimedPosInSet = unclaimedPosSet.size;
-              if (isPosUsed) {
-                if (unclaimedPosSet && numOfClaimedPosInSet > 0) {
-                  unclaimedPosSet.delete(rndPos);
-                }
-                foundOverlap = true;
-                break loop3;
-              }
-            }
-          }
-
-          if (!foundOverlap) {
-            // NO overlap found!
-            // keep track to try to avoid overlapping and to use for position
-            // renderings
-            claimedPosSet.add(rndPos);
-            claimedPosVizArr[rndPos] = true;
-            claimedPosArr.push(rndPos);
-
-            const availablePosFromSet = unclaimedPosSet.size;
-            if (unclaimedPosSet && availablePosFromSet > 0) {
-              unclaimedPosSet.delete(rndPos);
-            }
-
-            // we can end the outer loop since we found our non-overlapping position
-            break loop1;
-          }
-
           iteration++;
+
+          // we've got our position move on to generating the next position
+          continue;
         }
-      }
 
-      const afterNumOfPosUsedAlready = claimedPosArr.length;
-      if (afterNumOfPosUsedAlready === beforeNumOfPosUsedAlready) {
-        // ran through without luck, use a rnd pos without checking for overlap
-        ({
-          noLuck,
-          claimedPosSet,
-          claimedPosVizArr,
-          claimedPosArr,
-          unclaimedPosSet,
-        } = noLuckFallback(
-          claimedPosVizArr,
-          claimedPosArr,
-          unclaimedPosSet,
-          claimedPosSet,
-          noLuck,
-          dvImgWidth
-        ));
-      }
+        const numClaimedPos = claimedPosArr.length;
+        if (numClaimedPos < numOfDVs) {
+          const leftEdgeImgBufferWOverlap = getLeftImgBufferEdge(
+            rndPos,
+            dvImgWidth,
+            overlap
+          );
+          const rightEdgeImgBufferWOverlap = getRightImgBufferEdge(
+            rndPos,
+            dvImgWidth,
+            overlap
+          );
+          loop2: for (
+            let i = leftEdgeImgBufferWOverlap;
+            i < rightEdgeImgBufferWOverlap;
+            i++
+          ) {
+            const isPosAtIClaimed = claimedPosVizArr[i];
+            if (isPosAtIClaimed) {
+              unclaimedPosSet.delete(rndPos);
+              foundOverlap = true;
+              break loop2;
+            }
+          }
+        } else {
+          // Check if we've already used a position in between the current rnd
+          // number minus the image width minus the allowed overlap
+          // Basically, check if the current rnd pos would overlapping too much
+          // Start from the leftmost edge of our image buffer and walking to the
+          // rightmost edge of the image buffer with the image in the center
+          const leftEdgeImgBuffer = rndPos - dvImgWidth - 1 + overlap;
+          const rightEdgeImgBuffer = rndPos + dvImgWidth - 1 - overlap;
+          loop3: for (let pos = leftEdgeImgBuffer; pos < rndPos; pos++) {
+            // if we already have this position (disallowing overlap), try again
+            // by breaking out
+            const isPosUsed = claimedPosVizArr[pos];
+            const numOfClaimedPosInSet = unclaimedPosSet.size;
+            if (isPosUsed) {
+              if (unclaimedPosSet && numOfClaimedPosInSet > 0) {
+                unclaimedPosSet.delete(rndPos);
+              }
+              foundOverlap = true;
+              break loop3;
+            }
+          }
+        }
 
-      j++;
+        if (!foundOverlap) {
+          // NO overlap found!
+          // keep track to try to avoid overlapping and to use for position
+          // renderings
+          claimedPosSet.add(rndPos);
+          claimedPosVizArr[rndPos] = true;
+          claimedPosArr.push(rndPos);
+
+          const availablePosFromSet = unclaimedPosSet.size;
+          if (unclaimedPosSet && availablePosFromSet > 0) {
+            unclaimedPosSet.delete(rndPos);
+          }
+
+          // we can end the outer loop since we found our non-overlapping position
+          break loop1;
+        }
+
+        iteration++;
+      }
     }
+
+    const afterNumOfPosUsedAlready = claimedPosArr.length;
+    if (afterNumOfPosUsedAlready === beforeNumOfPosUsedAlready) {
+      // ran through without luck, use a rnd pos without checking for overlap
+      ({
+        noLuck,
+        claimedPosSet,
+        claimedPosVizArr,
+        claimedPosArr,
+        unclaimedPosSet,
+      } = noLuckFallback(
+        claimedPosVizArr,
+        claimedPosArr,
+        unclaimedPosSet,
+        claimedPosSet,
+        noLuck,
+        dvImgWidth
+      ));
+    }
+
+    j++;
   }
 
   return {
@@ -907,7 +910,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
   let unclaimedPosSet = new Set();
   claimedPosVizArr = claimedPosVizArr.fill(0);
 
-  for (let i = 0; i < 100 - dvImgWidth; i++) {
+  for (let i = 0; i <= 100 - dvImgWidth; i++) {
     unclaimedPosSet.add(i);
   }
 
@@ -1327,7 +1330,7 @@ const combineCodesAndPosArrayAndImgs = (
   return { code: initCode, renderings: renderingsString };
 };
 
-const localParams = { numDVs: 2, dvImgWidth: 5, theme: "ahhhhhh" };
+const localParams = { numDVs: 20, dvImgWidth: 5, theme: "racing" };
 
 module.exports = a = async (params = localParams) => {
   const numOfDVs = Number(params.numDVs);

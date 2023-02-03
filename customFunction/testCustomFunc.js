@@ -26,7 +26,7 @@ async function test() {
     const customFunctionResults = await customFunction();
 
     // console.log(JSON.parse(customFunctionResults.renderings)["19"].pos);
-    arr.push(JSON.parse(customFunctionResults.renderings)["19"].pos);
+    // arr.push(JSON.parse(customFunctionResults.renderings)["19"].pos);
     console.log(JSON.parse(customFunctionResults.renderings));
     // console.log(customFunctionResults);
     // console.log(i);
