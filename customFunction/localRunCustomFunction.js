@@ -381,25 +381,25 @@ const fillPosWithOverlap = (
   numOfDVs
 ) => {
   let numClaimedPos = 0;
-  const maxNumPosAvail = 100 - dvImgWidth + 1;
+  const maxNumPosAvail = 100 - dvImgWidth + 1 + 1;
 
   // if we started at pos >= dvImgWidth we'd be leaving enough room for another
   // img to fit in before it
-  // const maxPosForFirstImg = dvImgWidth - 1;
-  // const firstPos = floorRND(maxPosForFirstImg);
-  // ({ claimedPosSet, claimedPosVizArr, claimedPosArr } = addPosToHelperObjs(
-  //   firstPos,
-  //   {
-  //     claimedPosSet,
-  //     claimedPosVizArr,
-  //     claimedPosArr,
-  //   }
-  // ));
+  const maxPosForFirstImg = dvImgWidth - 1 - overlap;
+  const firstPos = floorRND(maxPosForFirstImg);
+  ({ claimedPosSet, claimedPosVizArr, claimedPosArr } = addPosToHelperObjs(
+    firstPos,
+    {
+      claimedPosSet,
+      claimedPosVizArr,
+      claimedPosArr,
+    }
+  ));
 
-  let prevPos = 0;
+  let prevPos = firstPos;
 
   // TODO: figure how much we can space out if we're below the next overlap number
-  let rndMaxSpacingAddition = maxNumPosAvail % numOfDVs;
+  let rndMaxSpacingAddition = (maxNumPosAvail % numOfDVs) + 1;
   const minSpacing = dvImgWidth - overlap - 1;
   let rnd = 0;
   while (numClaimedPos < numOfDVs) {
