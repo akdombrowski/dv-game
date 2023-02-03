@@ -14,10 +14,13 @@ const customFunction = require("./localRunCustomFunction.js");
 // 50000 ~ 1min
 // 4% chance of direct overlap
 //
+/* Setting the number of times the function will run. */
+// const iterations = 100;
 // const iterations = 1000;
 // const iterations = 10000;
 // const iterations = 50000;
-const iterations = 1;
+const iterations = 100000;
+// const iterations = 1;
 let count = 0;
 async function test() {
   console.time("totalScriptRuntime");
@@ -26,8 +29,8 @@ async function test() {
     const customFunctionResults = await customFunction();
 
     // console.log(JSON.parse(customFunctionResults.renderings)["19"].pos);
-    // arr.push(JSON.parse(customFunctionResults.renderings)["19"].pos);
-    console.log(JSON.parse(customFunctionResults.renderings));
+    arr.push(JSON.parse(customFunctionResults.renderings)["19"].pos);
+    // console.log(JSON.parse(customFunctionResults.renderings));
     // console.log(customFunctionResults);
     // console.log(i);
 
@@ -40,7 +43,8 @@ async function test() {
     }
   }
   arr.sort();
-  console.log(arr[arr.length - 1]);
+  console.log("max:", arr[arr.length - 1]);
+  console.log("min:", arr[0]);
   console.log("runs:", iterations);
   console.log("count of direct overlaps:", count);
   console.log("% with direct overlap:", (count / iterations) * 100);
