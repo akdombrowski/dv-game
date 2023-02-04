@@ -474,7 +474,8 @@ const fillPosWOOverlap = (
   ) {
     let numPosAvailable = unclaimedPosSet.size;
 
-    // should only hit this first conditional block
+    // should only hit this first conditional block if numOfDVs <
+    // maxNumPosWOOverlapping
     if (numPosAvailable > 0) {
       // get a rnd num to choose a pos from the unclaimed positions
       const rnd = floorRND(numPosAvailable);
