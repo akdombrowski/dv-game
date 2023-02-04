@@ -258,7 +258,7 @@ const noLuckFallback = (
   };
 };
 
-const getMinOverlapNeeded = (dvImgWidth, maxPosWOOverlap, numOfDVs) => {
+const getMinOverlapNeeded = (dvImgWidth, maxNumPosWOOverlap, numOfDVs) => {
   // actually don't want to go through at an overlap then increase overlap
   // because we'll get more overlap on some that we might've been able to avoid
   // if we started out spacing out imgs with the min overlap required given how
@@ -347,7 +347,7 @@ const getMinOverlapNeeded = (dvImgWidth, maxPosWOOverlap, numOfDVs) => {
   // we reserve 2 spots, 1, 0, or 2 - 0
   // it's the min of pos - 0 or the current overlap number
 
-  const overlap = dvImgWidth - Math.floor(maxPosWOOverlap / numOfDVs);
+  const overlap = dvImgWidth - Math.floor(maxNumPosWOOverlap / numOfDVs);
 
   return overlap;
 };
@@ -376,6 +376,7 @@ const fillPosWithOverlap = (
   claimedPosSet,
   claimedPosVizArr,
   claimedPosArr,
+  maxNumPosWOOverlap,
   posOverlapping,
   overlap,
   numOfDVs
@@ -385,7 +386,7 @@ const fillPosWithOverlap = (
 
   // if we started at pos >= dvImgWidth we'd be leaving enough room for another
   // img to fit in before it
-  const maxPosForFirstImg = dvImgWidth - 1 - overlap;
+  const maxPosForFirstImg = dvImgWidth - overlap;
   const firstPos = floorRND(maxPosForFirstImg);
   ({ claimedPosSet, claimedPosVizArr, claimedPosArr } = addPosToHelperObjs(
     firstPos,
@@ -399,17 +400,21 @@ const fillPosWithOverlap = (
   let prevPos = firstPos;
 
   // TODO: figure how much we can space out if we're below the next overlap number
-  let rndMaxSpacingAddition = (maxNumPosAvail % numOfDVs) + 1;
+  let rndMaxSpacingAddition =
+    Math.floor(numOfDVs / maxNumPosWOOverlap) + (maxNumPosAvail % numOfDVs);
   const minSpacing = dvImgWidth - overlap - 1;
   let rnd = 0;
   while (numClaimedPos < numOfDVs) {
     // if we've got greater than 1 extra space left to work with,
     // divide it by 2 so we don't use all the extra space up in the first couple
     // of positions
-    const rndChanceOfAddingXtraSpacing = floorRND(numOfDVs) % 2 === 0;
-    if (rndChanceOfAddingXtraSpacing && rndMaxSpacingAddition > 0) {
-      if (rndMaxSpacingAddition > 1) {
-        rnd = floorRND(Math.floor(rndMaxSpacingAddition / 2) + 1);
+    if (rndMaxSpacingAddition > 0) {
+      const rndNumForChance = floorRND(101);
+      const rndChance = rndNumForChance % 2;
+      const rndChanceOfAddingXtraSpacing = rndChance === 0;
+      if (rndChanceOfAddingXtraSpacing && rndMaxSpacingAddition > 1) {
+        const halfMaxAmtExtraSpacing = Math.floor(rndMaxSpacingAddition / 2);
+        rnd = floorRND(halfMaxAmtExtraSpacing) + 1;
       } else {
         rnd = floorRND(rndMaxSpacingAddition + 1);
       }
@@ -454,7 +459,6 @@ const fillPosWOOverlap = (
   claimedPosArr,
   unclaimedPosSet,
   dvImgWidth,
-  maxPosWOOverlap,
   noLuck,
   numOfDVs
 ) => {
@@ -646,7 +650,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
   // if dvImgWidth were 5, we'd have 96 positions to work with 0 - 95
   const maxPosToAvoidClipping = 100 - dvImgWidth;
   const totalNumPosAvailable = maxPosToAvoidClipping + 1;
-  const maxPosWOOverlap = Math.floor(totalNumPosAvailable / dvImgWidth);
+  const maxNumPosWOOverlap = Math.floor(totalNumPosAvailable / dvImgWidth);
   const posOverlapping = {
     withoutOverlap: 0,
     withPartialOverlap: 0,
@@ -665,7 +669,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
     unclaimedPosSet.add(i);
   }
 
-  if (numOfDVs > maxPosWOOverlap) {
+  if (numOfDVs > maxNumPosWOOverlap) {
     // with overlap
     const overlap = getMinOverlapNeeded(
       dvImgWidth,
@@ -678,6 +682,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
       claimedPosSet,
       claimedPosVizArr,
       claimedPosArr,
+      maxNumPosWOOverlap,
       posOverlapping,
       overlap,
       numOfDVs
@@ -698,7 +703,6 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
       claimedPosArr,
       unclaimedPosSet,
       dvImgWidth,
-      maxPosWOOverlap,
       noLuck,
       numOfDVs
     ));
@@ -709,7 +713,7 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
     claimedPosArr,
     noLuck,
     posOverlapping,
-    maxPosWOOverlap,
+    maxNumPosWOOverlap,
   };
 };
 
@@ -1081,7 +1085,7 @@ const combineCodesAndPosArrayAndImgs = (
   return { code: initCode, renderings: renderingsString };
 };
 
-const localParams = { numDVs: 20, dvImgWidth: 5, theme: "racing" };
+const localParams = { numDVs: 40, dvImgWidth: 5, theme: "racing" };
 
 module.exports = a = async (params = localParams) => {
   const numOfDVs = Number(params.numDVs);
@@ -1093,7 +1097,7 @@ module.exports = a = async (params = localParams) => {
     claimedPosArr,
     noLuck,
     posOverlapping,
-    maxPosWOOverlap,
+    maxNumPosWOOverlap,
   } = generateDVColPosArrays(numOfDVs, dvImgWidth);
 
   const codes = generateCodes(numOfDVs);
@@ -1128,7 +1132,7 @@ module.exports = a = async (params = localParams) => {
     posArrayLength: claimedPosArr.length,
     noLuck: noLuck,
     posOverlapping: posOverlapping,
-    maxPosWOOverlap: maxPosWOOverlap,
+    maxNumPosWOOverlap: maxNumPosWOOverlap,
     numDirectOverlaps: numDirectOverlaps,
   };
 

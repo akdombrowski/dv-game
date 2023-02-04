@@ -15,21 +15,23 @@ const customFunction = require("./localRunCustomFunction.js");
 // 4% chance of direct overlap
 //
 /* Setting the number of times the function will run. */
-// const iterations = 100;
+const iterations = 100;
 // const iterations = 1000;
 // const iterations = 10000;
 // const iterations = 50000;
-const iterations = 100000;
+// const iterations = 100000;
 // const iterations = 1;
 let count = 0;
 async function test() {
   console.time("totalScriptRuntime");
-  let arr = [];
+  let arrMaxPos = [];
+  let arrMinPos = [];
   for (let i = 0; i < iterations; i++) {
     const customFunctionResults = await customFunction();
 
     // console.log(JSON.parse(customFunctionResults.renderings)["19"].pos);
-    arr.push(JSON.parse(customFunctionResults.renderings)["19"].pos);
+    arrMaxPos.push(JSON.parse(customFunctionResults.renderings)["19"].pos);
+    arrMinPos.push(JSON.parse(customFunctionResults.renderings)["0"].pos);
     // console.log(JSON.parse(customFunctionResults.renderings));
     // console.log(customFunctionResults);
     // console.log(i);
@@ -42,13 +44,18 @@ async function test() {
       // console.log("positionsSorted:", aResults.positionsSorted);
     }
   }
-  arr.sort();
-  console.log("max:", arr[arr.length - 1]);
-  console.log("min:", arr[0]);
+  console.timeEnd("totalScriptRuntime");
+  arrMaxPos.sort();
+  arrMinPos.sort();
+  console.log("max position");
+  console.log("  max:", arrMaxPos[arrMaxPos.length - 1]);
+  console.log("  min:", arrMaxPos[0]);
+  console.log("min position");
+  console.log("  max:", arrMinPos[arrMinPos.length - 1]);
+  console.log("  min:", arrMinPos[0]);
   console.log("runs:", iterations);
   console.log("count of direct overlaps:", count);
   console.log("% with direct overlap:", (count / iterations) * 100);
-  console.timeEnd("totalScriptRuntime");
 }
 
 test();
