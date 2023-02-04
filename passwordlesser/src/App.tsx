@@ -90,6 +90,7 @@ const precacheAllImagesNeeded = async () => {
 function App() {
   const [imgsLoaded, setImgsLoaded] = useState(false);
   const [bgImageContainerHeight, setBgImageContainerHeight] = useState(0);
+  const [bgImageContainerWidth, setBgImageContainerWidth] = useState(0);
   const mainContainerRef = useRef<HTMLDivElement | null>(null);
   const dvContainers = generateDVs();
 
@@ -107,9 +108,11 @@ function App() {
     for (const entry of entries) {
       if (entry.contentBoxSize) {
         const contentBoxSize = entry.contentBoxSize[0];
-        const bottom = contentBoxSize.blockSize;
+        const height = contentBoxSize.blockSize;
+        const width = contentBoxSize.inlineSize;
 
-        setBgImageContainerHeight(bottom);
+        setBgImageContainerHeight(height);
+        setBgImageContainerWidth(width);
       }
     }
   });
@@ -160,6 +163,7 @@ function App() {
             handleClick: Function;
             imgsLoaded: boolean;
             bgImageContainerHeight: number;
+            bgImageContainerWidth: number;
           } = {
             idNumber: i,
             duration: dur,
@@ -168,6 +172,7 @@ function App() {
             handleClick: updateValueAndAdvanceFlow,
             imgsLoaded: imgsLoaded,
             bgImageContainerHeight: bgImageContainerHeight,
+            bgImageContainerWidth: bgImageContainerWidth,
           };
 
           return (
