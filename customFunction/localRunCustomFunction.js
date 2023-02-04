@@ -398,6 +398,7 @@ const fillPosWithOverlap = (
   ));
 
   let prevPos = firstPos;
+  numClaimedPos++;
 
   // TODO: figure how much we can space out if we're below the next overlap number
   let rndMaxSpacingAddition =
