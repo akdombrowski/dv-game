@@ -466,6 +466,16 @@ const fillPosWOOverlap = (
   const overlap = 0;
   const maxIterationsBeforePickingAnyRND = 100000;
   const beforeNumOfPosUsedAlready = claimedPosArr.length;
+  const firstPos = floorRND(dvImgWidth);
+
+  ({ claimedPosSet, claimedPosVizArr, claimedPosArr } = addPosToHelperObjs(
+    firstPos,
+    {
+      claimedPosSet,
+      claimedPosVizArr,
+      claimedPosArr,
+    }
+  ));
 
   let j = 0;
   while (
