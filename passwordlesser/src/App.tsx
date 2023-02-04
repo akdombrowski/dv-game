@@ -160,7 +160,6 @@ function App() {
             handleClick: Function;
             imgsLoaded: boolean;
             bgImageContainerHeight: number;
-            theme: string;
           } = {
             idNumber: i,
             duration: dur,
@@ -169,7 +168,6 @@ function App() {
             handleClick: updateValueAndAdvanceFlow,
             imgsLoaded: imgsLoaded,
             bgImageContainerHeight: bgImageContainerHeight,
-            theme: theme,
           };
 
           return (

@@ -14,7 +14,6 @@ const MotionContainer = (props: {
   handleClick: Function;
   imgsLoaded: boolean;
   bgImageContainerHeight: number;
-  theme: string;
 }) => {
   const dvMotionDiv = useRef<HTMLDivElement>(null);
   const y = useMotionValue(0);
