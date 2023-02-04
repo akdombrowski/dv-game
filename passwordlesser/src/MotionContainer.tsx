@@ -1,10 +1,5 @@
 import { motion, useMotionValue } from "framer-motion";
-import {
-  SyntheticEvent,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { SyntheticEvent, useLayoutEffect, useRef, useState } from "react";
 
 const convert5WToPx = () => {
   const windowW = window.innerWidth;
@@ -19,6 +14,7 @@ const MotionContainer = (props: {
   handleClick: Function;
   imgsLoaded: boolean;
   bgImageContainerHeight: number;
+  theme: string;
 }) => {
   const dvMotionDiv = useRef<HTMLDivElement>(null);
   const y = useMotionValue(0);

@@ -14,8 +14,10 @@ const MIN_DURATION = 4;
 const MAX_DURATION = 7;
 
 // for local dev
+const theme = "racing";
 // const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
-const bgImg = "https://i.ibb.co/ystvSH8/race-Track.png";
+// const bgImg = "https://i.ibb.co/ystvSH8/race-Track.png";
+// const theme = "{{global.variables.theme}}";
 // const bgImg = "{{global.variables.themeSrc}}";
 
 /**
@@ -158,6 +160,7 @@ function App() {
             handleClick: Function;
             imgsLoaded: boolean;
             bgImageContainerHeight: number;
+            theme: string;
           } = {
             idNumber: i,
             duration: dur,
@@ -166,6 +169,7 @@ function App() {
             handleClick: updateValueAndAdvanceFlow,
             imgsLoaded: imgsLoaded,
             bgImageContainerHeight: bgImageContainerHeight,
+            theme: theme,
           };
 
           return (
