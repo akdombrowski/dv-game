@@ -39,6 +39,7 @@ const MotionContainer = (props: {
   const xRightControls = useAnimationControls();
   const xLeftControls = useAnimationControls();
   const imgSizePX = props.bgImageContainerHeight * props.imgSize * 0.01;
+  const imgSizePerc = props.imgSize + "%";
   const leftEdge = imgSizePX * -2;
   const rightEdge = props.bgImageContainerWidth + imgSizePX * 2;
   const racingThemeTransition = {
@@ -96,7 +97,6 @@ const MotionContainer = (props: {
 
   const createMotionDivBasedOnTheme = () => {
     if (props.theme === "racing") {
-      const imgSizeRelativeToViewport = props.imgSize + props.vwOrVH;
       return (
         <>
           <motion.div
@@ -104,7 +104,7 @@ const MotionContainer = (props: {
             className="dv-motion-div-x muscle-container"
             id={"motionDVRight" + props.idNumber}
             animate={xRightControls}
-            style={{ x: xRight, width: imgSizeRelativeToViewport }}
+            style={{ x: xRight, width: imgSizePerc }}
             whileHover={{
               scale: 3,
               translateY: 0,
@@ -133,7 +133,7 @@ const MotionContainer = (props: {
             ref={dvMotionDiv}
             className="dv-motion-div-x muscle-container"
             id={"motionDVLeft" + props.idNumber}
-            style={{ x: xLeft, width: imgSizeRelativeToViewport }}
+            style={{ x: xLeft, width: imgSizePerc }}
             animate={xLeftControls}
             whileHover={{
               scale: 3,

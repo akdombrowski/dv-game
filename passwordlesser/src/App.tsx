@@ -4,12 +4,12 @@ import "./App.css";
 import MotionContainer from "./MotionContainer";
 
 // for local dev
-const DV_IMG_SIZE = 20;
-const NUMBER_OF_DAVINCIS = 2;
-// const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
-// const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
-const DV_IMG_WIDTH_VW = DV_IMG_SIZE.toString() + "vw";
-const DV_IMG_HEIGHT_VH = DV_IMG_SIZE.toString() + "vh";
+// const DV_IMG_SIZE = 20;
+// const NUMBER_OF_DAVINCIS = 2;
+// const DV_IMG_WIDTH_VW = DV_IMG_SIZE.toString() + "vw";
+// const DV_IMG_HEIGHT_VH = DV_IMG_SIZE.toString() + "vh";
+const DV_IMG_SIZE = Number("{{global.variables.DV_IMG_SIZE}}");
+const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
 const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DUR = 4;
 const MAX_DUR = 8;
