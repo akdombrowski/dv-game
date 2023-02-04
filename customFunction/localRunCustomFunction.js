@@ -1107,7 +1107,7 @@ const combineCodesAndPosArrayAndImgs = (
   return { code: initCode, renderings: renderingsString };
 };
 
-const localParams = { numDVs: 1, dvImgWidth: 5, theme: "racing" };
+const localParams = { numDVs: 19, dvImgWidth: 5, theme: "racing" };
 
 module.exports = a = async (params = localParams) => {
   const numOfDVs = Number(params.numDVs);
