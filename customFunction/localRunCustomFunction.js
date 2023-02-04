@@ -478,7 +478,7 @@ const fillPosWOOverlap = (
   ));
 
   // Remove first pos and dvImgWidth - 1 positions after it to avoid overlap
-  for (let i = firstPos; i < firstPos + dvImgWidth; i++) {
+  for (let i = 0; i < firstPos + dvImgWidth; i++) {
     unclaimedPosSet.delete(i);
   }
 
