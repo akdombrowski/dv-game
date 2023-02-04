@@ -461,12 +461,16 @@ const fillPosWOOverlap = (
   unclaimedPosSet,
   dvImgWidth,
   noLuck,
-  numOfDVs
+  numOfDVs,
+  totalNumPosAvailable
 ) => {
   const overlap = 0;
   const maxIterationsBeforePickingAnyRND = 100000;
   const beforeNumOfPosUsedAlready = claimedPosArr.length;
-  const firstPos = floorRND(dvImgWidth);
+  const numOfPosTakenImg = dvImgWidth - 1;
+  const numOfPosTakenByNumOfDVs = numOfPosTakenImg * numOfDVs;
+  const xtraSpacing = totalNumPosAvailable - numOfPosTakenByNumOfDVs;
+  const firstPos = floorRND(dvImgWidth + xtraSpacing);
 
   ({ claimedPosSet, claimedPosVizArr, claimedPosArr } = addPosToHelperObjs(
     firstPos,
@@ -721,7 +725,8 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
       unclaimedPosSet,
       dvImgWidth,
       noLuck,
-      numOfDVs
+      numOfDVs,
+      totalNumPosAvailable
     ));
   }
 

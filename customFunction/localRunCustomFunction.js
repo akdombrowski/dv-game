@@ -461,12 +461,16 @@ const fillPosWOOverlap = (
   unclaimedPosSet,
   dvImgWidth,
   noLuck,
-  numOfDVs
+  numOfDVs,
+  totalNumPosAvailable
 ) => {
   const overlap = 0;
   const maxIterationsBeforePickingAnyRND = 100000;
   const beforeNumOfPosUsedAlready = claimedPosArr.length;
-  const firstPos = floorRND(dvImgWidth);
+  const numOfPosTakenImg = dvImgWidth - 1;
+  const numOfPosTakenByNumOfDVs = numOfPosTakenImg * numOfDVs;
+  const xtraSpacing = totalNumPosAvailable - numOfPosTakenByNumOfDVs;
+  const firstPos = floorRND(dvImgWidth + xtraSpacing);
 
   ({ claimedPosSet, claimedPosVizArr, claimedPosArr } = addPosToHelperObjs(
     firstPos,
@@ -721,7 +725,8 @@ const generateDVColPosArrays = (numOfDVs, dvImgWidth) => {
       unclaimedPosSet,
       dvImgWidth,
       noLuck,
-      numOfDVs
+      numOfDVs,
+      totalNumPosAvailable
     ));
   }
 
@@ -1102,7 +1107,7 @@ const combineCodesAndPosArrayAndImgs = (
   return { code: initCode, renderings: renderingsString };
 };
 
-const localParams = { numDVs: 19, dvImgWidth: 5, theme: "racing" };
+const localParams = { numDVs: 1, dvImgWidth: 5, theme: "racing" };
 
 module.exports = a = async (params = localParams) => {
   const numOfDVs = Number(params.numDVs);
