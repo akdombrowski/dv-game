@@ -4,14 +4,15 @@ import "./App.css";
 import MotionContainer from "./MotionContainer";
 
 // for local dev
-const DV_IMG_WIDTH = 5;
-const NUMBER_OF_DAVINCIS = 19;
+const DV_IMG_SIZE = 20;
+const NUMBER_OF_DAVINCIS = 2;
 // const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
 // const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
-const DV_IMG_WIDTH_VW = DV_IMG_WIDTH.toString() + "vw";
+const DV_IMG_WIDTH_VW = DV_IMG_SIZE.toString() + "vw";
+const DV_IMG_HEIGHT_VH = DV_IMG_SIZE.toString() + "vh";
 const RENDERINGS = document.getElementById("renderings")?.innerText;
-const MIN_DURATION = 4;
-const MAX_DURATION = 7;
+const MIN_DUR = 4;
+const MAX_DUR = 8;
 
 // for local dev
 const theme = "racing";
@@ -25,12 +26,17 @@ const bgImg = "https://i.ibb.co/ystvSH8/race-Track.png";
  * MIN_DURATION + 4 for the duration of img moving through its range
  * @returns An array of numbers.
  */
-const generateDVs = (): number[] => {
+const generateDurations = (): number[] => {
   const dvs: number[] = [];
+  let min = MIN_DUR;
+  let max = MAX_DUR;
+  if (theme === "racing") {
+    min = 10;
+    max = 20;
+  }
 
   for (let i = 0; i < NUMBER_OF_DAVINCIS; i++) {
-    const duration =
-      Math.random() * (MAX_DURATION - MIN_DURATION) + MIN_DURATION;
+    const duration = Math.random() * (max - min) + min;
     dvs.push(duration);
   }
 
@@ -92,7 +98,7 @@ function App() {
   const [bgImageContainerHeight, setBgImageContainerHeight] = useState(0);
   const [bgImageContainerWidth, setBgImageContainerWidth] = useState(0);
   const mainContainerRef = useRef<HTMLDivElement | null>(null);
-  const dvContainers = generateDVs();
+  const dvContainers = generateDurations();
 
   const waitForImages = async () => {
     await precacheAllImagesNeeded();
@@ -152,6 +158,12 @@ function App() {
   };
 
   const mappingDVs = (dvContainers: number[]) => {
+    let vwOrVH: string;
+    if (theme === "racing") {
+      vwOrVH = "vh";
+    } else {
+      vwOrVH = "vw";
+    }
     return (
       <>
         {dvContainers.map((dur, i) => {
@@ -165,6 +177,8 @@ function App() {
             bgImageContainerHeight: number;
             bgImageContainerWidth: number;
             theme: string;
+            imgSize: number;
+            vwOrVH: string;
           } = {
             idNumber: i,
             duration: dur,
@@ -175,27 +189,30 @@ function App() {
             bgImageContainerHeight: bgImageContainerHeight,
             bgImageContainerWidth: bgImageContainerWidth,
             theme: theme,
+            imgSize: DV_IMG_SIZE,
+            vwOrVH: vwOrVH,
           };
 
           let style;
+          let rowOrClass;
           if (theme === "racing") {
             style = {
               top: renderings[i].pos.toString() + "%",
-              maxWidth: DV_IMG_WIDTH_VW,
-              minWidth: DV_IMG_WIDTH_VW,
+              height: DV_IMG_SIZE + "%",
             };
+            rowOrClass = "dv-row";
           } else {
             style = {
               left: renderings[i].pos.toString() + "%",
-              maxWidth: DV_IMG_WIDTH_VW,
-              minWidth: DV_IMG_WIDTH_VW,
+              width: DV_IMG_SIZE + "%",
             };
+            rowOrClass = "dv-col";
           }
           return (
             <div
               id={"imgCol" + i}
               key={"imgCol" + i}
-              className="dv-col"
+              className={rowOrClass}
               style={style}
             >
               {MotionContainer(props)}
@@ -206,6 +223,14 @@ function App() {
     );
   };
 
+  const calcFlexDirection = () => {
+    if (theme === "racing") {
+      return "flex-child muscle-container dv-rows full-child";
+    } else {
+      return "flex-child muscle-container dv-cols full-child";
+    }
+  };
+
   return (
     <div
       id="mainContainer"
@@ -213,10 +238,7 @@ function App() {
       className="content muscle-container sceneImg"
       style={{ backgroundImage: "url(" + bgImg + ")" }}
     >
-      <div
-        id="dvColsContainer"
-        className="flex-child muscle-container dvs-holder full-child"
-      >
+      <div id="dvsContainer" className={calcFlexDirection()}>
         <form
           id="captcha-dv-form"
           className="flex-form full-child"
