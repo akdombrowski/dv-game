@@ -16,7 +16,7 @@ const MAX_DURATION = 7;
 // for local dev
 const theme = "racing";
 // const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
-// const bgImg = "https://i.ibb.co/ystvSH8/race-Track.png";
+const bgImg = "https://i.ibb.co/ystvSH8/race-Track.png";
 // const theme = "{{global.variables.theme}}";
 // const bgImg = "{{global.variables.themeSrc}}";
 
@@ -164,6 +164,7 @@ function App() {
             imgsLoaded: boolean;
             bgImageContainerHeight: number;
             bgImageContainerWidth: number;
+            theme: string;
           } = {
             idNumber: i,
             duration: dur,
@@ -173,18 +174,29 @@ function App() {
             imgsLoaded: imgsLoaded,
             bgImageContainerHeight: bgImageContainerHeight,
             bgImageContainerWidth: bgImageContainerWidth,
+            theme: theme,
           };
 
+          let style;
+          if (theme === "racing") {
+            style = {
+              top: renderings[i].pos.toString() + "%",
+              maxWidth: DV_IMG_WIDTH_VW,
+              minWidth: DV_IMG_WIDTH_VW,
+            };
+          } else {
+            style = {
+              left: renderings[i].pos.toString() + "%",
+              maxWidth: DV_IMG_WIDTH_VW,
+              minWidth: DV_IMG_WIDTH_VW,
+            };
+          }
           return (
             <div
               id={"imgCol" + i}
               key={"imgCol" + i}
               className="dv-col"
-              style={{
-                left: renderings[i].pos.toString() + "%",
-                maxWidth: DV_IMG_WIDTH_VW,
-                minWidth: DV_IMG_WIDTH_VW,
-              }}
+              style={style}
             >
               {MotionContainer(props)}
             </div>
