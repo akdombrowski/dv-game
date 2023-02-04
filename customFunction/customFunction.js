@@ -989,16 +989,23 @@ const combineCodesAndPosArrayAndImgs = (
 
 module.exports = a = async ({ params }) => {
   const numOfDVs = Number(params.numDVs);
-  const dvImgWidth = Number(params.dvImgWidth);
+  const imgSize = Number(params.imgSize);
+  const imgSizeRacing = Number(params.imgSizeRacing);
   const theme = params.theme;
   const bgImgSrc = images.bg[theme];
+  let size;
+  if (theme === "racing") {
+    size = imgSizeRacing;
+  } else {
+    size = imgSize;
+  }
   let {
     claimedPosVizArr,
     claimedPosArr,
     noLuck,
     posOverlapping,
     maxNumPosWOOverlap,
-  } = generateDVColPosArrays(numOfDVs, dvImgWidth);
+  } = generateDVColPosArrays(numOfDVs, size);
 
   const codes = generateCodes(numOfDVs);
 

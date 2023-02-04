@@ -992,15 +992,22 @@ const localParams = { numDVs: 6, imgSize: 20, theme: "racing" };
 module.exports = a = async (params = localParams) => {
   const numOfDVs = Number(params.numDVs);
   const imgSize = Number(params.imgSize);
+  const imgSizeRacing = Number(params.imgSizeRacing);
   const theme = params.theme;
   const bgImgSrc = images.bg[theme];
+  let size;
+  if (theme === "racing") {
+    size = imgSizeRacing;
+  } else {
+    size = imgSize;
+  }
   let {
     claimedPosVizArr,
     claimedPosArr,
     noLuck,
     posOverlapping,
     maxNumPosWOOverlap,
-  } = generateDVColPosArrays(numOfDVs, imgSize);
+  } = generateDVColPosArrays(numOfDVs, size);
 
   const codes = generateCodes(numOfDVs);
 
