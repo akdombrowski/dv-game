@@ -477,6 +477,8 @@ const fillPosWOOverlap = (
     }
   ));
 
+  unclaimedPosSet.delete(firstPos);
+
   let j = 0;
   while (
     j < maxIterationsBeforePickingAnyRND &&
