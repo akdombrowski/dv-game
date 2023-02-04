@@ -29,9 +29,12 @@ async function test() {
   for (let i = 0; i < iterations; i++) {
     const customFunctionResults = await customFunction();
 
+    const parsedResults = JSON.parse(customFunctionResults.renderings);
+    const values = Object.values(parsedResults);
+    const lastIndex = values.length - 1;
     // console.log(JSON.parse(customFunctionResults.renderings)["19"].pos);
-    arrMaxPos.push(JSON.parse(customFunctionResults.renderings)["39"].pos);
-    arrMinPos.push(JSON.parse(customFunctionResults.renderings)["0"].pos);
+    arrMaxPos.push(values[lastIndex].pos);
+    arrMinPos.push(values[0].pos);
     // console.log(JSON.parse(customFunctionResults.renderings));
     // console.log(customFunctionResults);
     // console.log(i);
