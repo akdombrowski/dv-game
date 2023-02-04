@@ -353,11 +353,11 @@ const getMinOverlapNeeded = (dvImgWidth, maxNumPosWOOverlap, numOfDVs) => {
 };
 
 const getLeftImgBufferEdge = (rndPos, dvImgWidth, overlap) => {
-  return rndPos - (dvImgWidth - 1) + overlap;
+  return rndPos - (dvImgWidth - 1) + overlap + 1;
 };
 
 const getRightImgBufferEdge = (rndPos, dvImgWidth, overlap) => {
-  return rndPos + (dvImgWidth - 1) + overlap;
+  return rndPos + (dvImgWidth - 1) + overlap - 1;
 };
 
 const addPosToHelperObjs = (pos, helperObjs) => {
@@ -478,7 +478,7 @@ const fillPosWOOverlap = (
   ));
 
   // Remove first pos and dvImgWidth - 1 positions after it to avoid overlap
-  for (let i = 0; i < firstPos + dvImgWidth; i++) {
+  for (let i = 0; i < firstPos + dvImgWidth - 1; i++) {
     unclaimedPosSet.delete(i);
   }
 
