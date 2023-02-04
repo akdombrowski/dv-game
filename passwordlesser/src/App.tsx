@@ -9,17 +9,18 @@ import MotionContainer from "./MotionContainer";
 // const DV_IMG_WIDTH_VW = DV_IMG_SIZE.toString() + "vw";
 // const DV_IMG_HEIGHT_VH = DV_IMG_SIZE.toString() + "vh";
 const DV_IMG_SIZE = Number("{{global.variables.DV_IMG_SIZE}}");
+const DV_IMG_SIZE_RACING = Number("{{global.variables.DV_IMG_SIZE_RACING}}");
 const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
 const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DUR = 4;
 const MAX_DUR = 8;
 
 // for local dev
-const theme = "racing";
+// const theme = "racing";
 // const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
-const bgImg = "https://i.ibb.co/ystvSH8/race-Track.png";
-// const theme = "{{global.variables.theme}}";
-// const bgImg = "{{global.variables.themeSrc}}";
+// const bgImg = "https://i.ibb.co/ystvSH8/race-Track.png";
+const theme = "{{global.variables.theme}}";
+const bgImg = "{{global.variables.themeSrc}}";
 
 /**
  * It generates an array of random numbers between MIN_DURATION and
@@ -30,7 +31,7 @@ const generateDurations = (): number[] => {
   const dvs: number[] = [];
   let min = MIN_DUR;
   let max = MAX_DUR;
-  if (theme === "racing") {
+  if (theme.startsWith("racing")) {
     min = 10;
     max = 20;
   }
@@ -159,10 +160,13 @@ function App() {
 
   const mappingDVs = (dvContainers: number[]) => {
     let vwOrVH: string;
-    if (theme === "racing") {
+    let size: number;
+    if (theme.startsWith("racing")) {
       vwOrVH = "vh";
+      size = DV_IMG_SIZE_RACING;
     } else {
       vwOrVH = "vw";
+      size = DV_IMG_SIZE;
     }
     return (
       <>
@@ -189,22 +193,22 @@ function App() {
             bgImageContainerHeight: bgImageContainerHeight,
             bgImageContainerWidth: bgImageContainerWidth,
             theme: theme,
-            imgSize: DV_IMG_SIZE,
+            imgSize: size,
             vwOrVH: vwOrVH,
           };
 
           let style;
           let rowOrClass;
-          if (theme === "racing") {
+          if (theme.startsWith("racing")) {
             style = {
               top: renderings[i].pos.toString() + "%",
-              height: DV_IMG_SIZE + "%",
+              height: size + "%",
             };
             rowOrClass = "dv-row";
           } else {
             style = {
               left: renderings[i].pos.toString() + "%",
-              width: DV_IMG_SIZE + "%",
+              width: size + "%",
             };
             rowOrClass = "dv-col";
           }
@@ -224,7 +228,7 @@ function App() {
   };
 
   const calcFlexDirection = () => {
-    if (theme === "racing") {
+    if (theme.startsWith("racing")) {
       return "flex-child muscle-container dv-rows full-child";
     } else {
       return "flex-child muscle-container dv-cols full-child";
