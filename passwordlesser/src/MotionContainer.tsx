@@ -14,11 +14,12 @@ const MotionContainer = (props: {
   handleClick: Function;
   imgsLoaded: boolean;
   bgImageContainerHeight: number;
+  bgImageContainerWidth: number;
 }) => {
   const dvMotionDiv = useRef<HTMLDivElement>(null);
+  const bgImageContainerHeight = props.bgImageContainerHeight;
   const y = useMotionValue(0);
   const [yFinal, setYFinal] = useState(0);
-  const bgImageContainerHeight = props.bgImageContainerHeight;
 
   const calculateYInitial = (pxSizeOf5W: number) => {
     y.set(pxSizeOf5W * -1);
@@ -26,6 +27,10 @@ const MotionContainer = (props: {
 
   const calculateYFinal = (bgImageContainerHeight: number) => {
     setYFinal(bgImageContainerHeight);
+  };
+
+  const calculateXFinal = (bgImageContainerWidth: number) => {
+    setYFinal(bgImageContainerWidth);
   };
 
   useLayoutEffect(() => {
