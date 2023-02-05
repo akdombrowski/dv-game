@@ -746,17 +746,17 @@ const fillRenderings = (
   let code = 0;
   let position = 0;
   let image = "";
-  let immediateRight = initRND + 1;
-  let immediateLeft = initRND - 1;
+  let immediateRight = initPos + 1;
+  let immediateLeft = initPos - 1;
 
-  for (let i = initRND + 1; i < claimedPosVizArr.length; i++) {
+  for (let i = initPos; i < claimedPosVizArr.length; i++) {
     if (claimedPosVizArr[i]) {
       immediateRight = i;
       break;
     }
   }
 
-  for (let i = initRND - 1; i >= 0; i--) {
+  for (let i = initPos; i >= 0; i--) {
     if (claimedPosVizArr[i]) {
       immediateLeft = i;
       break;
@@ -816,17 +816,17 @@ const fillRenderings2D = (
   let position = 0;
   let image = "";
   let image2 = "";
-  let immediateRight = initRND + 1;
-  let immediateLeft = initRND - 1;
+  let immediateRight = initPos + 1;
+  let immediateLeft = initPos - 1;
 
-  for (let i = initRND + 1; i < claimedPosVizArr.length; i++) {
+  for (let i = initPos; i < claimedPosVizArr.length; i++) {
     if (claimedPosVizArr[i]) {
       immediateRight = i;
       break;
     }
   }
 
-  for (let i = initRND - 1; i >= 0; i--) {
+  for (let i = initPos; i >= 0; i--) {
     if (claimedPosVizArr[i]) {
       immediateLeft = i;
       break;
@@ -874,6 +874,7 @@ const getImgOptions = (theme) => {
   const mees = images.mee;
   const meees = images.meee;
   const meeees = images.meeee;
+  const pings = images.ping;
   const as = images.pointA;
   const bs = images.pointB;
   const cs = images.pointC;
@@ -882,6 +883,8 @@ const getImgOptions = (theme) => {
   const ffs = images.pointFF;
   const gs = images.pointG;
   const ggs = images.pointGG;
+  const is = images.pointI;
+  const js = images.pointJ;
 
   // shuffle
   let ohs;
@@ -895,6 +898,10 @@ const getImgOptions = (theme) => {
     ohs = shuffleArray(mees);
     ones = shuffleArray(cs);
     twos = shuffleArray(ds);
+  } else if (theme === "ping") {
+    ohs = shuffleArray(pings);
+    ones = shuffleArray(is);
+    twos = shuffleArray(js);
   } else if (theme === "racing") {
     ohs = shuffleArray(meees);
     ohhs = shuffleArray(meeees);
@@ -997,13 +1004,6 @@ const combineCodesAndPosArrayAndImgs = (
   const renderingsString = JSON.stringify(renderings);
 
   return { code: initCode, renderings: renderingsString };
-};
-
-const localParams = {
-  numDVs: 6,
-  imgSize: 5,
-  imgSizeRacing: 20,
-  theme: "seeingDouble",
 };
 
 module.exports = a = async (params = localParams) => {
