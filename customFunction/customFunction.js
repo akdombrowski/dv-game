@@ -874,6 +874,7 @@ const getImgOptions = (theme) => {
   const mees = images.mee;
   const meees = images.meee;
   const meeees = images.meeee;
+  const pings = images.ping;
   const as = images.pointA;
   const bs = images.pointB;
   const cs = images.pointC;
@@ -882,6 +883,8 @@ const getImgOptions = (theme) => {
   const ffs = images.pointFF;
   const gs = images.pointG;
   const ggs = images.pointGG;
+  const is = images.pointI;
+  const js = images.pointJ;
 
   // shuffle
   let ohs;
@@ -895,6 +898,10 @@ const getImgOptions = (theme) => {
     ohs = shuffleArray(mees);
     ones = shuffleArray(cs);
     twos = shuffleArray(ds);
+  } else if (theme === "ping") {
+    ohs = shuffleArray(pings);
+    ones = shuffleArray(is);
+    twos = shuffleArray(js);
   } else if (theme === "racing") {
     ohs = shuffleArray(meees);
     ohhs = shuffleArray(meeees);
