@@ -498,6 +498,7 @@ const fillPosWOOverlap = (
   const numOfPosTakenImg = imgSize - 1;
   const numOfPosNeededForAllImgs = numOfPosTakenImg * numOfDVs;
   let xtraSpacing = totNumPosAvail - numOfPosNeededForAllImgs;
+  let rnd = xtraSpacing;
   let currPos = floorRND(imgSize + xtraSpacing);
   let prevPos = 0;
   let numPosAvail = unclaimedPosSet.size;
@@ -510,6 +511,7 @@ const fillPosWOOverlap = (
   let j = 0;
   while (claimedPosArr.length < numOfDVs) {
     prevPos = currPos;
+    xtraSpacing -= rnd;
     ({ claimedPosSet, claimedPosVizArr, claimedPosArr } = addPosToHelperObjs(
       currPos,
       {
@@ -524,7 +526,6 @@ const fillPosWOOverlap = (
     if (numPosAvail > 0) {
       // get a rnd num to add to prev pos
       rnd = floorRND(xtraSpacing + 1);
-      xtraSpacing -= rnd;
       currPos = prevPos + imgSize + rnd;
 
       // walk positions from leftmost position that would be overlapping too much
@@ -987,7 +988,12 @@ const combineCodesAndPosArrayAndImgs = (
   return { code: initCode, renderings: renderingsString };
 };
 
-const localParams = { numDVs: 6, imgSize: 20, theme: "racing" };
+const localParams = {
+  numDVs: 6,
+  imgSize: 5,
+  imgSizeRacing: 20,
+  theme: "seeingDouble",
+};
 
 module.exports = a = async (params = localParams) => {
   const numOfDVs = Number(params.numDVs);
