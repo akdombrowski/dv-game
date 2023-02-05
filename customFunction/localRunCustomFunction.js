@@ -4,7 +4,7 @@ const images = {
   bg: {
     seeingDouble: "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png",
     ahhhhhh: "https://i.ibb.co/4dgrH9T/groupphoto3.png",
-    racing: "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png",
+    racing: "https://i.ibb.co/ystvSH8/race-Track.png",
     ping: "",
   },
   me: [
