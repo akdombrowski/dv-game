@@ -5,7 +5,7 @@ const images = {
     seeingDouble: "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png",
     ahhhhhh: "https://i.ibb.co/4dgrH9T/groupphoto3.png",
     racing: "https://i.ibb.co/ystvSH8/race-Track.png",
-    ping: "https://i.ibb.co/zsK7Rs1/jewelBG.png",
+    ping: "https://i.imgur.com/pOecQB0.png",
   },
   me: [
     "https://i.ibb.co/j6SmfCv/katpcha-me-b7e50e30-1f4e-43aa-8f6b-d82d9d7f4d32.png",
