@@ -139,24 +139,24 @@ const images = {
     "https://i.ibb.co/rGc9pmb/katpcha-me-d511f872-5cc5-4089-b2fc-e9ca23e6eb3e.png",
   ],
   pointI: [
-    "https://i.ibb.co/qnKH5X1/katpcha-me-3e4cb2d0-673d-4e4b-894e-214a402499cf.png",
-    "https://i.ibb.co/HhW6mPJ/katpcha-me-7b146194-f659-4e94-82ee-f34e065bd644.png",
-    "https://i.ibb.co/nMcY1mj/katpcha-me-9bbc5edb-7873-4017-90b3-ebca9834fbee.png",
-    "https://i.ibb.co/HhW6mPJ/katpcha-me-7b146194-f659-4e94-82ee-f34e065bd644.png",
-    "https://i.ibb.co/PCnrBW8/katpcha-me-2696df4b-42ec-48ce-8e95-26fcd1d905f5.png",
-    "https://i.ibb.co/qnKH5X1/katpcha-me-3e4cb2d0-673d-4e4b-894e-214a402499cf.png",
-    "https://i.ibb.co/PCnrBW8/katpcha-me-2696df4b-42ec-48ce-8e95-26fcd1d905f5.png",
-    "https://i.ibb.co/PCnrBW8/katpcha-me-2696df4b-42ec-48ce-8e95-26fcd1d905f5.png",
+    "https://i.imgur.com/7UpBYYI.png",
+    "https://i.imgur.com/xeOtZmm.png",
+    "https://i.imgur.com/4SOoYcE.png",
+    "https://i.imgur.com/P07Zcaj.png",
+    "https://i.imgur.com/0WU03YI.png",
+    "https://i.imgur.com/HgQdQZd.png",
+    "https://i.imgur.com/JSe0zjq.png",
+    "https://i.imgur.com/4GiaPhz.png",
   ],
   pointJ: [
-    "https://i.ibb.co/TBz5gRm/katpcha-me-1b795ca0-9ce4-4634-a18e-e2913aa8e74b.png",
-    "https://i.ibb.co/C9SX5Zh/katpcha-me-86c63577-dc26-4c06-b537-7c4e2d1457db.png",
-    "https://i.ibb.co/QkCmxMf/katpcha-me-05539794-4152-4d0d-8b44-f49fff4cfe69.png",
-    "https://i.ibb.co/SRgYBXv/katpcha-me-b7bfd0c3-ac17-4d66-939b-4af51cd498e1.png",
-    "https://i.ibb.co/fFDpbYh/katpcha-me-bc859376-f6c9-4153-945a-d131387e5d13.png",
-    "https://i.ibb.co/SRgYBXv/katpcha-me-b7bfd0c3-ac17-4d66-939b-4af51cd498e1.png",
-    "https://i.ibb.co/4mXg62S/katpcha-me-dc81c394-a48e-4ba1-9c16-9ab5d25f223c.png",
-    "https://i.ibb.co/n3cMYbk/katpcha-me-e2e1008d-9b8e-4ac6-917a-d9685f3152d7.png",
+    "https://i.imgur.com/pgWvOl1.png",
+    "https://i.imgur.com/pWPUGUo.png",
+    "https://i.imgur.com/rCLXY6N.png",
+    "https://i.imgur.com/0NZGLFw.png",
+    "https://i.imgur.com/pRqltkP.png",
+    "https://i.imgur.com/gRqzafU.png",
+    "https://i.imgur.com/dyNloCw.png",
+    "https://i.imgur.com/gZ3LEEL.png",
   ],
 };
 
@@ -900,8 +900,8 @@ const getImgOptions = (theme) => {
     twos = shuffleArray(ds);
   } else if (theme === "ping") {
     ohs = shuffleArray(pings);
-    ones = shuffleArray(is);
-    twos = shuffleArray(js);
+    ones = shuffleArray(js);
+    twos = shuffleArray(is);
   } else if (theme === "racing") {
     ohs = shuffleArray(meees);
     ohhs = shuffleArray(meeees);
