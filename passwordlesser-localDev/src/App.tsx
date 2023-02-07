@@ -4,23 +4,24 @@ import "./App.css";
 import MotionContainer from "./MotionContainer";
 
 // for local dev
-// const DV_IMG_SIZE = 20;
-// const NUMBER_OF_DAVINCIS = 2;
-// const DV_IMG_WIDTH_VW = DV_IMG_SIZE.toString() + "vw";
-// const DV_IMG_HEIGHT_VH = DV_IMG_SIZE.toString() + "vh";
-const DV_IMG_SIZE = Number("{{global.variables.DV_IMG_SIZE}}");
-const DV_IMG_SIZE_RACING = Number("{{global.variables.DV_IMG_SIZE_RACING}}");
-const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
+const DV_IMG_SIZE = 5;
+const DV_IMG_SIZE_RACING = 20;
+const NUMBER_OF_DAVINCIS = 10;
+const DV_IMG_WIDTH_VW = DV_IMG_SIZE.toString() + "vw";
+const DV_IMG_HEIGHT_VH = DV_IMG_SIZE.toString() + "vh";
+// const DV_IMG_SIZE = Number("{{global.variables.DV_IMG_SIZE}}");
+// const DV_IMG_SIZE_RACING = Number("{{global.variables.DV_IMG_SIZE_RACING}}");
+// const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
 const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DUR = 4;
 const MAX_DUR = 8;
 
 // for local dev
-// const theme = "racing";
+const theme = "racing";
 // const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
-// const bgImg = "https://i.ibb.co/ystvSH8/race-Track.png";
-const theme = "{{global.variables.theme}}";
-const bgImg = "{{global.variables.themeSrc}}";
+const bgImg = "https://i.ibb.co/ystvSH8/race-Track.png";
+// const theme = "{{global.variables.theme}}";
+// const bgImg = "{{global.variables.themeSrc}}";
 
 /**
  * It generates an array of random numbers between MIN_DURATION and
