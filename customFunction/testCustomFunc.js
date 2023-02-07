@@ -36,8 +36,8 @@ async function test() {
     const lastIndex = values.length - 1;
     arrMaxPos.push(values[lastIndex].pos);
     arrMinPos.push(values[0].pos);
-    console.log(parsedResultsRenderings);
-    // console.log(customFunctionResults);
+    // console.log(parsedResultsRenderings);
+    console.log(customFunctionResults);
     // console.log(i);
 
     if (customFunctionResults.numDirectOverlaps > 0) {
