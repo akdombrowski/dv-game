@@ -1007,10 +1007,10 @@ const combineCodesAndPosArrayAndImgs = (
 };
 
 const localParams = {
-  numDVs: 6,
+  numDVs: 10,
   imgSize: 5,
   imgSizeRacing: 20,
-  theme: "seeingDouble",
+  theme: "racing",
 };
 
 module.exports = a = async (params = localParams) => {
