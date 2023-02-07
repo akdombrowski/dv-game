@@ -749,14 +749,14 @@ const fillRenderings = (
   let immediateRight = initPos + 1;
   let immediateLeft = initPos - 1;
 
-  for (let i = initPos; i < claimedPosVizArr.length; i++) {
+  for (let i = initPos + 1; i < claimedPosVizArr.length; i++) {
     if (claimedPosVizArr[i]) {
       immediateRight = i;
       break;
     }
   }
 
-  for (let i = initPos; i >= 0; i--) {
+  for (let i = initPos - 1; i >= 0; i--) {
     if (claimedPosVizArr[i]) {
       immediateLeft = i;
       break;
@@ -819,14 +819,14 @@ const fillRenderings2D = (
   let immediateRight = initPos + 1;
   let immediateLeft = initPos - 1;
 
-  for (let i = initPos; i < claimedPosVizArr.length; i++) {
+  for (let i = initPos + 1; i < claimedPosVizArr.length; i++) {
     if (claimedPosVizArr[i]) {
       immediateRight = i;
       break;
     }
   }
 
-  for (let i = initPos; i >= 0; i--) {
+  for (let i = initPos - 1; i >= 0; i--) {
     if (claimedPosVizArr[i]) {
       immediateLeft = i;
       break;
