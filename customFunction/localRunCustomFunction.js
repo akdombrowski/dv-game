@@ -1006,6 +1006,13 @@ const combineCodesAndPosArrayAndImgs = (
   return { code: initCode, renderings: renderingsString };
 };
 
+const localParams = {
+  numDVs: 6,
+  imgSize: 5,
+  imgSizeRacing: 20,
+  theme: "seeingDouble",
+};
+
 module.exports = a = async (params = localParams) => {
   const numOfDVs = Number(params.numDVs);
   const imgSize = Number(params.imgSize);
