@@ -79,11 +79,9 @@ const MotionContainer = (props: {
   });
 
   useMotionValueEvent(xRight, "animationComplete", () => {
-    console.log("animation complete on xRight (cart moving to the right)");
     startMovingLeftAnimation(rightEdge);
   });
   useMotionValueEvent(xLeft, "animationComplete", () => {
-    console.log("animation complete on xLeft (cart moving to the left)");
     startMovingRightAnimation(leftEdge);
   });
 
