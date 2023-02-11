@@ -19,7 +19,7 @@ const MAX_DUR = 8;
 // for local dev
 const theme = "racing";
 // const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
-const bgImg = "https://i.postimg.cc/RFmXx2X3/race-Track.webp";
+const bgImg = "https://i.postimg.cc/DzjCwcwW/race-Track.webp";
 // const theme = "{{global.variables.theme}}";
 // const bgImg = "{{global.variables.themeSrc}}";
 
@@ -61,16 +61,13 @@ const renderings: {
 
 const precacheAllImagesNeeded = async () => {
   if (!renderings) {
-    return new Promise<Error>(() => new Error("didn't get renderings info"));
+    throw new Error("didn't get renderings info");
   }
 
   const proms: Promise<string>[] = [];
   const imgsSet = new Set();
 
   for (const r of Object.values(renderings)) {
-    const imgs = [];
-    imgs.push(r.img);
-
     if (!imgsSet.has(r.img)) {
       imgsSet.add(r.img);
       const img = new Image();
@@ -79,18 +76,18 @@ const precacheAllImagesNeeded = async () => {
       img.onload = () => new Event("imgLoaded");
       img.onerror = () => new Event("imgLoadFailed");
 
-      proms.push(
-        new Promise<string>((resolve, reject) => {
-          document.addEventListener("imgLoaded", () => {
-            console.log(img.src, "loaded");
-            resolve("loaded: " + img.src);
-          });
-          document.addEventListener("imgLoadFailed", () => {
-            console.log(img.src, "error");
-            reject("loading failed for image: " + r.img);
-          });
-        })
-      );
+      // proms.push(
+      //   new Promise<string>((resolve, reject) => {
+      //     document.addEventListener("imgLoaded", () => {
+      //       console.log(img.src, "loaded");
+      //       resolve("loaded: " + img.src);
+      //     });
+      //     document.addEventListener("imgLoadFailed", () => {
+      //       console.log(img.src, "error");
+      //       reject("loading failed for image: " + r.img);
+      //     });
+      //   })
+      // );
     }
   }
 
@@ -105,6 +102,7 @@ function App() {
   const dvContainers = generateDurations();
 
   const waitForImages = async () => {
+    // await Promise.all(precacheAllImagesNeeded());
     await precacheAllImagesNeeded();
     setImgsLoaded(true);
   };
