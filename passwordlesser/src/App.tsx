@@ -32,7 +32,7 @@ const generateDurations = (): number[] => {
   let min = MIN_DUR;
   let max = MAX_DUR;
   if (theme.startsWith("racing")) {
-    min = 10;
+    min = 8;
     max = 20;
   }
 
