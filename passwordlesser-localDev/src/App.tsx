@@ -19,7 +19,7 @@ const MAX_DUR = 8;
 // for local dev
 const theme = "racing";
 // const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
-const bgImg = "https://i.ibb.co/ystvSH8/race-Track.png";
+const bgImg = "https://i.postimg.cc/RFmXx2X3/race-Track.webp";
 // const theme = "{{global.variables.theme}}";
 // const bgImg = "{{global.variables.themeSrc}}";
 
@@ -81,12 +81,14 @@ const precacheAllImagesNeeded = async () => {
 
       proms.push(
         new Promise<string>((resolve, reject) => {
-          img.addEventListener("imgLoaded", () =>
-            resolve("loaded: " + img.src)
-          );
-          img.addEventListener("imgLoadFailed", () =>
-            reject("loading failed for image: " + r.img)
-          );
+          document.addEventListener("imgLoaded", () => {
+            console.log(img.src, "loaded");
+            resolve("loaded: " + img.src);
+          });
+          document.addEventListener("imgLoadFailed", () => {
+            console.log(img.src, "error");
+            reject("loading failed for image: " + r.img);
+          });
         })
       );
     }
