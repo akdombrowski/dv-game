@@ -2,29 +2,42 @@
 import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
 import MotionContainer from "./MotionContainer";
-import { MotionValue, useMotionValue } from "framer-motion";
 
+// for local dev
+// const DV_IMG_SIZE = 20;
+// const NUMBER_OF_DAVINCIS = 2;
+// const DV_IMG_WIDTH_VW = DV_IMG_SIZE.toString() + "vw";
+// const DV_IMG_HEIGHT_VH = DV_IMG_SIZE.toString() + "vh";
+const DV_IMG_SIZE = Number("{{global.variables.DV_IMG_SIZE}}");
+const DV_IMG_SIZE_RACING = Number("{{global.variables.DV_IMG_SIZE_RACING}}");
 const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
-const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
-const DV_IMG_WIDTH_VW = DV_IMG_WIDTH.toString() + "vw";
 const RENDERINGS = document.getElementById("renderings")?.innerText;
-const MIN_DURATION = 4;
-const MAX_DURATION = 7;
-const IMG_Y_INIT = "0px";
+const MIN_DUR = 4;
+const MAX_DUR = 8;
 
-const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
+// for local dev
+// const theme = "racing";
+// const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
+// const bgImg = "https://i.ibb.co/ystvSH8/race-Track.png";
+const theme = "{{global.variables.theme}}";
+const bgImg = "{{global.variables.themeSrc}}";
 
 /**
  * It generates an array of random numbers between MIN_DURATION and
  * MIN_DURATION + 4 for the duration of img moving through its range
  * @returns An array of numbers.
  */
-const generateDVs = (): number[] => {
+const generateDurations = (): number[] => {
   const dvs: number[] = [];
+  let min = MIN_DUR;
+  let max = MAX_DUR;
+  if (theme.startsWith("racing")) {
+    min = 10;
+    max = 20;
+  }
 
   for (let i = 0; i < NUMBER_OF_DAVINCIS; i++) {
-    const duration =
-      Math.random() * (MAX_DURATION - MIN_DURATION) + MIN_DURATION;
+    const duration = Math.random() * (max - min) + min;
     dvs.push(duration);
   }
 
@@ -50,31 +63,28 @@ const precacheAllImagesNeeded = async () => {
     return new Promise<Error>(() => new Error("didn't get renderings info"));
   }
 
-  const proms: Promise<void>[] = [];
+  const proms: Promise<string>[] = [];
   const imgsSet = new Set();
 
   for (const r of Object.values(renderings)) {
     const imgs = [];
     imgs.push(r.img);
+
     if (!imgsSet.has(r.img)) {
       imgsSet.add(r.img);
       const img = new Image();
       img.src = r.img;
 
-      const ev = new Event("imgLoaded");
-      img.addEventListener(
-        ev.type,
-        () => new Promise(() => console.log("image" + r.img + "loaded"))
-      );
-
       img.onload = () => new Event("imgLoaded");
       img.onerror = () => new Event("imgLoadFailed");
 
       proms.push(
-        new Promise((resolve, reject) => {
-          img.addEventListener("imgLoaded", () => resolve());
+        new Promise<string>((resolve, reject) => {
+          img.addEventListener("imgLoaded", () =>
+            resolve("loaded: " + img.src)
+          );
           img.addEventListener("imgLoadFailed", () =>
-            reject(r.img + " loading failed")
+            reject("loading failed for image: " + r.img)
           );
         })
       );
@@ -86,39 +96,47 @@ const precacheAllImagesNeeded = async () => {
 
 function App() {
   const [imgsLoaded, setImgsLoaded] = useState(false);
+  const [bgImageContainerHeight, setBgImageContainerHeight] = useState(0);
+  const [bgImageContainerWidth, setBgImageContainerWidth] = useState(0);
   const mainContainerRef = useRef<HTMLDivElement | null>(null);
-  const dvContainers = generateDVs();
+  const dvContainers = generateDurations();
 
   const waitForImages = async () => {
     await precacheAllImagesNeeded();
     setImgsLoaded(true);
   };
 
-  // const setInitialAndFinalYPositions = () => {
-  //   const contentBoxSize = entry.contentBoxSize[0];
-  //   const dvMotionDiv = document.querySelector(
-  //     ".dv-motion-div"
-  //   ) as HTMLDivElement;
-  //   const h = dvMotionDiv.offsetHeight;
-  //   const top = h * -1.1;
-  //   const bottom = contentBoxSize.blockSize * 1.1;
-  //   const topPX = top + "px";
-  //   const bottomPX = bottom + "px";
-
-  //   console.log("currentYValue");
-  //   console.log(currentYValue);
-  //   console.log("topPX");
-  //   console.log(topPX);
-  //   currentYValue.set(top);
-  //   console.log("setYInit:", topPX);
-  //   console.log("setYFinal:", bottomPX);
-  //   setYInit(topPX);
-  //   setYFinal(bottomPX);
-  // };
-
   useEffect(() => {
     waitForImages();
   }, []);
+
+  const resizeObserver = new ResizeObserver((entries) => {
+    // entry is a ResizeObserverEntry
+    for (const entry of entries) {
+      if (entry.contentBoxSize) {
+        const contentBoxSize = entry.contentBoxSize[0];
+        const height = contentBoxSize.blockSize;
+        const width = contentBoxSize.inlineSize;
+
+        setBgImageContainerHeight(height);
+        setBgImageContainerWidth(width);
+      }
+    }
+  });
+
+  useEffect(() => {
+    if (imgsLoaded) {
+      if (mainContainerRef?.current) {
+        const curr = mainContainerRef.current as HTMLDivElement;
+        resizeObserver.observe(curr);
+        return () => {
+          resizeObserver.unobserve(curr);
+        };
+      } else {
+        console.error("main bg img container not found");
+      }
+    }
+  }, [imgsLoaded]);
 
   const updateValueAndAdvanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -141,6 +159,15 @@ function App() {
   };
 
   const mappingDVs = (dvContainers: number[]) => {
+    let vwOrVH: string;
+    let size: number;
+    if (theme.startsWith("racing")) {
+      vwOrVH = "vh";
+      size = DV_IMG_SIZE_RACING;
+    } else {
+      vwOrVH = "vw";
+      size = DV_IMG_SIZE;
+    }
     return (
       <>
         {dvContainers.map((dur, i) => {
@@ -151,6 +178,11 @@ function App() {
             img: string;
             handleClick: Function;
             imgsLoaded: boolean;
+            bgImageContainerHeight: number;
+            bgImageContainerWidth: number;
+            theme: string;
+            imgSize: number;
+            vwOrVH: string;
           } = {
             idNumber: i,
             duration: dur,
@@ -158,18 +190,34 @@ function App() {
             img: renderings[i].img,
             handleClick: updateValueAndAdvanceFlow,
             imgsLoaded: imgsLoaded,
+            bgImageContainerHeight: bgImageContainerHeight,
+            bgImageContainerWidth: bgImageContainerWidth,
+            theme: theme,
+            imgSize: size,
+            vwOrVH: vwOrVH,
           };
 
+          let style;
+          let rowOrClass;
+          if (theme.startsWith("racing")) {
+            style = {
+              top: renderings[i].pos.toString() + "%",
+              height: size + "%",
+            };
+            rowOrClass = "dv-row";
+          } else {
+            style = {
+              left: renderings[i].pos.toString() + "%",
+              width: size + "%",
+            };
+            rowOrClass = "dv-col";
+          }
           return (
             <div
               id={"imgCol" + i}
               key={"imgCol" + i}
-              className="dv-col"
-              style={{
-                left: renderings[i].pos.toString() + "%",
-                maxWidth: DV_IMG_WIDTH_VW,
-                minWidth: DV_IMG_WIDTH_VW,
-              }}
+              className={rowOrClass}
+              style={style}
             >
               {MotionContainer(props)}
             </div>
@@ -179,6 +227,14 @@ function App() {
     );
   };
 
+  const calcFlexDirection = () => {
+    if (theme.startsWith("racing")) {
+      return "flex-child muscle-container dv-rows full-child";
+    } else {
+      return "flex-child muscle-container dv-cols full-child";
+    }
+  };
+
   return (
     <div
       id="mainContainer"
@@ -186,10 +242,7 @@ function App() {
       className="content muscle-container sceneImg"
       style={{ backgroundImage: "url(" + bgImg + ")" }}
     >
-      <div
-        id="dvColsContainer"
-        className="flex-child muscle-container dvs-holder full-child"
-      >
+      <div id="dvsContainer" className={calcFlexDirection()}>
         <form
           id="captcha-dv-form"
           className="flex-form full-child"

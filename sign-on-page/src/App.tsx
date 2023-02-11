@@ -13,19 +13,38 @@ import { ThemeChooser } from "./ThemeChooser";
 
 import "./App.css";
 
-const includeRegistration: string = "{{global.variables.includeRegistration}}";
-const themes = JSON.parse("{{global.variables.themes}}");
+// for local dev
+// const includeRegistration = true;
+// const themes = { \"0\": {\"name\": \"seeingDouble\", \"src\": \"https://i.ibb.co/yWrB3tt/anthony-double-trouble.png\"}, \"1\": {\"name\": \"ahhhhhh\", \"src\": \"https://i.ibb.co/4dgrH9T/groupphoto3.png\"}, \"2\": {\"name\": \"racing\", \"src\": \"https://i.ibb.co/ystvSH8/race-Track.png\"} , \"3\": {\"name\": \"ping\", \"src\": \"https://i.ibb.co/zsK7Rs1/jewelBG.png\"} }
+const includeRegistration = "{{global.variables.includeRegistration}}";
+const themeNames = "{{global.variables.themeNames}}";
+const themeBGs = "{{global.variables.themeBGs}}";
+const themeNamesArr = themeNames.split(", ");
+const themeBGsArr = themeBGs.split(", ");
+const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
+const maxDifficulty = Math.floor(100 / DV_IMG_WIDTH);
 
 const SignOnPage = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState(1);
   const [emailInputValue, setEmailInputValue] = useState("");
   const [theme, setTheme] = useState<string>();
 
-  // run on after first render
+  // sets background to dark color. run only after first render
   useEffect(() => {
     const body = document.body as HTMLElement;
 
     body.style.backgroundColor = "var(--bs-dark)";
+  }, []);
+
+  // sets one of the radio buttons as default (doesn't determine which one
+  // specifically)
+  useEffect(() => {
+    const radioInput = document.querySelector(
+      "input[type=radio]"
+    ) as HTMLInputElement;
+
+    radioInput.checked = true;
+    setTheme(radioInput.id);
   }, []);
 
   useEffect(() => {
@@ -57,7 +76,7 @@ const SignOnPage = () => {
         advanceFlowInputTheme as HTMLInputElement;
       advanceFlowInputThemeInputElement.value = theme as string;
     }
-  }, [emailInputValue, selectedDifficulty]);
+  }, [emailInputValue, selectedDifficulty, theme]);
 
   const clickAdvFlowBtn = () => {
     const advFlowBtn = document.getElementById(
@@ -111,19 +130,16 @@ const SignOnPage = () => {
   };
 
   const handleEmailUpdate = (e: ChangeEvent) => {
-    e.preventDefault();
     const target = e.target as HTMLInputElement;
     setEmailInputValue(target.value);
   };
 
   const difficultySelectedFn = (e: ChangeEvent) => {
-    e.preventDefault();
     const target = e.target as HTMLInputElement;
     setSelectedDifficulty(Number(target.value));
   };
 
   const handleThemeUpdate = (e: ChangeEvent) => {
-    e.preventDefault();
     setTheme(e.target.id);
   };
 
@@ -144,7 +160,7 @@ const SignOnPage = () => {
       className="col-xs-10 col-md-8 col-lg-6 mx-auto my-5 py-5 align-content-around"
       style={{ height: "100vh", backgroundColor: "var(--bs-dark)" }}
     >
-      <Row className="mb-4">
+      <Row className="mb-4 h-10">
         <Col className="col-md-10 col-lg-8 mx-auto">
           <h1
             className="display-5 text-center font-monospace"
@@ -155,12 +171,13 @@ const SignOnPage = () => {
         </Col>
       </Row>
 
-      <Row>
+      <Row className="h-90">
         <Col>
           <Form id="signOnForm" onSubmit={advanceFlow}>
             <Stack gap={2} className="mb-4">
               <EmailInputFormGroup updateEmail={handleEmailUpdate} />
               <GameDifficultyLevelSelectionFormGroup
+                maxDifficulty={maxDifficulty}
                 difficultySelectedFn={difficultySelectedFn}
               />
             </Stack>
@@ -211,7 +228,8 @@ const SignOnPage = () => {
             <Row className="py-3">
               <ThemeChooser
                 updateTheme={handleThemeUpdate}
-                themes={themes}
+                themeNames={themeNamesArr}
+                themeBGs={themeBGsArr}
               ></ThemeChooser>
             </Row>
           </Form>
