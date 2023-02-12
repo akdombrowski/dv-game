@@ -124,6 +124,8 @@ const precacheAllImagesNeeded = () => {
   return proms;
 };
 
+function schmapp() {}
+
 function App() {
   const [bgImgLoaded, setBGImgLoaded] = useState(false);
   const [imgsLoaded, setImgsLoaded] = useState(false);
