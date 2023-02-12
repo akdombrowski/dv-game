@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "displayName": "success",
+      "preferredControlType": "textField",
+      "enableParameters": true,
+      "propertyName": "success"
+    },
+    "errorCode": {
+      "type": "string",
+      "displayName": "errorCode",
+      "preferredControlType": "textField",
+      "enableParameters": true,
+      "propertyName": "errorCode"
+    },
+    "errorMsg": {
+      "type": "string",
+      "displayName": "errorMsg",
+      "preferredControlType": "textField",
+      "enableParameters": true,
+      "propertyName": "errorMsg"
+    },
+    "errorDetails": {
+      "type": "string",
+      "displayName": "errorDetails",
+      "preferredControlType": "textField",
+      "enableParameters": true,
+      "propertyName": "errorDetails"
+    },
+    "errorResponseCode": {
+      "type": "string",
+      "displayName": "errorResponseCode",
+      "preferredControlType": "textField",
+      "enableParameters": true,
+      "propertyName": "errorResponseCode"
+    }
+  }
+}

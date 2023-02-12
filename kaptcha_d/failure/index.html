@@ -1,4 +1,4 @@
-<div id="coverContainer" class="cover-container container-fluid d-flex p-5 mx-auto flex-column">
+<div id="coverContainer" class="cover-container container-fluid d-flex px-5 mx-auto flex-column">
   <main class="pb-5 container-fluid text-center">
     <div class="row justify-content-around border border-info pt-3 pb-3">
       <div class="col-6 pb-1">
@@ -22,11 +22,26 @@
     <h1 class="pt-3 fs-1">Maybe you are a bot...</h1>
     <h1 class="fs-1">Why don't you give that another try...</h1>
     <br />
-    <button data-skcustomloadingindicatorclass="" data-skcustomloadingindicator="" data-skdefaultloadingcolor="" data-skbuttonimageclass="" data-skbuttonimageplacement="" data-skbuttonimage="" data-skotpinput="" data-skform="" data-skbuttontype="next-event" data-skbuttonvalue="tryAgain" data-skbuttonevent="" data-skvalue="tryAgain" class="btn btn-info mx-5" id="tryAgainBtn" data-skcomponent="skbutton" type="button">
-      <div class="btnOption text-uppercase">Try again</div>
+    <button data-skcustomloadingindicatorclass="" data-skcustomloadingindicator="" data-skdefaultloadingcolor="" data-skbuttonimageclass="" data-skbuttonimageplacement="" data-skbuttonimage="" data-skotpinput="" data-skform="" data-skbuttontype="next-event" data-skbuttonvalue="tryAgain" data-skbuttonevent="" data-skvalue="tryAgain" class="btn btn-info mx-5 px-5" id="tryAgainBtn" data-skcomponent="skbutton" type="button">
+      <div class="btnOption text-uppercase fs-3">Try again</div>
     </button>
-    <button data-skcustomloadingindicatorclass="" data-skcustomloadingindicator="" data-skdefaultloadingcolor="" data-skbuttonimageclass="" data-skbuttonimageplacement="" data-skbuttonimage="" data-skotpinput="" data-skform="" data-skbuttontype="next-event" data-skbuttonvalue="false" data-skbuttonevent="" data-skvalue="false" class="btn btn-danger mx-5" id="somethingFishyCancelBtn" data-skcomponent="skbutton" type="button">
-      <div class="btnOption text-uppercase">No, you caught me. I <em>am</em> a bot.</div>
+    <button data-skcustomloadingindicatorclass="" data-skcustomloadingindicator="" data-skdefaultloadingcolor="" data-skbuttonimageclass="" data-skbuttonimageplacement="" data-skbuttonimage="" data-skotpinput="" data-skform="" data-skbuttontype="next-event" data-skbuttonvalue="false" data-skbuttonevent="" data-skvalue="false" class="btn btn-danger mx-5 px-5" id="somethingFishyCancelBtn" data-skcomponent="skbutton" type="button">
+      <div class="btnOption text-uppercase fs-3">
+        No, you caught me. I <em>am</em> a bot.
+      </div>
     </button>
+    <div class="my-5 mx-33 py-5 border">
+      <p>
+        errorMsg:
+        {{local.6g3h3j5cue.payload.output.errorMsg}}
+      </p>
+      <p>
+        errorCode:
+        {{local.6g3h3j5cue.payload.output.errorCode}}
+        httpCode:
+        {{local.6g3h3j5cue.payload.output.errorResponseCode}}
+      </p>
+      <p>{{local.6g3h3j5cue.payload.output.errorDetails}}</p>
+    </div>
   </main>
 </div>
