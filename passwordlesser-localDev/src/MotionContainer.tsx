@@ -85,6 +85,13 @@ const MotionContainer = (props: {
     startMovingRightAnimation(leftEdge);
   });
 
+  useLayoutEffect(() => {
+    const pxSizeOf5W = convert5WToPx();
+
+    calculateYInitial(pxSizeOf5W);
+    calculateYFinal(bgImageContainerHeight);
+  }, [bgImageContainerHeight]);
+
   const calculateYInitial = (pxSizeOf5W: number) => {
     y.set(pxSizeOf5W * -1);
   };
@@ -204,13 +211,6 @@ const MotionContainer = (props: {
       );
     }
   };
-
-  useLayoutEffect(() => {
-    const pxSizeOf5W = convert5WToPx();
-
-    calculateYInitial(pxSizeOf5W);
-    calculateYFinal(bgImageContainerHeight);
-  }, [bgImageContainerHeight]);
 
   const handleClick = (e: SyntheticEvent) => {
     e.preventDefault();

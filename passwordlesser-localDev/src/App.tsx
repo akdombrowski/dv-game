@@ -68,14 +68,6 @@ const precacheImage = (
   imgsSet.add(imgSrc);
   proms.push(
     new Promise<string>((resolve, reject) => {
-      // document.addEventListener("imgLoaded", () => {
-      //   console.log(imgSrc, "loaded");
-      //   resolve("loaded: " + imgSrc);
-      // });
-      // document.addEventListener("imgLoadFailed", () => {
-      //   console.log(imgSrc, "loading failed");
-      //   reject("loading failed for image: " + imgSrc);
-      // });
       img.onload = () => {
         console.log(imgSrc, "loaded");
         resolve("loaded: " + imgSrc);
@@ -89,6 +81,15 @@ const precacheImage = (
 
   img.src = imgSrc;
   img.loading = "eager";
+  return { imgsSet, proms };
+};
+
+const precacheBGImage = (bgImg: string) => {
+  const imgsSet = new Set<string>();
+  let proms: Promise<string>[] = [];
+
+  ({ proms } = precacheImage(imgsSet, bgImg, proms));
+
   return proms;
 };
 
@@ -98,22 +99,22 @@ const precacheAllImagesNeeded = () => {
   }
 
   let proms: Promise<string>[] = [];
-  const imgsSet = new Set<string>();
+  let imgsSet = new Set<string>();
 
   for (const r of Object.values(renderings)) {
-    if (theme === "racing") {
+    if (theme.startsWith("racing")) {
       const img0 = r.img[0];
       const img1 = r.img[1];
 
       if (!imgsSet.has(img0)) {
-        proms = precacheImage(imgsSet, img0, proms);
+        ({ imgsSet, proms } = precacheImage(imgsSet, img0, proms));
       }
       if (!imgsSet.has(img1)) {
-        proms = precacheImage(imgsSet, img1, proms);
+        ({ imgsSet, proms } = precacheImage(imgsSet, img1, proms));
       }
     } else {
       if (!imgsSet.has(r.img)) {
-        proms = precacheImage(imgsSet, r.img, proms);
+        ({ imgsSet, proms } = precacheImage(imgsSet, r.img, proms));
       }
     }
   }
@@ -121,22 +122,33 @@ const precacheAllImagesNeeded = () => {
   return proms;
 };
 
+function schmapp() {}
+
 function App() {
+  const [bgImgLoaded, setBGImgLoaded] = useState(false);
   const [imgsLoaded, setImgsLoaded] = useState(false);
   const [bgImageContainerHeight, setBgImageContainerHeight] = useState(0);
   const [bgImageContainerWidth, setBgImageContainerWidth] = useState(0);
   const mainContainerRef = useRef<HTMLDivElement | null>(null);
   const dvContainers = generateDurations();
 
+  const waitForBGImage = async () => {
+    await Promise.all(precacheBGImage(bgImg));
+    setBGImgLoaded(true);
+  };
+
   const waitForImages = async () => {
     await Promise.all(precacheAllImagesNeeded());
-    // await precacheAllImagesNeeded();
     setImgsLoaded(true);
   };
 
   useEffect(() => {
-    waitForImages();
+    waitForBGImage();
   }, []);
+
+  useEffect(() => {
+    waitForImages();
+  }, [bgImgLoaded]);
 
   const resizeObserver = new ResizeObserver((entries) => {
     // entry is a ResizeObserverEntry
@@ -196,6 +208,7 @@ function App() {
       vwOrVH = "vw";
       size = DV_IMG_SIZE;
     }
+
     return (
       <>
         {dvContainers.map((dur, i) => {
@@ -268,8 +281,9 @@ function App() {
       id="mainContainer"
       ref={mainContainerRef}
       className="content muscle-container sceneImg"
-      style={{ backgroundImage: "url(" + bgImg + ")" }}
+      style={bgImgLoaded ? { backgroundImage: "url(" + bgImg + ")" } : {}}
     >
+      <h1 style={bgImgLoaded ? { display: "none" } : {}}>Loading...</h1>
       <div id="dvsContainer" className={calcFlexDirection()}>
         <form
           id="captcha-dv-form"
