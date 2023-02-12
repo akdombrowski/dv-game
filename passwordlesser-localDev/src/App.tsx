@@ -68,19 +68,27 @@ const precacheImage = (
   imgsSet.add(imgSrc);
   proms.push(
     new Promise<string>((resolve, reject) => {
-      document.addEventListener("imgLoaded", () => {
+      // document.addEventListener("imgLoaded", () => {
+      //   console.log(imgSrc, "loaded");
+      //   resolve("loaded: " + imgSrc);
+      // });
+      // document.addEventListener("imgLoadFailed", () => {
+      //   console.log(imgSrc, "loading failed");
+      //   reject("loading failed for image: " + imgSrc);
+      // });
+      img.onload = () => {
+        console.log(imgSrc, "loaded");
         resolve("loaded: " + imgSrc);
-      });
-      document.addEventListener("imgLoadFailed", () => {
+      };
+      img.onerror = () => {
+        console.log(imgSrc, "loading failed");
         reject("loading failed for image: " + imgSrc);
-      });
+      };
     })
   );
 
   img.src = imgSrc;
   img.loading = "eager";
-  img.onload = () => new Event("imgLoaded");
-  img.onerror = () => new Event("imgLoadFailed");
   return proms;
 };
 
@@ -106,7 +114,6 @@ const precacheAllImagesNeeded = () => {
     } else {
       if (!imgsSet.has(r.img)) {
         proms = precacheImage(imgsSet, r.img, proms);
-
       }
     }
   }
