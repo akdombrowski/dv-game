@@ -59,35 +59,55 @@ const renderings: {
   [key: number]: { value: string; pos: number; img: string };
 } = convertRenderingsToObj();
 
-const precacheAllImagesNeeded = async () => {
+const precacheImage = (
+  imgsSet: Set<string>,
+  imgSrc: string,
+  proms: Promise<string>[]
+) => {
+  const img = new Image();
+  imgsSet.add(imgSrc);
+  proms.push(
+    new Promise<string>((resolve, reject) => {
+      document.addEventListener("imgLoaded", () => {
+        resolve("loaded: " + imgSrc);
+      });
+      document.addEventListener("imgLoadFailed", () => {
+        reject("loading failed for image: " + imgSrc);
+      });
+    })
+  );
+
+  img.src = imgSrc;
+  img.loading = "eager";
+  img.onload = () => new Event("imgLoaded");
+  img.onerror = () => new Event("imgLoadFailed");
+  return proms;
+};
+
+const precacheAllImagesNeeded = () => {
   if (!renderings) {
     throw new Error("didn't get renderings info");
   }
 
-  const proms: Promise<string>[] = [];
-  const imgsSet = new Set();
+  let proms: Promise<string>[] = [];
+  const imgsSet = new Set<string>();
 
   for (const r of Object.values(renderings)) {
-    if (!imgsSet.has(r.img)) {
-      imgsSet.add(r.img);
-      const img = new Image();
-      img.src = r.img;
+    if (theme === "racing") {
+      const img0 = r.img[0];
+      const img1 = r.img[1];
 
-      img.onload = () => new Event("imgLoaded");
-      img.onerror = () => new Event("imgLoadFailed");
+      if (!imgsSet.has(img0)) {
+        proms = precacheImage(imgsSet, img0, proms);
+      }
+      if (!imgsSet.has(img1)) {
+        proms = precacheImage(imgsSet, img1, proms);
+      }
+    } else {
+      if (!imgsSet.has(r.img)) {
+        proms = precacheImage(imgsSet, r.img, proms);
 
-      // proms.push(
-      //   new Promise<string>((resolve, reject) => {
-      //     document.addEventListener("imgLoaded", () => {
-      //       console.log(img.src, "loaded");
-      //       resolve("loaded: " + img.src);
-      //     });
-      //     document.addEventListener("imgLoadFailed", () => {
-      //       console.log(img.src, "error");
-      //       reject("loading failed for image: " + r.img);
-      //     });
-      //   })
-      // );
+      }
     }
   }
 
@@ -102,8 +122,8 @@ function App() {
   const dvContainers = generateDurations();
 
   const waitForImages = async () => {
-    // await Promise.all(precacheAllImagesNeeded());
-    await precacheAllImagesNeeded();
+    await Promise.all(precacheAllImagesNeeded());
+    // await precacheAllImagesNeeded();
     setImgsLoaded(true);
   };
 
