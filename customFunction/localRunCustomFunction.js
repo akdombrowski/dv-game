@@ -1006,7 +1006,7 @@ const combineCodesAndPosArrayAndImgs = (
 };
 
 const localParams = {
-  numDVs: 10,
+  numDVs: 9,
   imgSize: 5,
   imgSizeRacing: 20,
   theme: "racing",

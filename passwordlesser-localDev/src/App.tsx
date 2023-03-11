@@ -6,7 +6,7 @@ import MotionContainer from "./MotionContainer";
 // for local dev
 const DV_IMG_SIZE = 5;
 const DV_IMG_SIZE_RACING = 20;
-const NUMBER_OF_DAVINCIS = 10;
+const NUMBER_OF_DAVINCIS = 9;
 const DV_IMG_WIDTH_VW = DV_IMG_SIZE.toString() + "vw";
 const DV_IMG_HEIGHT_VH = DV_IMG_SIZE.toString() + "vh";
 // const DV_IMG_SIZE = Number("{{global.variables.DV_IMG_SIZE}}");
@@ -33,12 +33,13 @@ const generateDurations = (): number[] => {
   let min = MIN_DUR;
   let max = MAX_DUR;
   if (theme.startsWith("racing")) {
-    min = 8;
-    max = 20;
+    min = 5;
+    max = 25;
   }
 
   for (let i = 0; i < NUMBER_OF_DAVINCIS; i++) {
     const duration = Math.random() * (max - min) + min;
+
     dvs.push(duration);
   }
 
