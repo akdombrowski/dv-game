@@ -282,7 +282,13 @@ function App() {
       className="content muscle-container sceneImg"
       style={bgImgLoaded ? { backgroundImage: "url(" + bgImg + ")" } : {}}
     >
-      <span>
+      <span
+        className={
+          theme === "racing" || theme === "ahhhhhh"
+            ? "darkInstructions"
+            : "lightInstructions"
+        }
+      >
         <h3>Kaptcha Me!</h3>
         <strong>I need to make sure you're not a bot.</strong>
         <p>
