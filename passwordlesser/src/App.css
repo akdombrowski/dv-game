@@ -178,3 +178,11 @@ input {
   min-width: 100%;
   min-height: 100%;
 }
+
+.darkInstructions {
+  color: #000000
+}
+
+.lightInstructions {
+  color: #ffffff
+}

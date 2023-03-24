@@ -280,6 +280,29 @@ function App() {
       className="content muscle-container sceneImg"
       style={bgImgLoaded ? { backgroundImage: "url(" + bgImg + ")" } : {}}
     >
+      <span
+        className={
+          theme === "racing" || theme === "ahhhhhh"
+            ? "darkInstructions"
+            : "lightInstructions"
+        }
+      >
+        <h3>Kaptcha Me!</h3>
+        <strong>I need to make sure you're not a bot.</strong>
+        <p>
+          There are a bunch of images of me with something pointing in one
+          direction.
+        </p>
+        <p>
+          There are a bunch of images of me with something pointing in another
+          direction.
+        </p>
+        <p>
+          In between where all of those images are pointing is a different image
+          of me.
+        </p>
+        <p>Click this image.</p>
+      </span>
       <h1 style={bgImgLoaded ? { display: "none" } : {}}>Loading...</h1>
       <div id="dvsContainer" className={calcFlexDirection()}>
         <form
