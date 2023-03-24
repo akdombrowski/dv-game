@@ -282,7 +282,7 @@ function App() {
     >
       <span
         className={
-          theme === "racing" || theme === "ahhhhhh"
+          theme.startsWith("racing") || theme.startsWith("ahhhhhh")
             ? "darkInstructions"
             : "lightInstructions"
         }
