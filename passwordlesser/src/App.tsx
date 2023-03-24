@@ -287,7 +287,7 @@ function App() {
             : "lightInstructions"
         }
       >
-        <h3>Kaptcha Me!</h3>
+        <h3 className="pt-3">Kaptcha Me!</h3>
         <strong>I need to make sure you're not a bot.</strong>
         <p>
           There are a bunch of images of me with something pointing in one
