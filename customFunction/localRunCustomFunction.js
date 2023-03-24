@@ -941,7 +941,7 @@ const combineCodesAndPosArrayAndImgs = (
 
   // inverse of percentage chance (percentage chance will be equal to 1 over
   // this number) for having another "oh" image show up
-  let chanceForOh = 10;
+  let chanceForOh = 5;
 
   // img options
   const imgOptions = getImgOptions(theme);
