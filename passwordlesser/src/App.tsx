@@ -290,8 +290,8 @@ function App() {
         <h3 className="pt-3">Kaptcha Me!</h3>
         <strong>I need to make sure you're not a bot.</strong>
         <p>
-          The images (of me) are all pointing at another image. Click that
-          image.
+          The images (of me) are all pointing at a particular image (of me).
+          Click that image.
         </p>
       </span>
       <h1 style={bgImgLoaded ? { display: "none" } : {}}>Loading...</h1>
