@@ -68,7 +68,7 @@ const precacheImage = (
   proms.push(
     new Promise<string>((resolve, reject) => {
       img.onload = () => {
-        console.log(imgSrc, "loaded");
+        // console.log(imgSrc, "loaded");
         resolve("loaded: " + imgSrc);
       };
       img.onerror = () => {
@@ -144,7 +144,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    waitForImages();
+    if (bgImgLoaded) {
+      waitForImages();
+    }
   }, [bgImgLoaded]);
 
   const resizeObserver = new ResizeObserver((entries) => {

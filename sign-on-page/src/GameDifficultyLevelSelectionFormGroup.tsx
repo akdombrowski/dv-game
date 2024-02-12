@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const GameDifficultyLevelSelectionFormGroup = (props: Props) => {
-  const [difficulty, setDifficulty] = useState("1");
+  const [difficulty, setDifficulty] = useState("3");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

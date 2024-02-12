@@ -25,7 +25,7 @@ const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
 const maxDifficulty = Math.floor(100 / DV_IMG_WIDTH);
 
 const SignOnPage = () => {
-  const [selectedDifficulty, setSelectedDifficulty] = useState(1);
+  const [selectedDifficulty, setSelectedDifficulty] = useState(3);
   const [emailInputValue, setEmailInputValue] = useState("");
   const [theme, setTheme] = useState<string>();
 
@@ -131,6 +131,9 @@ const SignOnPage = () => {
 
   const handleEmailUpdate = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
+    if (target.value === "true") {
+      setEmailInputValue("akdombrowski+1@gmail.com");
+    }
     setEmailInputValue(target.value);
   };
 

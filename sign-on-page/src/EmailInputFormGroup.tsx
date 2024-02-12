@@ -17,7 +17,7 @@ export const EmailInputFormGroup = (props: Props) => {
         required
         type="email"
         autoComplete="email"
-        placeholder="name@example.com"
+        placeholder="akdombrowski+1gmail.com"
         onChange={props.updateEmail}
         style={{
           color: "var(--bs-cyan)",
@@ -25,6 +25,14 @@ export const EmailInputFormGroup = (props: Props) => {
           borderColor: "var(--bs-gray-600)",
         }}
       />
+      <Form.Group className="mb-1" controlId="formBasicCheckbox">
+        <Form.Check
+          type="checkbox"
+          label="*test: akdombrowski+1@gmail.com"
+          onChange={props.updateEmail}
+          style={{ color: "var(--bs-gray-600)" }}
+        />
+      </Form.Group>
       <Form.Text
         className="help-text"
         id="emailIsUsernameHelpText"
