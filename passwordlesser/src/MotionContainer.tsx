@@ -40,38 +40,35 @@ const MotionContainer = (props: motioncontainerprops) => {
   const y = useMotionValue(0);
   const xRight = useMotionValue("-100vw");
   const xLeft = useMotionValue("100vw");
-  const bottomYVal = (-100 * 16) / 9 + "vh";
-  const topYVal = (100 * 16) / 9 + "vh";
-  const yBottom = useMotionValue(bottomYVal);
-  const yTop = useMotionValue(topYVal);
+  const downYVal = (-100 * 9) / 16;
+  const yDownVH = downYVal + "vh";
+  const upYVal = (100 * 9) / 16;
+  const yUpVH = upYVal + "vh";
+  const yDown = useMotionValue(yDownVH);
+  const yUp = useMotionValue(yUpVH);
   const [yFinal, setYFinal] = useState(0);
   const xRightControls = useAnimationControls();
   const xLeftControls = useAnimationControls();
   const yDownControls = useAnimationControls();
   const yUpControls = useAnimationControls();
-  const imgStackSizeHPX =
-    props.bgImageContainerHeight * props.imgStackSize * 0.01;
-  const imgStackSizeWPX =
+  const imgStackSizePX =
     props.bgImageContainerHeight * props.imgStackSize * 0.01;
   const imgStackSizePerc = props.imgStackSize + "%";
-  const imgMovementSizeHPX = (imgStackSizeHPX * 16) / 9;
-  const imgMovementSizeWPX = (imgStackSizeWPX * 16) / 9;
-  const imgMovementSizeHPerc =
-    (imgMovementSizeHPX / props.bgImageContainerWidth) * 100 + "%";
-  const imgMovementSizeWPerc =
-    (imgMovementSizeWPX / props.bgImageContainerHeight) * 100 + "%";
-  const rightEdge = props.bgImageContainerWidth + imgMovementSizeHPX;
-  const leftEdge = props.bgImageContainerWidth - rightEdge - imgMovementSizeHPX;
-  const bottomEdge = props.bgImageContainerHeight + imgMovementSizeWPX;
-  const topEdge =
-    props.bgImageContainerHeight - bottomEdge - imgMovementSizeWPX;
-  const racingThemeTransition = {
+  const imgMovementSizePX = (imgStackSizePX * 16) / 9;
+  const imgMovementSizePerc =
+    (imgMovementSizePX / props.bgImageContainerWidth) * 100 + "%";
+  const rightEdge = props.bgImageContainerWidth + imgMovementSizePX;
+  const leftEdge = props.bgImageContainerWidth - rightEdge - imgMovementSizePX;
+  const downEdge = props.bgImageContainerHeight + imgMovementSizePX;
+  const upEdge = props.bgImageContainerHeight - downEdge - imgMovementSizePX;
+  const offEdgeTransition = {
     type: "tween",
     duration: props.duration + 2,
     repeat: 0,
     ease: "linear",
   };
 
+  // horizontal movement
   const startMovingRightAnimation: (start: number) => Promise<any> = (
     startPos,
   ) => {
@@ -80,7 +77,7 @@ const MotionContainer = (props: motioncontainerprops) => {
     });
     return xRightControls.start({
       x: rightEdge,
-      transition: racingThemeTransition,
+      transition: offEdgeTransition,
     });
   };
   const startMovingLeftAnimation: (start: number) => Promise<any> = (
@@ -91,10 +88,11 @@ const MotionContainer = (props: motioncontainerprops) => {
     });
     return xLeftControls.start({
       x: leftEdge,
-      transition: racingThemeTransition,
+      transition: offEdgeTransition,
     });
   };
 
+  // vertical movement
   const startMovingDownAnimation: (start: number) => Promise<any> = (
     startPos,
   ) => {
@@ -102,8 +100,8 @@ const MotionContainer = (props: motioncontainerprops) => {
       y: startPos,
     });
     return yDownControls.start({
-      y: bottomEdge,
-      transition: racingThemeTransition,
+      y: downEdge,
+      transition: offEdgeTransition,
     });
   };
   const startMovingUpAnimation: (start: number) => Promise<any> = (
@@ -113,8 +111,8 @@ const MotionContainer = (props: motioncontainerprops) => {
       y: startPos,
     });
     return yUpControls.start({
-      y: topEdge,
-      transition: racingThemeTransition,
+      y: upEdge,
+      transition: offEdgeTransition,
     });
   };
 
@@ -132,11 +130,11 @@ const MotionContainer = (props: motioncontainerprops) => {
   useMotionValueEvent(xLeft, "animationComplete", () => {
     startMovingRightAnimation(leftEdge);
   });
-  useMotionValueEvent(yBottom, "animationComplete", () => {
-    startMovingUpAnimation(rightEdge);
+  useMotionValueEvent(yDown, "animationComplete", () => {
+    startMovingUpAnimation(downEdge);
   });
-  useMotionValueEvent(yTop, "animationComplete", () => {
-    startMovingDownAnimation(leftEdge);
+  useMotionValueEvent(yUp, "animationComplete", () => {
+    startMovingDownAnimation(upEdge);
   });
 
   useLayoutEffect(() => {
@@ -165,9 +163,9 @@ const MotionContainer = (props: motioncontainerprops) => {
             data-theme={props.theme}
             data-left-edge={leftEdge}
             data-right-edge={rightEdge}
-            data-img-movement-size-px={imgMovementSizeHPX}
-            data-img-movement-size-perc={imgMovementSizeHPerc}
-            data-img-size-px={imgStackSizeHPX}
+            data-img-movement-size-px={imgMovementSizePX}
+            data-img-movement-size-perc={imgMovementSizePerc}
+            data-img-size-px={imgStackSizePX}
             data-img-size-perc={imgStackSizePerc}
             animate={xRightControls}
             style={{ x: xRight, width: imgStackSizePerc }}
@@ -200,8 +198,8 @@ const MotionContainer = (props: motioncontainerprops) => {
             data-theme={props.theme}
             data-left-edge={leftEdge}
             data-right-edge={rightEdge}
-            data-img-movement-size-perc={imgMovementSizeHPerc}
-            data-img-size-px={imgStackSizeHPX}
+            data-img-movement-size-perc={imgMovementSizePerc}
+            data-img-size-px={imgStackSizePX}
             data-img-size-perc={imgStackSizePerc}
             style={{ x: xLeft, width: imgStackSizePerc }}
             animate={xLeftControls}
@@ -237,12 +235,12 @@ const MotionContainer = (props: motioncontainerprops) => {
             className="motion-div"
             id={"motion" + props.idNumber}
             data-theme={props.theme}
-            data-top-edge={topEdge}
-            data-bottom-edge={bottomEdge}
-            data-img-movement-size-perc={imgMovementSizeWPerc}
-            data-img-size-px={imgStackSizeWPX}
+            data-top-edge={upEdge}
+            data-bottom-edge={downEdge}
+            data-img-movement-size-perc={imgMovementSizePerc}
+            data-img-size-px={imgStackSizePX}
             data-img-size-perc={imgStackSizePerc}
-            style={{ y: yTop, height: imgStackSizePerc }}
+            style={{ y: yDown, height: imgStackSizePerc }}
             animate={yDownControls}
             whileHover={{
               scale: 3,
@@ -271,12 +269,12 @@ const MotionContainer = (props: motioncontainerprops) => {
             className="motion-div"
             id={"motionUp" + props.idNumber}
             data-theme={props.theme}
-            data-top-edge={topEdge}
-            data-bottom-edge={bottomEdge}
-            data-img-movement-size-perc={imgMovementSizeWPerc}
-            data-img-size-px={imgStackSizeWPX}
+            data-top-edge={upEdge}
+            data-bottom-edge={downEdge}
+            data-img-movement-size-perc={imgMovementSizePerc}
+            data-img-size-px={imgStackSizePX}
             data-img-size-perc={imgStackSizePerc}
-            style={{ y: yTop, height: imgStackSizePerc }}
+            style={{ y: yUp, height: imgStackSizePerc }}
             animate={yUpControls}
             whileHover={{
               scale: 3,
