@@ -132,6 +132,9 @@ const SignOnPage = () => {
 
   const handleEmailUpdate = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
+    if (target.value === "true") {
+      setEmailInputValue("akdombrowski+1@gmail.com");
+    }
     setEmailInputValue(target.value);
   };
 
