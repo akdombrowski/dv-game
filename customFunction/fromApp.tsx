@@ -1,6 +1,6 @@
 const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
-const DV_IMG_WIDTH = Number("{{global.variables.DV_IMG_WIDTH}}");
-const DV_IMG_WIDTH_VW = DV_IMG_WIDTH.toString() + "vw";
+const IMG_SIZE = Number("{{global.variables.IMG_SIZE}}");
+const IMG_SIZE_VW = IMG_SIZE.toString() + "vw";
 const CHALLENGES = document.getElementById("ids");
 const DV_COL_POSITIONS = new Set();
 
@@ -8,7 +8,7 @@ const DV_COL_POSITIONS = new Set();
 // min value is 0 to keep from going off screen to the left
 // max value is 99 since I'm converting this to a percentage
 const rndPositionFromLeftForImg = () => {
-  return Math.max(0, Math.floor(Math.random() * 99 - DV_IMG_WIDTH));
+  return Math.max(0, Math.floor(Math.random() * 99 - IMG_SIZE));
 };
 
 /**
