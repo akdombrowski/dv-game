@@ -1,3 +1,4 @@
+
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
@@ -18,24 +19,9 @@ const MAX_DUR = 8;
 // for local dev
 // const theme = "racing";
 // const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
-// const bgImg = "https://i.postimg.cc/DzjCwcwW/race-Track.webp";
+// const bgImg = "https://i.ibb.co/ystvSH8/race-Track.png";
 const theme = "{{global.variables.theme}}";
 const bgImg = "{{global.variables.themeSrc}}";
-
-type motioncontainerprops = {
-  idNumber: number;
-  duration: number;
-  challenge: string;
-  img: string;
-  handleClick: Function;
-  imgsLoaded: boolean;
-  bgImageContainerHeight: number;
-  bgImageContainerWidth: number;
-  theme: string;
-  imgStackSize: number;
-  movementSize: number;
-  moveDir: string;
-};
 
 /**
  * It generates an array of random numbers between MIN_DURATION and
@@ -47,13 +33,12 @@ const generateDurations = (): number[] => {
   let min = MIN_DUR;
   let max = MAX_DUR;
   if (theme.startsWith("racing")) {
-    min = 5;
-    max = 25;
+    min = 8;
+    max = 20;
   }
 
   for (let i = 0; i < NUMBER_OF_DAVINCIS; i++) {
     const duration = Math.random() * (max - min) + min;
-
     dvs.push(duration);
   }
 
@@ -63,21 +48,6 @@ const generateDurations = (): number[] => {
 const convertRenderingsToObj = () => {
   if (RENDERINGS) {
     return JSON.parse(RENDERINGS);
-    // if (typeof RENDERINGS === "string") {
-    //   try {
-    //     return JSON.parse(RENDERINGS);
-    //   } catch (e) {
-    //     throw new Error("Couldn't parse string of renderings.", { cause: e });
-    //   }
-    // } else {
-    //   try {
-    //     return JSON.parse(JSON.stringify(RENDERINGS));
-    //   } catch (e) {
-    //     throw new Error("This non-string can't be parse as a JSON object", {
-    //       cause: e,
-    //     });
-    //   }
-    // }
   } else {
     console.error("missing renderings");
   }
@@ -92,7 +62,7 @@ const renderings: {
 const precacheImage = (
   imgsSet: Set<string>,
   imgSrc: string,
-  proms: Promise<string>[],
+  proms: Promise<string>[]
 ) => {
   const img = new Image();
 
@@ -109,7 +79,7 @@ const precacheImage = (
         console.log("'", imgSrc, "' loading failed");
         reject("loading failed for image: " + imgSrc);
       };
-    }),
+    })
   );
 
   img.src = imgSrc;
@@ -179,10 +149,8 @@ function App() {
 
   useEffect(() => {
     if (bgImgLoaded) {
-      console.log("bg loaded proceed with images")
       waitForImages();
     }
-    console.log("bg DID NOT load yet")
   }, [bgImgLoaded]);
 
   const resizeObserver = new ResizeObserver((entries) => {
@@ -216,10 +184,10 @@ function App() {
   const updateValueAndAdvanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();
     const advFlowValue = document.getElementById(
-      "advFlowValue",
+      "advFlowValue"
     ) as HTMLInputElement;
     const advFlowSubmitBtn = document.getElementById(
-      "advFlowSubmitBtn",
+      "advFlowSubmitBtn"
     ) as HTMLInputElement;
 
     if (advFlowValue as HTMLInputElement) {
@@ -233,7 +201,7 @@ function App() {
     advFlowSubmitBtn?.click();
   };
 
-  const mappings = (dvContainers: number[]) => {
+  const mappingDVs = (dvContainers: number[]) => {
     let vwOrVH: string;
     let size: number;
     if (theme.startsWith("racing")) {
@@ -244,82 +212,58 @@ function App() {
       size = IMG_SIZE;
     }
 
-    // stackSize is either the height of the image if moving horizontally, or
-    // it's the width of the image if moving vertically. "stack" size meaning
-    // the size in the direction of the image stacking to fit in the play area
-    const stackSize = Math.floor(100 / dvContainers.length);
-    const movementSize = (stackSize * 16) / 9;
-
     return (
       <>
         {dvContainers.map((dur, i) => {
-          let style;
-          let rowOrClass;
-          let moveDir;
-          const challenge = renderings[i].value;
-          const img = renderings[i].img;
-
-          if (theme.startsWith("racing")) {
-            moveDir = "x";
-            style = {
-              top: renderings[i].pos.toString() + "%",
-              height: stackSize + "%",
-            };
-            rowOrClass = "rows";
-          } else {
-            moveDir = "y";
-            style = {
-              left: renderings[i].pos.toString() + "%",
-              width: stackSize + "%",
-            };
-            rowOrClass = "cols";
-          }
-
-          const props: motioncontainerprops = {
+          const props: {
+            idNumber: number;
+            duration: number;
+            challenge: string;
+            img: string;
+            handleClick: Function;
+            imgsLoaded: boolean;
+            bgImageContainerHeight: number;
+            bgImageContainerWidth: number;
+            theme: string;
+            imgSize: number;
+            vwOrVH: string;
+          } = {
             idNumber: i,
             duration: dur,
-            challenge: challenge,
-            img: img,
+            challenge: renderings[i].value,
+            img: renderings[i].img,
             handleClick: updateValueAndAdvanceFlow,
             imgsLoaded: imgsLoaded,
             bgImageContainerHeight: bgImageContainerHeight,
             bgImageContainerWidth: bgImageContainerWidth,
             theme: theme,
-            imgStackSize: stackSize,
-            movementSize: movementSize,
-            moveDir: moveDir,
+            imgSize: size,
+            vwOrVH: vwOrVH,
           };
 
+          let style;
+          let rowOrClass;
+          if (theme.startsWith("racing")) {
+            style = {
+              top: renderings[i].pos.toString() + "%",
+              height: size + "%",
+            };
+            rowOrClass = "dv-row";
+          } else {
+            style = {
+              left: renderings[i].pos.toString() + "%",
+              width: size + "%",
+            };
+            rowOrClass = "dv-col";
+          }
           return (
             <div
               id={"imgCol" + i}
               key={"imgCol" + i}
               className={rowOrClass}
-              data-id-number={i}
-              data-duration={dur}
-              data-imgs-loaded={imgsLoaded}
-              data-bg-image-container-height={bgImageContainerHeight}
-              data-bg-image-container-width={bgImageContainerWidth}
-              data-img-size={stackSize}
+              style={style}
             >
-              <form
-                id={"kaptcha-form" + i}
-                key={"kaptcha-form" + i}
-                className="form"
-                // action={checkChall}
-                action="/api/kaptchapi/challenge/check"
-                autoComplete="off"
-                method="POST"
-                noValidate
-              >
-                <input
-                  type="hidden"
-                  id={"chall" + i}
-                  name={"challenge"}
-                  value={challenge}
-                />
-                {MotionContainer(props)}
-              </form>
+              {MotionContainer(props)}
             </div>
           );
         })}
@@ -329,9 +273,9 @@ function App() {
 
   const calcFlexDirection = () => {
     if (theme.startsWith("racing")) {
-      return "horizontal-scene";
+      return "flex-child muscle-container dv-rows full-child";
     } else {
-      return "vertical-scene";
+      return "flex-child muscle-container dv-cols full-child";
     }
   };
 
@@ -339,12 +283,25 @@ function App() {
     <div
       id="mainContainer"
       ref={mainContainerRef}
-      className="main-container sceneImg"
+      className="content muscle-container sceneImg"
       style={bgImgLoaded ? { backgroundImage: "url(" + bgImg + ")" } : {}}
     >
       <h1 style={bgImgLoaded ? { display: "none" } : {}}>Loading...</h1>
       <div id="dvsContainer" className={calcFlexDirection()}>
-        {mappings(dvContainers)}
+        <form
+          id="captcha-dv-form"
+          className="flex-form full-child"
+          onSubmit={updateValueAndAdvanceFlow}
+        >
+          {mappingDVs(dvContainers)}
+        </form>
+        {/* need to show the following error as a popup or something
+        <p
+          className="text-danger mdi mdi-alert-circle"
+          data-id="feedback"
+          data-skcomponent="skerror"
+        ></p>
+        */}
       </div>
     </div>
   );
