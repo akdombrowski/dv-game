@@ -45,7 +45,8 @@ export const ThemeChooser = (props: Props) => {
         <Form.Check
           className="col-3 justify flex-wrap d-flex"
           type="radio"
-          id={theme + "-col"}
+          id={theme}
+          name={theme + "-col"}
         >
           <Row className="">
             <Col xs={2} className="">
