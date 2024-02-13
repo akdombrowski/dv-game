@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
+import Image from "react-bootstrap/Image";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { useState, SyntheticEvent, useEffect, ChangeEvent } from "react";
 import { GameDifficultyLevelSelectionFormGroup } from "./GameDifficultyLevelSelectionFormGroup";
@@ -40,7 +41,7 @@ const SignOnPage = () => {
   // specifically)
   useEffect(() => {
     const radioInput = document.querySelector(
-      "input[type=radio]"
+      "input[type=radio]",
     ) as HTMLInputElement;
 
     radioInput.checked = true;
@@ -49,13 +50,13 @@ const SignOnPage = () => {
 
   useEffect(() => {
     const advanceFlowInputEmail: HTMLElement | null = document.getElementById(
-      "advanceFlowInputEmail"
+      "advanceFlowInputEmail",
     );
     const advanceFlowInputDifficulty: HTMLElement | null =
       document.getElementById("advanceFlowInputDifficulty");
 
     const advanceFlowInputTheme: HTMLElement | null = document.getElementById(
-      "advanceFlowInputTheme"
+      "advanceFlowInputTheme",
     );
 
     if (advanceFlowInputEmail) {
@@ -80,7 +81,7 @@ const SignOnPage = () => {
 
   const clickAdvFlowBtn = () => {
     const advFlowBtn = document.getElementById(
-      "advanceFlowBtn"
+      "advanceFlowBtn",
     ) as HTMLInputElement;
     if (advFlowBtn) {
       advFlowBtn.click();
@@ -92,7 +93,7 @@ const SignOnPage = () => {
 
   const updateActionValue = (action: string) => {
     const advFlowActionElement = document.getElementById(
-      "advFlowAction"
+      "advFlowAction",
     ) as HTMLInputElement;
 
     if (advFlowActionElement) {
@@ -107,10 +108,10 @@ const SignOnPage = () => {
 
     // Check for values in the advance DV flow form inputs
     const advanceFlowInputEmailInputElement = document.getElementById(
-      "advanceFlowInputEmail"
+      "advanceFlowInputEmail",
     ) as HTMLInputElement;
     const advanceFlowInputDifficultyInputElement = document.getElementById(
-      "advanceFlowInputDifficulty"
+      "advanceFlowInputDifficulty",
     ) as HTMLInputElement;
 
     // Throw error if we're missing one of the input values we need to move forward
@@ -119,7 +120,7 @@ const SignOnPage = () => {
       !advanceFlowInputDifficultyInputElement?.value
     ) {
       throw new Error(
-        "Need values for both email and difficulty, but we're missing one or both"
+        "Need values for both email and difficulty, but we're missing one or both",
       );
     }
 
@@ -131,9 +132,6 @@ const SignOnPage = () => {
 
   const handleEmailUpdate = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
-    if (target.value === "true") {
-      setEmailInputValue("akdombrowski+1@gmail.com");
-    }
     setEmailInputValue(target.value);
   };
 
@@ -160,11 +158,19 @@ const SignOnPage = () => {
   return (
     <Container
       fluid
-      className="col-xs-10 col-md-8 col-lg-6 mx-auto my-5 py-5 align-content-around"
-      style={{ height: "100vh", backgroundColor: "var(--bs-dark)" }}
+      className="py-3 px-5 align-content-around"
+      style={{ backgroundColor: "var(--bs-dark)" }}
     >
-      <Row className="mb-4 h-10">
-        <Col className="col-md-10 col-lg-8 mx-auto">
+      <Row xs={3} className="m-1 h-10">
+        <Col xs={1}></Col>
+        <Col xs={1} className="">
+          <Image
+            src="https://i.postimg.cc/Xq7JXNYH/recaptcha-katpchame.webp"
+            fluid
+            thumbnail
+          ></Image>
+        </Col>
+        <Col xs={3} className="mx-auto">
           <h1
             className="display-5 text-center font-monospace"
             style={{ color: "var(--bs-cyan)" }}
@@ -174,7 +180,7 @@ const SignOnPage = () => {
         </Col>
       </Row>
 
-      <Row className="h-90">
+      <Row className="m-1 h-90">
         <Col>
           <Form id="signOnForm" onSubmit={advanceFlow}>
             <Stack gap={2} className="mb-4">
