@@ -4,13 +4,13 @@ import "./App.css";
 import MotionContainer from "./MotionContainer";
 
 // for local dev
-const DV_IMG_SIZE = 5;
-const DV_IMG_SIZE_RACING = 20;
+const IMG_SIZE = 6;
+const IMG_SIZE_RACING = 16;
 const NUMBER_OF_DAVINCIS = 9;
-const DV_IMG_WIDTH_VW = DV_IMG_SIZE.toString() + "vw";
-const DV_IMG_HEIGHT_VH = DV_IMG_SIZE.toString() + "vh";
-// const DV_IMG_SIZE = Number("{{global.variables.DV_IMG_SIZE}}");
-// const DV_IMG_SIZE_RACING = Number("{{global.variables.DV_IMG_SIZE_RACING}}");
+const IMG_SIZE_VW = IMG_SIZE.toString() + "vw";
+const IMG_HEIGHT_VH = IMG_SIZE.toString() + "vh";
+// const IMG_SIZE = Number("{{global.variables.IMG_SIZE}}");
+// const IMG_SIZE_RACING = Number("{{global.variables.IMG_SIZE_RACING}}");
 // const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
 const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DUR = 4;
@@ -202,10 +202,10 @@ function App() {
     let size: number;
     if (theme.startsWith("racing")) {
       vwOrVH = "vh";
-      size = DV_IMG_SIZE_RACING;
+      size = IMG_SIZE_RACING;
     } else {
       vwOrVH = "vw";
-      size = DV_IMG_SIZE;
+      size = IMG_SIZE;
     }
 
     return (

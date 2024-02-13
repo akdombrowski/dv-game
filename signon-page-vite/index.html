@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="/profileCropped2.svg"
+  />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>Kaptcha Me Sign On Page</title>
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div
+    id="root"
+    style="height: 100%; width: 100%;"
+  >
+    <form
+      id="advanceFlowForm"
+      className="p-0 m-0"
+    >
+      <input
+        type="hidden"
+        name="advanceFlowInputEmail"
+        id="advanceFlowInputEmail"
+      />
+      <input
+        type="hidden"
+        name="advanceFlowInputDifficulty"
+        id="advanceFlowInputDifficulty"
+      />
+      <input
+        type="hidden"
+        name="advanceFlowInputTheme"
+        id="advanceFlowInputTheme"
+      />
+      <input
+        type="hidden"
+        name="advFlowAction"
+        id="advFlowAction"
+      />
+      <button
+        id="advanceFlowBtn"
+        data-id="advanceFlowBtn"
+        type="submit"
+        data-skcomponent="skbutton"
+        data-skbuttontype="form-submit"
+        data-skbuttonvalue="submit"
+        data-skform="advanceFlowForm"
+        class="hidden"
+      ></button>
+    </form>
+    <div
+      id="app"
+      style="height: 100%; width: 100%;"
+    ></div>
+    <script
+      type="module"
+      src="/src/main.tsx"
+    ></script>
+</body>
+
+</html>

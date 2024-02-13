@@ -5,12 +5,12 @@ import "./App.css";
 import MotionContainer from "./MotionContainer";
 
 // for local dev
-// const DV_IMG_SIZE = 20;
-// const NUMBER_OF_DAVINCIS = 2;
-// const DV_IMG_WIDTH_VW = DV_IMG_SIZE.toString() + "vw";
-// const DV_IMG_HEIGHT_VH = DV_IMG_SIZE.toString() + "vh";
-const DV_IMG_SIZE = Number("{{global.variables.DV_IMG_SIZE}}");
-const DV_IMG_SIZE_RACING = Number("{{global.variables.DV_IMG_SIZE_RACING}}");
+// const IMG_SIZE = 5;
+// const IMG_SIZE_RACING = 11;
+const IMG_SIZE = Number("{{global.variables.IMG_SIZE}}");
+const IMG_SIZE_RACING = Number("{{global.variables.IMG_SIZE_RACING}}");
+const IMG_WIDTH_VW = IMG_SIZE.toString() + "vw";
+const IMG_HEIGHT_VH = IMG_SIZE.toString() + "vh";
 const NUMBER_OF_DAVINCIS = Number("{{global.variables.difficulty}}");
 const RENDERINGS = document.getElementById("renderings")?.innerText;
 const MIN_DUR = 4;
@@ -19,9 +19,24 @@ const MAX_DUR = 8;
 // for local dev
 // const theme = "racing";
 // const bgImg = "https://i.ibb.co/yWrB3tt/anthony-double-trouble.png";
-// const bgImg = "https://i.ibb.co/ystvSH8/race-Track.png";
+// const bgImg = "https://i.postimg.cc/DzjCwcwW/race-Track.webp";
 const theme = "{{global.variables.theme}}";
 const bgImg = "{{global.variables.themeSrc}}";
+
+type motioncontainerprops = {
+  idNumber: number;
+  duration: number;
+  challenge: string;
+  img: string;
+  handleClick: Function;
+  imgsLoaded: boolean;
+  bgImageContainerHeight: number;
+  bgImageContainerWidth: number;
+  theme: string;
+  imgStackSize: number;
+  movementSize: number;
+  moveDir: string;
+};
 
 /**
  * It generates an array of random numbers between MIN_DURATION and
@@ -33,12 +48,13 @@ const generateDurations = (): number[] => {
   let min = MIN_DUR;
   let max = MAX_DUR;
   if (theme.startsWith("racing")) {
-    min = 8;
-    max = 20;
+    min = 5;
+    max = 25;
   }
 
   for (let i = 0; i < NUMBER_OF_DAVINCIS; i++) {
     const duration = Math.random() * (max - min) + min;
+
     dvs.push(duration);
   }
 
@@ -48,6 +64,21 @@ const generateDurations = (): number[] => {
 const convertRenderingsToObj = () => {
   if (RENDERINGS) {
     return JSON.parse(RENDERINGS);
+    // if (typeof RENDERINGS === "string") {
+    //   try {
+    //     return JSON.parse(RENDERINGS);
+    //   } catch (e) {
+    //     throw new Error("Couldn't parse string of renderings.", { cause: e });
+    //   }
+    // } else {
+    //   try {
+    //     return JSON.parse(JSON.stringify(RENDERINGS));
+    //   } catch (e) {
+    //     throw new Error("This non-string can't be parse as a JSON object", {
+    //       cause: e,
+    //     });
+    //   }
+    // }
   } else {
     console.error("missing renderings");
   }
@@ -62,7 +93,7 @@ const renderings: {
 const precacheImage = (
   imgsSet: Set<string>,
   imgSrc: string,
-  proms: Promise<string>[]
+  proms: Promise<string>[],
 ) => {
   const img = new Image();
   imgsSet.add(imgSrc);
@@ -73,10 +104,10 @@ const precacheImage = (
         resolve("loaded: " + imgSrc);
       };
       img.onerror = () => {
-        console.log(imgSrc, "loading failed");
+        console.error(imgSrc, ": image loading failed");
         reject("loading failed for image: " + imgSrc);
       };
-    })
+    }),
   );
 
   img.src = imgSrc;
@@ -146,8 +177,10 @@ function App() {
 
   useEffect(() => {
     if (bgImgLoaded) {
+      console.log("bg loaded proceed with images")
       waitForImages();
     }
+    console.log("bg DID NOT load yet")
   }, [bgImgLoaded]);
 
   const resizeObserver = new ResizeObserver((entries) => {
@@ -181,10 +214,10 @@ function App() {
   const updateValueAndAdvanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();
     const advFlowValue = document.getElementById(
-      "advFlowValue"
+      "advFlowValue",
     ) as HTMLInputElement;
     const advFlowSubmitBtn = document.getElementById(
-      "advFlowSubmitBtn"
+      "advFlowSubmitBtn",
     ) as HTMLInputElement;
 
     if (advFlowValue as HTMLInputElement) {
@@ -198,69 +231,93 @@ function App() {
     advFlowSubmitBtn?.click();
   };
 
-  const mappingDVs = (dvContainers: number[]) => {
+  const mappings = (dvContainers: number[]) => {
     let vwOrVH: string;
     let size: number;
     if (theme.startsWith("racing")) {
       vwOrVH = "vh";
-      size = DV_IMG_SIZE_RACING;
+      size = IMG_SIZE_RACING;
     } else {
       vwOrVH = "vw";
-      size = DV_IMG_SIZE;
+      size = IMG_SIZE;
     }
+
+    // stackSize is either the height of the image if moving horizontally, or
+    // it's the width of the image if moving vertically. "stack" size meaning
+    // the size in the direction of the image stacking to fit in the play area
+    const stackSize = Math.floor(100 / dvContainers.length);
+    const movementSize = (stackSize * 16) / 9;
 
     return (
       <>
         {dvContainers.map((dur, i) => {
-          const props: {
-            idNumber: number;
-            duration: number;
-            challenge: string;
-            img: string;
-            handleClick: Function;
-            imgsLoaded: boolean;
-            bgImageContainerHeight: number;
-            bgImageContainerWidth: number;
-            theme: string;
-            imgSize: number;
-            vwOrVH: string;
-          } = {
+          let style;
+          let rowOrClass;
+          let moveDir;
+          const challenge = renderings[i].value;
+          const img = renderings[i].img;
+
+          if (theme.startsWith("racing")) {
+            moveDir = "x";
+            style = {
+              top: renderings[i].pos.toString() + "%",
+              height: stackSize + "%",
+            };
+            rowOrClass = "rows";
+          } else {
+            moveDir = "y";
+            style = {
+              left: renderings[i].pos.toString() + "%",
+              width: stackSize + "%",
+            };
+            rowOrClass = "cols";
+          }
+
+          const props: motioncontainerprops = {
             idNumber: i,
             duration: dur,
-            challenge: renderings[i].value,
-            img: renderings[i].img,
+            challenge: challenge,
+            img: img,
             handleClick: updateValueAndAdvanceFlow,
             imgsLoaded: imgsLoaded,
             bgImageContainerHeight: bgImageContainerHeight,
             bgImageContainerWidth: bgImageContainerWidth,
             theme: theme,
-            imgSize: size,
-            vwOrVH: vwOrVH,
+            imgStackSize: stackSize,
+            movementSize: movementSize,
+            moveDir: moveDir,
           };
 
-          let style;
-          let rowOrClass;
-          if (theme.startsWith("racing")) {
-            style = {
-              top: renderings[i].pos.toString() + "%",
-              height: size + "%",
-            };
-            rowOrClass = "dv-row";
-          } else {
-            style = {
-              left: renderings[i].pos.toString() + "%",
-              width: size + "%",
-            };
-            rowOrClass = "dv-col";
-          }
           return (
             <div
               id={"imgCol" + i}
               key={"imgCol" + i}
               className={rowOrClass}
-              style={style}
+              data-id-number={i}
+              data-duration={dur}
+              data-imgs-loaded={imgsLoaded}
+              data-bg-image-container-height={bgImageContainerHeight}
+              data-bg-image-container-width={bgImageContainerWidth}
+              data-img-size={stackSize}
             >
-              {MotionContainer(props)}
+              <form
+                id={"kaptcha-form" + i}
+                key={"kaptcha-form" + i}
+                className="form"
+                // action={checkChall}
+                action="/api/kaptchapi/challenge/check"
+                autoComplete="off"
+                method="POST"
+                noValidate
+              >
+                <input
+                  type="hidden"
+                  id={"chall" + i}
+                  name={"challenge"}
+                  value={challenge}
+                />
+                {MotionContainer(props)}
+              </form>
             </div>
           );
         })}
@@ -270,9 +327,9 @@ function App() {
 
   const calcFlexDirection = () => {
     if (theme.startsWith("racing")) {
-      return "flex-child muscle-container dv-rows full-child";
+      return "horizontal-scene";
     } else {
-      return "flex-child muscle-container dv-cols full-child";
+      return "vertical-scene";
     }
   };
 
@@ -280,25 +337,12 @@ function App() {
     <div
       id="mainContainer"
       ref={mainContainerRef}
-      className="content muscle-container sceneImg"
+      className="main-container sceneImg"
       style={bgImgLoaded ? { backgroundImage: "url(" + bgImg + ")" } : {}}
     >
       <h1 style={bgImgLoaded ? { display: "none" } : {}}>Loading...</h1>
       <div id="dvsContainer" className={calcFlexDirection()}>
-        <form
-          id="captcha-dv-form"
-          className="flex-form full-child"
-          onSubmit={updateValueAndAdvanceFlow}
-        >
-          {mappingDVs(dvContainers)}
-        </form>
-        {/* need to show the following error as a popup or something
-        <p
-          className="text-danger mdi mdi-alert-circle"
-          data-id="feedback"
-          data-skcomponent="skerror"
-        ></p>
-        */}
+        {mappings(dvContainers)}
       </div>
     </div>
   );
