@@ -160,8 +160,15 @@ const SignOnPage = () => {
         backgroundColor: "var(--bs-dark)",
       }}
     >
-      <Row className="h-100 align-items-center">
-        <Col xs={2} md={3} lg={4} xl={5} className="h-100 align-content-center">
+      <Row className="px-5 h-100 align-items-center">
+        <Col
+          xs={12}
+          sm={12}
+          md={12}
+          lg={6}
+          xl={7}
+          className="px-5 py-1 h-100 align-content-center"
+        >
           <Row className="h-100 align-content-center row-gap-5">
             {/* <Row xs={1} className=""> */}
             <Col
@@ -284,7 +291,14 @@ const SignOnPage = () => {
           </Row>
         </Col>
 
-        <Col xs={10} md={9} lg={8} xl={7} className="h-100">
+        <Col
+          xs={12}
+          sm={12}
+          md={12}
+          lg={6}
+          xl={5}
+          className="px-xs-5 py-sm-5 py-md-5 px-lg-4 px-xl-3 py-5 h-100"
+        >
           <Row className="h-100">
             <Col className="justify-content-center align-items-center d-flex">
               <Image
