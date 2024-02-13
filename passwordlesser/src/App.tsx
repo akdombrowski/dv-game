@@ -1,4 +1,3 @@
-
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
@@ -62,7 +61,7 @@ const renderings: {
 const precacheImage = (
   imgsSet: Set<string>,
   imgSrc: string,
-  proms: Promise<string>[]
+  proms: Promise<string>[],
 ) => {
   const img = new Image();
 
@@ -79,7 +78,7 @@ const precacheImage = (
         console.log("'", imgSrc, "' loading failed");
         reject("loading failed for image: " + imgSrc);
       };
-    })
+    }),
   );
 
   img.src = imgSrc;
@@ -184,10 +183,10 @@ function App() {
   const updateValueAndAdvanceFlow = (e: SyntheticEvent) => {
     e.preventDefault();
     const advFlowValue = document.getElementById(
-      "advFlowValue"
+      "advFlowValue",
     ) as HTMLInputElement;
     const advFlowSubmitBtn = document.getElementById(
-      "advFlowSubmitBtn"
+      "advFlowSubmitBtn",
     ) as HTMLInputElement;
 
     if (advFlowValue as HTMLInputElement) {
