@@ -12,17 +12,8 @@
         "<node_internals>/**"
       ],
       "type": "node",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "outputCapture": "console",
     },
-
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Program",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}/img-base64/convertImgToBase64.js"
-    }
   ]
 }
