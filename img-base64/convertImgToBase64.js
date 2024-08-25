@@ -223,6 +223,7 @@ const compareB64EncBuffers = async (
 
   const diffChars1 = [];
   const diffChars2 = [];
+  let numCharsDiff = 0;
 
   for (let i = 0; i < maxLen; i++) {
     let c1,
@@ -234,6 +235,9 @@ const compareB64EncBuffers = async (
       c2 = b64Arr2[i];
     }
 
+    // since only one condition in the if else block below does NOT increment
+    // the count, we can just lower the count if we satisfy that condition
+    numCharsDiff++;
     // c2 has to exist since we must be using the max length from array 2 which
     // is longer than array 1, hence why c1 doesn't exist
     if (!c1) {
@@ -255,6 +259,7 @@ const compareB64EncBuffers = async (
       diffChars1.push(colorizeChar(c1));
       diffChars2.push(colorizeChar(c2));
     } else {
+      numCharsDiff--;
       b64Arr1[i] = dimChar(c1);
       b64Arr2[i] = dimChar(c2);
 
@@ -275,20 +280,12 @@ const compareB64EncBuffers = async (
 
   console.log();
   console.log(
-    `(${name1 ?? "image 1"} === ${name2 ?? "image 2"}) \t=\t`,
+    `("${name1 ?? "image 1"}" === "${name2 ?? "image 2"}") \t=\t`,
     rImgsSame,
   );
-  console.log(
-    `b64 lengths = ${b64Arr1.length}; \t b64 length = ${b64Arr2.length}`,
-  );
+  console.log(`b64 lengths = ${b64Arr1.length} and ${b64Arr2.length}`);
   console.log();
 
-  // printTerminalWidthChars(b64Arr1, b64Arr2);
-  // printTerminalWidthChars(b64Arr1, b64Arr2);
-
-  // const rows = 4;
-
-  // const startIndex = 2000;
   const startIndex = startingCharIndex || 0;
   const endIndex = rows
     ? startIndex + getTerminalWidth() * rows - rows * 3
@@ -297,14 +294,6 @@ const compareB64EncBuffers = async (
         ? maxLen
         : startIndex + getTerminalWidth() - 3));
 
-  // print2WordsTerminalWidthChars(
-  //   b64Arr1.slice(startIndex, endIndex),
-  //   b64Arr2.slice(startIndex, endIndex),
-  // );
-
-  // printTerminalWidthChars(b64Arr1.slice(0, 1000), b64Arr2.slice(0, 1000));
-  // printWordTerminalWidthChars(b64Arr1);
-  // printWordTerminalWidthChars(b64Arr2);
   const n1 = name1 || "";
   const n2 = name2 || "";
   if (toStdOut) {
@@ -316,7 +305,7 @@ const compareB64EncBuffers = async (
     console.log();
   }
 
-  return { rImgsSame, diffChars: [diffChars1, diffChars2] };
+  return { rImgsSame, diffChars: [diffChars1, diffChars2], numCharsDiff };
 };
 
 const compareFilesB64Enc = async (
@@ -333,8 +322,11 @@ const compareFilesB64Enc = async (
   const b64Str2 = await b64EncFile(fd2, true);
   const name1 = getFilenameFromPath(filename);
   const name2 = getFilenameFromPath(filename2);
+  const len1 = b64Str1.length;
+  const len2 = b64Str2.length;
+  const maxLen = Math.max(len1, len2);
 
-  const { rImgsSame, diffChars } = await compareB64EncBuffers(
+  const { rImgsSame, diffChars, numCharsDiff } = await compareB64EncBuffers(
     toStdOut,
     b64Str1,
     b64Str2,
@@ -345,85 +337,20 @@ const compareFilesB64Enc = async (
     rows,
   );
 
-  console.log(diffChars[0].join(""));
+  const percentDifferent = Number((numCharsDiff / maxLen) * 100).toPrecision(2);
+
+  // includes missing chars if one's length is shorter than the other, so the
+  // possible chars that could be the same is the same as the max length of both
+  // b64 encoded imgs
+  console.log(`${percentDifferent}% of chars differ`);
   console.log();
-  console.log(diffChars[1].join(""));
-  console.log();
-  // const rImgsSame = b64Str1 === b64Str2;
 
-  // const b64Arr1 = Array.from(b64Str1);
-  // const b64Arr1Len = b64Arr1.length;
-
-  // const b64Arr2 = Array.from(b64Str2);
-  // const b64Arr2Len = b64Arr2.length;
-
-  // const maxLen = Math.max(b64Arr1Len, b64Arr2Len);
-
-  // for (let i = 0; i < maxLen; i++) {
-  //   let c1,
-  //     c2 = "";
-  //   if (i < b64Arr1Len) {
-  //     c1 = b64Arr1[i];
-  //   }
-  //   if (i < b64Arr2Len) {
-  //     c2 = b64Arr2[i];
-  //   }
-
-  //   // c2 has to exist since we must be using the max length from array 2 which
-  //   // is longer than array 1, hence why c1 doesn't exist
-  //   if (!c1) {
-  //     b64Arr2[i] = colorizeChar(c2);
-  //   } else if (!c2) {
-  //     // similar situation here as above conditional except we also get the
-  //     // benefit of having verified c1 exists by virtue of that conditional of
-  //     // this if else statement failing and falling through to this one
-  //     b64Arr1[i] = colorizeChar(c1);
-  //   } else if (c1 !== c2) {
-  //     b64Arr1[i] = colorizeChar(c1);
-  //     b64Arr2[i] = colorizeChar(c2);
-  //   } else {
-  //     b64Arr1[i] = dimChar(c1);
-  //     b64Arr2[i] = dimChar(c2);
-  //   }
-  // }
-  // // b64Arr1.forEach((c1, i, arr) => {
-  // //   if (c1 !== b64Arr2[i]) {
-  // //     arr[i] = colorizeChar(c1);
-  // //     b64Arr2[i] = colorizeChar(b64Arr2[i]);
-  // //   }
-  // // });
-
-  // console.log();
-  // console.log("(image 1 b64 encoded == image 2 b64 encoded) \t=\t", rImgsSame);
-  // console.log(
-  //   `word1 length = ${b64Arr1.length} \t word2 length = ${b64Arr2.length}`,
-  // );
-  // console.log();
-
-  // // printTerminalWidthChars(b64Arr1, b64Arr2);
-  // // printTerminalWidthChars(b64Arr1, b64Arr2);
-
-  // // const rows = 4;
-
-  // // const startIndex = 2000;
-  // const startIndex = startingCharIndex;
-  // const endIndex = startIndex + getTerminalWidth() * rows - rows * 3;
-
-  // // print2WordsTerminalWidthChars(
-  // //   b64Arr1.slice(startIndex, endIndex),
-  // //   b64Arr2.slice(startIndex, endIndex),
-  // // );
-
-  // // printTerminalWidthChars(b64Arr1.slice(0, 1000), b64Arr2.slice(0, 1000));
-  // // printWordTerminalWidthChars(b64Arr1);
-  // // printWordTerminalWidthChars(b64Arr2);
-
-  // console.log("1st (first 5000 chars)");
-  // console.log(b64Arr1.slice(0, 5000).join("") + "...");
-  // console.log();
-  // console.log("2nd (first 5000 chars)");
-  // console.log(b64Arr2.slice(0, 5000).join("") + "...");
-  // console.log();
+  if (!toStdOut) {
+    console.log(diffChars[0].join(""));
+    console.log();
+    console.log(diffChars[1].join(""));
+    console.log();
+  }
 
   return rImgsSame;
 };
@@ -434,7 +361,6 @@ try {
   let toonmeR1;
   let toonmeR2;
   if (process.argv.length > 2) {
-    console.log("uses args from stdIn", process.argv[2], process.argv[3]);
     toonmeR1 = process.argv[2];
     toonmeR2 = process.argv[3];
   } else {
@@ -443,7 +369,14 @@ try {
     toonmeR2 =
       "/home/adombrowski/workspace/dv-game/img-base64/toonme-final/right/toonme_eda3e3_2.png";
   }
-  const rImgsSame = await compareFilesB64Enc(false, toonmeR1, toonmeR2, 0);
+  const rImgsSame = await compareFilesB64Enc(
+    true,
+    toonmeR1,
+    toonmeR2,
+    0,
+    null,
+    4
+  );
 } catch (err) {
   console.error(err);
 }
