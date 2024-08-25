@@ -358,21 +358,21 @@ const compareFilesB64Enc = async (
 try {
   // convertDir(DIR);
   // convert(FILE);
-  let toonmeR1;
-  let toonmeR2;
+  let kmR1;
+  let kmR2;
   if (process.argv.length > 2) {
-    toonmeR1 = process.argv[2];
-    toonmeR2 = process.argv[3];
+    kmR1 = process.argv[2];
+    kmR2 = process.argv[3];
   } else {
-    toonmeR1 =
+    kmR1 =
       "/home/adombrowski/workspace/dv-game/img-base64/toonme-final/right/toonme_eda3e3_1.png";
-    toonmeR2 =
+    kmR2 =
       "/home/adombrowski/workspace/dv-game/img-base64/toonme-final/right/toonme_eda3e3_2.png";
   }
   const rImgsSame = await compareFilesB64Enc(
     true,
-    toonmeR1,
-    toonmeR2,
+    kmR1,
+    kmR2,
     0,
     null,
     4
