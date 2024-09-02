@@ -367,11 +367,12 @@ try {
     kmR1 =
       //     "/home/adombrowski/workspace/dv-game/img-base64/toonme-final/right/toonme_eda3e3_1.png";
       // "/home/adombrowski/workspace/dv-game/img-base64/Android_Robot_official.png";
-      "/home/adombrowski/workspace/dv-game/img-base64/bugdroid-ROG.png";
+      "/home/adombrowski/workspace/dv-game/img-base64/bugdroid/r/bugdroid-ROG.png";
     kmR2 =
       // "/home/adombrowski/workspace/dv-game/img-base64/toonme-final/right/toonme_eda3e3_2.png";
       // "/home/adombrowski/workspace/dv-game/img-base64/Android_Robot_official-2.png";
-      "/home/adombrowski/workspace/dv-game/img-base64/bugdroid-R1.png";
+      // "/home/adombrowski/workspace/dv-game/img-base64/bugdroid-R1.png";
+      "/home/adombrowski/workspace/dv-game/img-base64/bugdroid/r/bugdroid-R2.png";
   }
   const rImgsSame = await compareFilesB64Enc(true, kmR1, kmR2, 0, null, 4);
 } catch (err) {
