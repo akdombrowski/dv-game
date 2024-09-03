@@ -1,0 +1,21 @@
+kaptcha-me-rename-20240903_103830
+bugdroid-R1.png                -> kaptcha-me-5178197e-dac2-410c-aa77-135201582372.png
+bugdroid-R2.png                -> kaptcha-me-ad46d666-0490-40ea-8fa2-5f5f28f09624.png
+bugdroid-R3.png                -> kaptcha-me-d6a2ef84-300a-4e11-92e8-3a887467865c.png
+bugdroid-R4.png                -> kaptcha-me-1ca31859-c12b-44c9-9d6a-71797a1b09a9.png
+bugdroid-R5.png                -> kaptcha-me-5e320d23-2de8-4fcc-ac75-24e7e56bc7fc.png
+bugdroid-R6.png                -> kaptcha-me-041a6e22-9d2d-406e-8688-0f4c12016c74.png
+bugdroid-R7.png                -> kaptcha-me-076457ad-a674-442e-9dcc-f034bb9fa73b.png
+bugdroid-R8.png                -> kaptcha-me-ff5d7e56-5f95-4024-b5ec-fe9a7b9ae5b7.png
+bugdroid-ROG.png               -> kaptcha-me-ea1951f8-fef8-4ad4-b678-1a3797dcdb4d.png
+
+kaptcha-me-rename-20240903_103820/
+bugdroid-L1.png                -> kaptcha-me-4eb333fb-1859-437b-b5a6-3b2ddb411b4f.png
+bugdroid-L2.png                -> kaptcha-me-0498cfb5-adfc-416f-bda6-ca4ba1fcc5ec.png
+bugdroid-L3.png                -> kaptcha-me-2ff976c0-d9f9-4495-ae20-b38ce635d035.png
+bugdroid-L4.png                -> kaptcha-me-3d534f49-db29-40f3-a881-c601d9a6d590.png
+bugdroid-L5.png                -> kaptcha-me-dade0abe-512a-4ef5-bd44-ee95ef8a0343.png
+bugdroid-L6.png                -> kaptcha-me-6add93b7-9788-4c30-809d-7318de4ddb4a.png
+bugdroid-L7.png                -> kaptcha-me-8b651348-e450-4bc6-aa3e-1bc056cb1e86.png
+bugdroid-L8.png                -> kaptcha-me-14fc59c2-c68e-439e-bff0-2f133fa1adcb.png
+bugdroid-LOG.png               -> kaptcha-me-75ba10ea-b7b8-4e38-b66d-713e7b3f430a.png
