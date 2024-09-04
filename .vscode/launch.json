@@ -5,6 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Launch via yarn",
+      "request": "launch",
+      "runtimeArgs": [
+        "dev",
+      ],
+      "runtimeExecutable": "yarn",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+    {
       "name": "convertImgToBase64",
       "program": "${workspaceFolder}/img-base64/convertImgToBase64.js",
       "request": "launch",

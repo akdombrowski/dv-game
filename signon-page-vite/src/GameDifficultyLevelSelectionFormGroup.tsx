@@ -1,19 +1,23 @@
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 interface Props {
-  maxDifficulty: number;
-  difficultySelectedFn: ChangeEventHandler<HTMLInputElement>;
+  defaultDifficulty?: number;
+  maxDifficulty?: number;
+  difficultySelectedFn: (d: number) => void;
 }
 
 export const GameDifficultyLevelSelectionFormGroup = (props: Props) => {
-  const [difficulty, setDifficulty] = useState("3");
+  const [difficulty, setDifficulty] = useState<number>(
+    props.defaultDifficulty ?? 10,
+  );
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setDifficulty(e.target.value);
-    props.difficultySelectedFn(e);
+    const diff = Number.parseInt(e.target.value);
+    setDifficulty(diff);
+    props.difficultySelectedFn(diff);
   };
 
   return (
@@ -30,7 +34,7 @@ export const GameDifficultyLevelSelectionFormGroup = (props: Props) => {
         className="px-1"
         defaultValue={difficulty}
         min={1}
-        max={props.maxDifficulty}
+        max={props.maxDifficulty ?? 20}
         onChange={handleChange}
       ></Form.Range>
     </Form.Group>

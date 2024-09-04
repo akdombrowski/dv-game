@@ -8,7 +8,35 @@
 seeingDouble, ahhhhhh, racing, anthroid
 ```
 
-### escaped themes object
+### flow instance vars
+
+```js
+themeBGs = "https://i.postimg.cc/HxhXYXj2/double-Trouble.webp, https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp, https://i.postimg.cc/DzjCwcwW/raceTrack.webp, https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png";
+themes = "{\"0\":{\"name\":\"seeingDouble\",\"src\":\"https://i.postimg.cc/HxhXYXj2/double-Trouble.webp\"},\"1\":{\"name\":\"ahhhhhh\",\"src\":\"https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp\"},\"2\":{\"name\":\"racing\",\"src\":\"https://i.postimg.cc/DzjCwcwW/raceTrack.webp\"},\"3\":{\"name\":\"anthroid\",\"src\":\"https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png\"}}";
+themeNames = "seeingDouble, ahhhhhh, racing, anthroid";
+```
+
+### *themeBGs* (flow instance var)
+
+```
+https://i.postimg.cc/HxhXYXj2/double-Trouble.webp, https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp, https://i.postimg.cc/DzjCwcwW/raceTrack.webp, https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png
+```
+
+
+
+```
+// *w/ line breaks added for readability:
+
+https://i.postimg.cc/HxhXYXj2/double-Trouble.webp,
+https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp,
+https://i.postimg.cc/DzjCwcwW/raceTrack.webp,
+https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png
+```
+
+### *themes* 
+
+- (flow instance var)
+-  escaped themes object
 
 ```
 {\"0\":{\"name\":\"seeingDouble\",\"src\":\"https://i.postimg.cc/HxhXYXj2/double-Trouble.webp\"},\"1\":{\"name\":\"ahhhhhh\",\"src\":\"https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp\"},\"2\":{\"name\":\"racing\",\"src\":\"https://i.postimg.cc/DzjCwcwW/raceTrack.webp\"},\"3\":{\"name\":\"anthroid\",\"src\":\"https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png\"}}
