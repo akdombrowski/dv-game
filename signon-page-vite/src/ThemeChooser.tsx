@@ -5,10 +5,19 @@ import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+export interface IThemes {
+  [key: string]: ITheme;
+}
+export interface ITheme {
+  name: string;
+  src: string;
+}
+
 interface Props {
   updateTheme: ChangeEventHandler;
-  themeNames: Array<string>;
-  themeBGs: Array<string>;
+  themeNames: string[];
+  themeBGs: string[];
+  themes: IThemes;
 }
 
 const FEEDBACK = [
@@ -19,19 +28,11 @@ const FEEDBACK = [
 
 export const ThemeChooser = (props: Props) => {
   const themeOptsRender = () => {
-    let themes = props.themeNames;
-    let bgs = props.themeBGs;
-    const bgsLinks = {
-      seeingDouble: "https://i.postimg.cc/HxhXYXj2/double-Trouble.webp",
-      ahhhhhh: "https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp",
-      racing: "https://i.postimg.cc/DzjCwcwW/race-Track.webp",
-      anthroid: "https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png",
-      bitwarden: "https://i.postimg.cc/cCKzR6p2/black-BG-bitwarden.webp",
-    };
-    if (!!themes?.length || !!bgs?.length) {
-      themes = Object.keys(bgsLinks);
-      bgs = Object.values(bgsLinks);
-    }
+    const { themes } = props;
+
+    // if (Object.entries(themes).length <= 1 || bgs.length <= 1) {
+    //   bgs = Object.values(bgsLinks);
+    // }
     // const numThemes =
     //   props.themeNames.length === props.themeBGs.length
     //     ? props.themeNames.length
@@ -41,13 +42,14 @@ export const ThemeChooser = (props: Props) => {
     // const numRows = numThemes / numThemesPerRow;
     // const heightPerc = 100 / numRows + "%";
 
-    return themes.map((theme, i) => {
+    return Object.values(themes).map((theme, i) => {
       return (
         <Form.Check
           className="col-3 justify flex-wrap d-flex"
           type="radio"
-          id={theme}
-          name={theme + "-col"}
+          id={theme.name}
+          key={theme.name + `-${i}`}
+          name={theme.name + "-col"}
         >
           <Row className="">
             <Col xs={2} className="">
@@ -55,14 +57,14 @@ export const ThemeChooser = (props: Props) => {
                 type="radio"
                 onChange={props.updateTheme}
                 name="theme"
-                aria-describedby={theme + "-label"}
+                aria-describedby={theme.name + "-label"}
               />
               <Form.Check.Label
-                id={theme[i] + "-label"}
+                id={theme.name + "-label"}
                 style={{ color: "var(--bs-light)" }}
-                htmlFor={theme}
+                htmlFor={theme.name}
               >
-                {theme}
+                {theme.name}
               </Form.Check.Label>
             </Col>
           </Row>
@@ -72,7 +74,7 @@ export const ThemeChooser = (props: Props) => {
               id="theme-img-wrapper-row"
               className="justify-content-center align-items-center d-flex"
             >
-              <Image fluid src={bgs[i]}></Image>
+              <Image fluid src={theme.src}></Image>
             </Col>
             <Form.Control.Feedback
               type="valid"

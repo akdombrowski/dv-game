@@ -9,21 +9,46 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { useState, SyntheticEvent, useEffect, ChangeEvent } from "react";
 import { GameDifficultyLevelSelectionFormGroup } from "./GameDifficultyLevelSelectionFormGroup";
 import { EmailInputFormGroup } from "./EmailInputFormGroup";
-import { ThemeChooser } from "./ThemeChooser";
+import { IThemes, ThemeChooser } from "./ThemeChooser";
 
 // for local dev
 // const includeRegistration = true;
 // const themes = { \"0\": {\"name\": \"seeingDouble\", \"src\": \"https://i.ibb.co/yWrB3tt/anthony-double-trouble.png\"}, \"1\": {\"name\": \"ahhhhhh\", \"src\": \"https://i.ibb.co/4dgrH9T/groupphoto3.png\"}, \"2\": {\"name\": \"racing\", \"src\": \"https://i.ibb.co/ystvSH8/race-Track.png\"} , \"3\": {\"name\": \"ping\", \"src\": \"https://i.ibb.co/zsK7Rs1/jewelBG.png\"} }
 // const includeRegistration = "{{global.variables.includeRegistration}}";
+const themesFlowVar = "{{global.variables.themes}}";
+let themes: IThemes;
+try {
+  themes = JSON.parse(themesFlowVar);
+} catch (e) {
+  themes = {
+    "0": {
+      name: "seeingDouble",
+      src: "https://i.postimg.cc/HxhXYXj2/double-Trouble.webp",
+    },
+    "1": { name: "ahhhhhh", src: "https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp" },
+    "2": {
+      name: "racing",
+      src: "https://i.postimg.cc/DzjCwcwW/raceTrack.webp",
+    },
+    "3": {
+      name: "anthroid",
+      src: "https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png",
+    },
+  };
+}
+
 const themeNames = "{{global.variables.themeNames}}";
 const themeBGs = "{{global.variables.themeBGs}}";
 const themeNamesArr = themeNames.split(", ");
 const themeBGsArr = themeBGs.split(", ");
-const IMG_SIZE = Number("{{global.variables.IMG_SIZE}}");
-const maxDifficulty = Math.floor(100 / IMG_SIZE);
+const IMG_SIZE = "{{global.variables.IMG_SIZE}}";
+const imgSize = Number.isInteger(IMG_SIZE) ? Number.parseInt(IMG_SIZE) : 8;
+const maxDifficulty = Math.ceil(100 / imgSize);
+const defaultDifficulty = 10;
 
 const SignOnPage = () => {
-  const [selectedDifficulty, setSelectedDifficulty] = useState(3);
+  const [selectedDifficulty, setSelectedDifficulty] =
+    useState(defaultDifficulty);
   const [emailInputValue, setEmailInputValue] = useState("");
   const [theme, setTheme] = useState<string>();
 
@@ -132,9 +157,8 @@ const SignOnPage = () => {
     setEmailInputValue(target.value);
   };
 
-  const difficultySelectedFn = (e: ChangeEvent) => {
-    const target = e.target as HTMLInputElement;
-    setSelectedDifficulty(Number(target.value));
+  const difficultySelectedFn = (d: number) => {
+    setSelectedDifficulty(d);
   };
 
   const handleThemeUpdate = (e: ChangeEvent) => {
@@ -213,6 +237,7 @@ const SignOnPage = () => {
                 <Col xs={12}>
                   <Form.Group controlId="difficultySelector">
                     <GameDifficultyLevelSelectionFormGroup
+                      defaultDifficulty={defaultDifficulty}
                       maxDifficulty={maxDifficulty}
                       difficultySelectedFn={difficultySelectedFn}
                     />
@@ -239,6 +264,7 @@ const SignOnPage = () => {
                       updateTheme={handleThemeUpdate}
                       themeNames={themeNamesArr}
                       themeBGs={themeBGsArr}
+                      themes={themes}
                     ></ThemeChooser>
                     {/* </Col> */}
                   </Form.Group>

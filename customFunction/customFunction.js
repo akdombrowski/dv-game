@@ -153,17 +153,6 @@ const images = {
     "https://i.postimg.cc/0jNHCHX0/katpcha-me-f1682e3e-053a-4366-9353-80945c638ad5.webp",
   ],
   bugA: [
-    "https://i.postimg.cc/XqnMNk4R/kaptcha-me-0498cfb5-adfc-416f-bda6-ca4ba1fcc5ec.png",
-    "https://i.postimg.cc/nzbbgt5c/kaptcha-me-14fc59c2-c68e-439e-bff0-2f133fa1adcb.png",
-    "https://i.postimg.cc/tC2bTw12/kaptcha-me-2ff976c0-d9f9-4495-ae20-b38ce635d035.png",
-    "https://i.postimg.cc/P5Jj8yYh/kaptcha-me-3d534f49-db29-40f3-a881-c601d9a6d590.png",
-    "https://i.postimg.cc/g27PyhHh/kaptcha-me-4eb333fb-1859-437b-b5a6-3b2ddb411b4f.png",
-    "https://i.postimg.cc/QxXsjhMF/kaptcha-me-6add93b7-9788-4c30-809d-7318de4ddb4a.png",
-    "https://i.postimg.cc/Y96KwsKN/kaptcha-me-75ba10ea-b7b8-4e38-b66d-713e7b3f430a.png",
-    "https://i.postimg.cc/43hRW3WS/kaptcha-me-8b651348-e450-4bc6-aa3e-1bc056cb1e86.png",
-    "https://i.postimg.cc/ZYLt72L4/kaptcha-me-dade0abe-512a-4ef5-bd44-ee95ef8a0343.png",
-  ],
-  bugB: [
     "https://i.postimg.cc/9FNkshw5/kaptcha-me-041a6e22-9d2d-406e-8688-0f4c12016c74.png",
     "https://i.postimg.cc/MKG4sTTm/kaptcha-me-076457ad-a674-442e-9dcc-f034bb9fa73b.png",
     "https://i.postimg.cc/kMszF8n5/kaptcha-me-1ca31859-c12b-44c9-9d6a-71797a1b09a9.png",
@@ -173,6 +162,17 @@ const images = {
     "https://i.postimg.cc/Zq6D9v74/kaptcha-me-d6a2ef84-300a-4e11-92e8-3a887467865c.png",
     "https://i.postimg.cc/C1YrbMXD/kaptcha-me-ea1951f8-fef8-4ad4-b678-1a3797dcdb4d.png",
     "https://i.postimg.cc/pTZGCbMS/kaptcha-me-ff5d7e56-5f95-4024-b5ec-fe9a7b9ae5b7.png",
+  ],
+  bugB: [
+    "https://i.postimg.cc/XqnMNk4R/kaptcha-me-0498cfb5-adfc-416f-bda6-ca4ba1fcc5ec.png",
+    "https://i.postimg.cc/nzbbgt5c/kaptcha-me-14fc59c2-c68e-439e-bff0-2f133fa1adcb.png",
+    "https://i.postimg.cc/tC2bTw12/kaptcha-me-2ff976c0-d9f9-4495-ae20-b38ce635d035.png",
+    "https://i.postimg.cc/P5Jj8yYh/kaptcha-me-3d534f49-db29-40f3-a881-c601d9a6d590.png",
+    "https://i.postimg.cc/g27PyhHh/kaptcha-me-4eb333fb-1859-437b-b5a6-3b2ddb411b4f.png",
+    "https://i.postimg.cc/QxXsjhMF/kaptcha-me-6add93b7-9788-4c30-809d-7318de4ddb4a.png",
+    "https://i.postimg.cc/Y96KwsKN/kaptcha-me-75ba10ea-b7b8-4e38-b66d-713e7b3f430a.png",
+    "https://i.postimg.cc/43hRW3WS/kaptcha-me-8b651348-e450-4bc6-aa3e-1bc056cb1e86.png",
+    "https://i.postimg.cc/ZYLt72L4/kaptcha-me-dade0abe-512a-4ef5-bd44-ee95ef8a0343.png",
   ],
   pointI: [
     "https://i.postimg.cc/JnfDmnvD/katpcha-me-1574f467-2d70-4be8-bb92-288cd07c6978.webp",
@@ -952,7 +952,7 @@ const getImgOptions = (theme) => {
   const ggs = images.pointGG;
   // anthroid
   const bugAs = images.bugA;
-  const bugb = images.bugB;
+  const bugBs = images.bugB;
   // ping
   const is = images.pointI;
   const js = images.pointJ;
