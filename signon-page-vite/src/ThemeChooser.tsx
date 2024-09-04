@@ -25,6 +25,7 @@ export const ThemeChooser = (props: Props) => {
       seeingDouble: "https://i.postimg.cc/HxhXYXj2/double-Trouble.webp",
       ahhhhhh: "https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp",
       racing: "https://i.postimg.cc/DzjCwcwW/race-Track.webp",
+      anthroid: "https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png",
       bitwarden: "https://i.postimg.cc/cCKzR6p2/black-BG-bitwarden.webp",
     };
     if (!!themes?.length || !!bgs?.length) {

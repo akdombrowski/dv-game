@@ -5,9 +5,7 @@ const images = {
     seeingDouble: "https://i.postimg.cc/HxhXYXj2/double-Trouble.webp",
     ahhhhhh: "https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp",
     racing: "https://i.postimg.cc/DzjCwcwW/race-Track.webp",
-    anthroid: "https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png",
     ping: "https://i.postimg.cc/QNckCGmG/jewel-BG-16by9.webp",
-    bitwarden: "https://i.postimg.cc/cCKzR6p2/black-BG-bitwarden.webp",
   },
   me: [
     "https://i.postimg.cc/g2TM7XHv/katpcha-me-1885d2d7-2f3c-4c6b-9e5e-66d6f2930fd9.webp",
@@ -48,19 +46,6 @@ const images = {
     "https://i.postimg.cc/vZYQfQbJ/katpcha-me-ae261cd4-b1ec-4ee7-8a9e-2021d6f3bf37.webp",
     "https://i.postimg.cc/FK1NCDfG/katpcha-me-aea2b5c9-18fa-4c5b-a800-ecec5b4110ab.webp",
     "https://i.postimg.cc/J4W77Ng4/katpcha-me-f238a6ef-71c9-4a3c-b82d-9ef8248d3cb6.webp",
-  ],
-  anthroid: [
-    "https://i.postimg.cc/15SKgvgd/kaptcha-me-03c2555d-88d5-4748-b4c6-46c51f817935.png",
-    "https://i.postimg.cc/T3CQvn34/kaptcha-me-09b05b29-79da-45b9-a1c8-d5797fd25437.png",
-    "https://i.postimg.cc/2ScdKmHp/kaptcha-me-1849442e-ff38-46a3-a738-fc91a57375e0.png",
-    "https://i.postimg.cc/kG3vvcTB/kaptcha-me-24726b0e-6b52-4a95-8611-65ef964726ac.png",
-    "https://i.postimg.cc/GmhJK9xJ/kaptcha-me-6166b84b-220f-41d9-ba10-e440d3464cb9.png",
-    "https://i.postimg.cc/q7qwJgtM/kaptcha-me-6bb88af3-4162-4b07-81bf-4e5245121545.png",
-    "https://i.postimg.cc/J4Q5jjZz/kaptcha-me-781f7465-2121-478b-a03a-867562ee8cdf.png",
-    "https://i.postimg.cc/JhFqGmJ3/kaptcha-me-862b4420-d4f8-4c6f-99ed-e5827d696617.png",
-    "https://i.postimg.cc/50FmzGqh/kaptcha-me-99a6fbb6-dd80-42dd-98cf-8e67a4ec7af1.png",
-    "https://i.postimg.cc/zvCStgQp/kaptcha-me-b09e3815-e1ab-4bd5-83d0-9cf59276aa84.png",
-    "https://i.postimg.cc/66n05kQR/kaptcha-me-ec5fccb8-c18c-4573-83a5-05fc8f471f0c.png",
   ],
   ping: [
     "https://i.postimg.cc/xCC82YcD/katpcha-me-05539794-4152-4d0d-8b44-f49fff4cfe69.webp",
@@ -151,28 +136,6 @@ const images = {
     "https://i.postimg.cc/Z5v2g2bf/katpcha-me-bef29e05-53e7-4ade-b2ce-4743c8745f41.webp",
     "https://i.postimg.cc/fygqqj6n/katpcha-me-ec071831-fef6-4915-8e00-7354a7929ef6.webp",
     "https://i.postimg.cc/0jNHCHX0/katpcha-me-f1682e3e-053a-4366-9353-80945c638ad5.webp",
-  ],
-  bugA: [
-    "https://i.postimg.cc/XqnMNk4R/kaptcha-me-0498cfb5-adfc-416f-bda6-ca4ba1fcc5ec.png",
-    "https://i.postimg.cc/nzbbgt5c/kaptcha-me-14fc59c2-c68e-439e-bff0-2f133fa1adcb.png",
-    "https://i.postimg.cc/tC2bTw12/kaptcha-me-2ff976c0-d9f9-4495-ae20-b38ce635d035.png",
-    "https://i.postimg.cc/P5Jj8yYh/kaptcha-me-3d534f49-db29-40f3-a881-c601d9a6d590.png",
-    "https://i.postimg.cc/g27PyhHh/kaptcha-me-4eb333fb-1859-437b-b5a6-3b2ddb411b4f.png",
-    "https://i.postimg.cc/QxXsjhMF/kaptcha-me-6add93b7-9788-4c30-809d-7318de4ddb4a.png",
-    "https://i.postimg.cc/Y96KwsKN/kaptcha-me-75ba10ea-b7b8-4e38-b66d-713e7b3f430a.png",
-    "https://i.postimg.cc/43hRW3WS/kaptcha-me-8b651348-e450-4bc6-aa3e-1bc056cb1e86.png",
-    "https://i.postimg.cc/ZYLt72L4/kaptcha-me-dade0abe-512a-4ef5-bd44-ee95ef8a0343.png",
-  ],
-  bugB: [
-    "https://i.postimg.cc/9FNkshw5/kaptcha-me-041a6e22-9d2d-406e-8688-0f4c12016c74.png",
-    "https://i.postimg.cc/MKG4sTTm/kaptcha-me-076457ad-a674-442e-9dcc-f034bb9fa73b.png",
-    "https://i.postimg.cc/kMszF8n5/kaptcha-me-1ca31859-c12b-44c9-9d6a-71797a1b09a9.png",
-    "https://i.postimg.cc/qvhFT52t/kaptcha-me-5178197e-dac2-410c-aa77-135201582372.png",
-    "https://i.postimg.cc/zvxQzmdh/kaptcha-me-5e320d23-2de8-4fcc-ac75-24e7e56bc7fc.png",
-    "https://i.postimg.cc/P5gRrQMS/kaptcha-me-ad46d666-0490-40ea-8fa2-5f5f28f09624.png",
-    "https://i.postimg.cc/Zq6D9v74/kaptcha-me-d6a2ef84-300a-4e11-92e8-3a887467865c.png",
-    "https://i.postimg.cc/C1YrbMXD/kaptcha-me-ea1951f8-fef8-4ad4-b678-1a3797dcdb4d.png",
-    "https://i.postimg.cc/pTZGCbMS/kaptcha-me-ff5d7e56-5f95-4024-b5ec-fe9a7b9ae5b7.png",
   ],
   pointI: [
     "https://i.postimg.cc/JnfDmnvD/katpcha-me-1574f467-2d70-4be8-bb92-288cd07c6978.webp",
@@ -300,7 +263,7 @@ const noLuckFallback = (
   unclaimedPosSet,
   claimedPosSet,
   noLuck,
-  imgSize,
+  imgSize
 ) => {
   const lastDitchIterations = 100;
   let rnd = getRNDPos(imgSize);
@@ -453,17 +416,17 @@ const claimPosAndNearby = (
   imgSize,
   overlap,
   numPosAvail,
-  unclaimedPosSet,
+  unclaimedPosSet
 ) => {
   const leftEdgeImgBufferWOverlap = getLeftImgBufferEdge(
     currPos,
     imgSize,
-    overlap,
+    overlap
   );
   const rightEdgeImgBufferWOverlap = getRightImgBufferEdge(
     currPos,
     imgSize,
-    overlap,
+    overlap
   );
   for (
     let i = leftEdgeImgBufferWOverlap;
@@ -486,7 +449,7 @@ const fillPosWithOverlap = (
   maxNumPosWOOverlap,
   posOverlapping,
   overlap,
-  numOfDVs,
+  numOfDVs
 ) => {
   let numClaimedPos = 0;
   const maxNumPosAvail = 100 - imgSize + 1 + 1;
@@ -501,7 +464,7 @@ const fillPosWithOverlap = (
       claimedPosSet,
       claimedPosVizArr,
       claimedPosArr,
-    },
+    }
   ));
 
   let prevPos = firstPos;
@@ -540,7 +503,7 @@ const fillPosWithOverlap = (
         claimedPosSet,
         claimedPosVizArr,
         claimedPosArr,
-      },
+      }
     ));
 
     posOverlapping.withoutOverlap = posOverlapping.withoutOverlap + 1;
@@ -569,7 +532,7 @@ const fillPosWOOverlap = (
   imgSize,
   noLuck,
   numOfDVs,
-  totNumPosAvail,
+  totNumPosAvail
 ) => {
   const overlap = 0;
   const numOfPosTakenImg = imgSize - 1;
@@ -595,7 +558,7 @@ const fillPosWOOverlap = (
         claimedPosSet,
         claimedPosVizArr,
         claimedPosArr,
-      },
+      }
     ));
 
     // should only hit this first conditional block if numOfDVs <
@@ -612,7 +575,7 @@ const fillPosWOOverlap = (
         imgSize,
         overlap,
         numPosAvail,
-        unclaimedPosSet,
+        unclaimedPosSet
       );
     }
   }
@@ -664,7 +627,7 @@ const generateDVColPosArrays = (numOfDVs, imgSize) => {
       maxNumPosWOOverlap,
       posOverlapping,
       overlap,
-      numOfDVs,
+      numOfDVs
     ));
   } else {
     // without overlap
@@ -684,7 +647,7 @@ const generateDVColPosArrays = (numOfDVs, imgSize) => {
       imgSize,
       noLuck,
       numOfDVs,
-      totNumPosAvail,
+      totNumPosAvail
     ));
   }
 
@@ -722,7 +685,7 @@ const getImgToUseAtPos = (
   initPos,
   rnd,
   immediateRight,
-  immediateLeft,
+  immediateLeft
 ) => {
   const rndChanceToUseOhImg = floorRND(chanceForOh);
 
@@ -764,7 +727,7 @@ const getImgToUseAtPosHorizontal = (
   initPos,
   rnd,
   immediateRight,
-  immediateLeft,
+  immediateLeft
 ) => {
   const rndChanceToUseOhImg = floorRND(chanceForOh);
 
@@ -806,7 +769,7 @@ const fillRenderings = (
   claimedPosArr,
   claimedPosVizArr,
   initPos,
-  renderings,
+  renderings
 ) => {
   let rnd = -1;
   let code = 0;
@@ -852,7 +815,7 @@ const fillRenderings = (
       initPos,
       rnd,
       immediateRight,
-      immediateLeft,
+      immediateLeft
     );
 
     renderings[i] = { value: code, pos: position, img: image };
@@ -875,7 +838,7 @@ const fillRenderings2D = (
   claimedPosArr,
   claimedPosVizArr,
   initPos,
-  renderings,
+  renderings
 ) => {
   let rnd = -1;
   let code = 0;
@@ -926,7 +889,7 @@ const fillRenderings2D = (
       initPos,
       rnd,
       immediateRight,
-      immediateLeft,
+      immediateLeft
     ));
 
     renderings[i] = { value: code, pos: position, img: [image, image2] };
@@ -940,7 +903,6 @@ const getImgOptions = (theme) => {
   const mees = images.mee;
   const meees = images.meee;
   const meeees = images.meeee;
-  const anthroids = images.anthroid;
   const pings = images.ping;
   const as = images.pointA;
   const bs = images.pointB;
@@ -950,16 +912,8 @@ const getImgOptions = (theme) => {
   const ffs = images.pointFF;
   const gs = images.pointG;
   const ggs = images.pointGG;
-  // anthroid
-  const bugAs = images.bugA;
-  const bugb = images.bugB;
-  // ping
   const is = images.pointI;
   const js = images.pointJ;
-  // bitwarden
-  const bw = images.pointBW;
-  const bw_r = images.pointBW_R;
-  const bw_l = images.pointBW_L;
 
   // shuffle
   let ohs;
@@ -973,10 +927,6 @@ const getImgOptions = (theme) => {
     ohs = shuffleArray(mees);
     ones = shuffleArray(cs);
     twos = shuffleArray(ds);
-  } else if (theme === "anthroid") {
-    ohs = shuffleArray(anthroids);
-    ones = shuffleArray(bugAs);
-    twos = shuffleArray(bugBs);
   } else if (theme === "ping") {
     ohs = shuffleArray(pings);
     ones = shuffleArray(js);
@@ -1011,7 +961,7 @@ const combineCodesAndPosArrayAndImgs = (
   codes,
   claimedPosArr,
   claimedPosVizArr,
-  theme,
+  theme
 ) => {
   // init
   let renderings = {};
@@ -1054,7 +1004,7 @@ const combineCodesAndPosArrayAndImgs = (
       claimedPosArr,
       claimedPosVizArr,
       initPos,
-      renderings,
+      renderings
     );
   } else {
     const { ohs, ones, twos } = imgOptions;
@@ -1076,7 +1026,7 @@ const combineCodesAndPosArrayAndImgs = (
       claimedPosArr,
       claimedPosVizArr,
       initPos,
-      renderings,
+      renderings
     );
   }
 
@@ -1112,7 +1062,7 @@ module.exports = a = async ({ params }) => {
     codes,
     claimedPosArr,
     claimedPosVizArr,
-    theme,
+    theme
   );
   const numDirectOverlaps =
     claimedPosArr.length - claimedPosVizArr.filter((pos) => pos).length;
