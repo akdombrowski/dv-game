@@ -41,9 +41,9 @@ const themeNames = "{{global.variables.themeNames}}";
 const themeBGs = "{{global.variables.themeBGs}}";
 const themeNamesArr = themeNames.split(", ");
 const themeBGsArr = themeBGs.split(", ");
-const IMG_SIZE = "{{global.variables.IMG_SIZE}}";
-const imgSize = Number.isInteger(IMG_SIZE) ? Number.parseInt(IMG_SIZE) : 8;
-const maxDifficulty = Math.ceil(100 / imgSize);
+// const IMG_SIZE = "{{global.variables.IMG_SIZE}}";
+// const imgSize = Number.isInteger(IMG_SIZE) ? Number.parseInt(IMG_SIZE) : 8;
+const maxDifficulty = 25;
 const defaultDifficulty = 10;
 
 const SignOnPage = () => {
