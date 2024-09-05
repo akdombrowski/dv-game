@@ -10,7 +10,7 @@ interface Props {
 
 export const GameDifficultyLevelSelectionFormGroup = (props: Props) => {
   const [difficulty, setDifficulty] = useState<number>(
-    props.defaultDifficulty ?? 10,
+    props.defaultDifficulty ?? 25,
   );
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
