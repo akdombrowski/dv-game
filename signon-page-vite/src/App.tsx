@@ -194,7 +194,6 @@ const SignOnPage = () => {
           className="px-5 py-1 h-100 align-content-center"
         >
           <Row className="h-100 align-content-center row-gap-5">
-            {/* <Row xs={1} className=""> */}
             <Col
               xs={12}
               className="d-flex justify-content-center"
@@ -205,7 +204,6 @@ const SignOnPage = () => {
                   <h1 className="display-1 text-center text-info font-monospace m-0">
                     Sign In
                   </h1>
-                  R
                 </Col>
                 <Col xs={12} className="p-0" style={{ height: "20%" }}>
                   <h6 className="text-center text-secondary font-monospace m-0">
@@ -214,9 +212,7 @@ const SignOnPage = () => {
                 </Col>
               </Row>
             </Col>
-            {/* </Row> */}
 
-            {/* <Form id="signOnForm" as={Row} onSubmit={advanceFlow}> */}
             <Form
               id="signOnForm"
               as={Col}
@@ -254,19 +250,12 @@ const SignOnPage = () => {
                     className="h-100 justify"
                     style={{}}
                   >
-                    {/* <Row className="row-gap-3"> */}
-                    {/* <Col */}
-                    {/* xs={12}
-                      className="flex-shrink-1"
-                      id="themes-col-wrapper"
-                      > */}
                     <ThemeChooser
                       updateTheme={handleThemeUpdate}
                       themeNames={themeNamesArr}
                       themeBGs={themeBGsArr}
                       themes={themes}
                     ></ThemeChooser>
-                    {/* </Col> */}
                   </Form.Group>
                 </Col>
                 <Col>
