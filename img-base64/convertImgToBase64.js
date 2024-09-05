@@ -188,11 +188,13 @@ const compareDirBase64Encodings = async (dirname) => {
   // printTerminalWidthChars(b64Arr1.slice(0, 1000), b64Arr2.slice(0, 1000));
   // printWordTerminalWidthChars(b64Arr1);
   // printWordTerminalWidthChars(b64Arr2);
-  console.log("FILE 1 (first 5000 chars)");
-  console.log(b64Arr1.slice(0, 5000).join("") + "...");
+  const n1 = name1 || "";
+  const n2 = name2 || "";
+  console.log(`1: ${n1} (chars from (${startIndex}, ${endIndex}))`);
+  console.log(b64Arr1.slice(0, endIndex).join("") + "...");
   console.log();
-  console.log("FILE 2 (first 5000 chars)");
-  console.log(b64Arr2.slice(0, 5000).join("") + "...");
+  console.log(`2: ${n2} (chars from (${startIndex}, ${endIndex}))`);
+  console.log(b64Arr2.slice(0, endIndex).join("") + "...");
   console.log();
 
   return rImgsSame;
