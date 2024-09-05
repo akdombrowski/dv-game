@@ -11,15 +11,15 @@ seeingDouble, ahhhhhh, racing, anthroid
 ### flow instance vars
 
 ```js
-themeBGs = "https://i.postimg.cc/HxhXYXj2/double-Trouble.webp, https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp, https://i.postimg.cc/DzjCwcwW/raceTrack.webp, https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png";
-themes = "{\"0\":{\"name\":\"seeingDouble\",\"src\":\"https://i.postimg.cc/HxhXYXj2/double-Trouble.webp\"},\"1\":{\"name\":\"ahhhhhh\",\"src\":\"https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp\"},\"2\":{\"name\":\"racing\",\"src\":\"https://i.postimg.cc/DzjCwcwW/raceTrack.webp\"},\"3\":{\"name\":\"anthroid\",\"src\":\"https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png\"}}";
+themeBGs = "https://i.postimg.cc/HxhXYXj2/double-Trouble.webp, https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp, https://i.postimg.cc/DzjCwcwW/raceTrack.webp, https://i.postimg.cc/7P1NHTxw/katpcha-me-bugdroid-bg.png";
+themes = "{\"0\":{\"name\":\"seeingDouble\",\"src\":\"https://i.postimg.cc/HxhXYXj2/double-Trouble.webp\"},\"1\":{\"name\":\"ahhhhhh\",\"src\":\"https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp\"},\"2\":{\"name\":\"racing\",\"src\":\"https://i.postimg.cc/DzjCwcwW/raceTrack.webp\"},\"3\":{\"name\":\"anthroid\",\"src\":\"https://i.postimg.cc/7P1NHTxw/katpcha-me-bugdroid-bg.png\"}}";
 themeNames = "seeingDouble, ahhhhhh, racing, anthroid";
 ```
 
 ### *themeBGs* (flow instance var)
 
 ```
-https://i.postimg.cc/HxhXYXj2/double-Trouble.webp, https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp, https://i.postimg.cc/DzjCwcwW/raceTrack.webp, https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png
+https://i.postimg.cc/HxhXYXj2/double-Trouble.webp, https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp, https://i.postimg.cc/DzjCwcwW/raceTrack.webp, https://i.postimg.cc/7P1NHTxw/katpcha-me-bugdroid-bg.png
 ```
 
 
@@ -30,7 +30,7 @@ https://i.postimg.cc/HxhXYXj2/double-Trouble.webp, https://i.postimg.cc/Gm1Ppjgq
 https://i.postimg.cc/HxhXYXj2/double-Trouble.webp,
 https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp,
 https://i.postimg.cc/DzjCwcwW/raceTrack.webp,
-https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png
+https://i.postimg.cc/7P1NHTxw/katpcha-me-bugdroid-bg.png
 ```
 
 ### *themes* 
@@ -39,7 +39,7 @@ https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png
 -  escaped themes object
 
 ```
-{\"0\":{\"name\":\"seeingDouble\",\"src\":\"https://i.postimg.cc/HxhXYXj2/double-Trouble.webp\"},\"1\":{\"name\":\"ahhhhhh\",\"src\":\"https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp\"},\"2\":{\"name\":\"racing\",\"src\":\"https://i.postimg.cc/DzjCwcwW/raceTrack.webp\"},\"3\":{\"name\":\"anthroid\",\"src\":\"https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png\"}}
+{\"0\":{\"name\":\"seeingDouble\",\"src\":\"https://i.postimg.cc/HxhXYXj2/double-Trouble.webp\"},\"1\":{\"name\":\"ahhhhhh\",\"src\":\"https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp\"},\"2\":{\"name\":\"racing\",\"src\":\"https://i.postimg.cc/DzjCwcwW/raceTrack.webp\"},\"3\":{\"name\":\"anthroid\",\"src\":\"https://i.postimg.cc/7P1NHTxw/katpcha-me-bugdroid-bg.png\"}}
 ```
 
 ### theme links
@@ -48,7 +48,7 @@ https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png
 https://i.postimg.cc/HxhXYXj2/double-Trouble.webp, 
 https://i.postimg.cc/Gm1Ppjgq/ahhBG.webp, 
 https://i.postimg.cc/DzjCwcwW/raceTrack.webp, 
-https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png
+https://i.postimg.cc/7P1NHTxw/katpcha-me-bugdroid-bg.png
 ```
 
 ### target
