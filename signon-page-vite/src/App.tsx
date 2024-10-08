@@ -184,8 +184,9 @@ const SignOnPage = () => {
         backgroundColor: "var(--bs-dark)",
       }}
     >
-      <Row className="px-5 h-100 align-items-center">
+      <Row id="main-row" className="px-5 h-100 align-items-center">
         <Col
+          id="form-col"
           xs={12}
           sm={12}
           md={12}
@@ -193,48 +194,47 @@ const SignOnPage = () => {
           xl={7}
           className="px-5 py-1 h-100 align-content-center"
         >
-          <Row className="h-100 align-content-center row-gap-5">
+          <Row
+            id="form-nested-main-row"
+            className="h-100 align-content-center row-gap-3"
+          >
             {/* <Row xs={1} className=""> */}
             <Col
+              id="form-title"
               xs={12}
-              className="d-flex justify-content-center"
-              style={{ height: "13vh" }}
+              className="d-flex justify-content-center p-0"
             >
-              <Row className="row-gap-0">
-                <Col xs={12} className="p-0" style={{ height: "80%" }}>
+              <Row className="row-gap-xs-0 row-gap-md-3 row-gap-lg-4">
+                <Col xs={12} className="p-0">
                   <h1 className="display-1 text-center text-info font-monospace m-0">
                     Sign In
                   </h1>
                   R
                 </Col>
-                <Col xs={12} className="p-0" style={{ height: "20%" }}>
+                <Col xs={12} className="p-0">
                   <h6 className="text-center text-secondary font-monospace m-0">
                     or Sign Up
                   </h6>
                 </Col>
               </Row>
             </Col>
-            {/* </Row> */}
 
-            {/* <Form id="signOnForm" as={Row} onSubmit={advanceFlow}> */}
             <Form
-              id="signOnForm"
+              id="sign-on-form-as-col"
               as={Col}
               xs={12}
               className=""
               onSubmit={advanceFlow}
             >
-              <Row className="">
+              <Row id="email-input-row" className="">
                 <Col xs={12} className="">
-                  {/* <Stack gap={0} className=""> */}
                   <Form.Group controlId="emailInput">
-                    {/* <Col xs={12}> */}
                     <EmailInputFormGroup updateEmail={handleEmailUpdate} />
                   </Form.Group>
                 </Col>
               </Row>
-              <Row className="row-gap-5">
-                <Col xs={12}>
+              <Row id="difficulty-selector-row" className="row-gap-5">
+                <Col id="diff-sel-col" xs={12}>
                   <Form.Group controlId="difficultySelector">
                     <GameDifficultyLevelSelectionFormGroup
                       defaultDifficulty={defaultDifficulty}
@@ -250,65 +250,61 @@ const SignOnPage = () => {
                   className="vh-25"
                 >
                   <Form.Group
+                    id="themes-formgroup"
                     controlId="themes"
                     className="h-100 justify"
                     style={{}}
                   >
-                    {/* <Row className="row-gap-3"> */}
-                    {/* <Col */}
-                    {/* xs={12}
-                      className="flex-shrink-1"
-                      id="themes-col-wrapper"
-                      > */}
                     <ThemeChooser
                       updateTheme={handleThemeUpdate}
                       themeNames={themeNamesArr}
                       themeBGs={themeBGsArr}
                       themes={themes}
                     ></ThemeChooser>
-                    {/* </Col> */}
                   </Form.Group>
                 </Col>
-                <Col>
-                  <Form.Group controlId="submitBtns">
+
+                <Col id="form-action-btns-col">
+                  <Form.Group
+                    controlId="submitBtns"
+                    id="form-group-action-btns"
+                  >
                     <ButtonGroup
-                      as={Col}
-                      xs={12}
-                      id="signOnFormActionBtns"
-                      className="justify-content-center"
+                      as={Row}
+                      id="sign-on-form-action-btns"
+                      className="justify-content-center w-100"
                     >
-                      <Row id="btn-group-inner-row">
-                        <Col xs={8} className="">
-                          <Button
-                            className="w-100 h-100"
-                            id="signOnBtn"
-                            variant="outline-dark"
-                            size="sm"
-                            onClick={advanceFlow}
-                            style={{
-                              color: "var(--bs-cyan)",
-                              borderColor: "var(--bs-cyan)",
-                            }}
-                          >
-                            Login
-                          </Button>
-                        </Col>
-                        <Col xs={4} className="">
-                          <Button
-                            className="w-100 h-100"
-                            id="createNewAcctBtn"
-                            variant="outline-dark"
-                            type="button"
-                            onClick={handleReg}
-                            style={{
-                              color: "var(--bs-gray-500)",
-                              borderColor: "var(--bs-gray-600)",
-                            }}
-                          >
-                            Register a new account
-                          </Button>
-                        </Col>
-                      </Row>
+                      <Col xs={12} className="">
+                        <Button
+                          className="w-100 h-100 text-nowrap btn btn-primary"
+                          id="sign-on-btn"
+                          variant="outline-dark"
+                          size="lg"
+                          onClick={advanceFlow}
+                          style={{
+                            color: "var(--bs-white)",
+                            borderColor: "var(--bs-cyan)",
+                          }}
+                        >
+                          Login
+                        </Button>
+                      </Col>
+                      <Col xs={12} className="">
+                        <Button
+                          className="w-100 h-100 text-nowrap"
+                          id="register-btn"
+                          variant="outline-dark"
+                          type="button"
+                          onClick={handleReg}
+                          size="sm"
+                          style={{
+                            color: "var(--bs-gray-500)",
+                            borderColor: "var(--bs-gray-600)",
+                          }}
+                        >
+                          Register
+                        </Button>
+                      </Col>
                     </ButtonGroup>
                   </Form.Group>
                 </Col>
@@ -318,6 +314,7 @@ const SignOnPage = () => {
         </Col>
 
         <Col
+          id="logo-col"
           xs={12}
           sm={12}
           md={12}
