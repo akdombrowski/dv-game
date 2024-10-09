@@ -6,7 +6,13 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import { useState, SyntheticEvent, useEffect, ChangeEvent } from "react";
+import {
+  useState,
+  SyntheticEvent,
+  useEffect,
+  ChangeEvent,
+  type MouseEvent,
+} from "react";
 import { GameDifficultyLevelSelectionFormGroup } from "./GameDifficultyLevelSelectionFormGroup";
 import { EmailInputFormGroup } from "./EmailInputFormGroup";
 import { IThemes, ThemeChooser } from "./ThemeChooser";
@@ -32,7 +38,7 @@ try {
     },
     "3": {
       name: "anthroid",
-      src: "https://i.postimg.cc/kXMqTcr6/katpcha-me-bugdroid-bg.png",
+      src: "https://i.postimg.cc/6pyc5PNF/katpcha-me-bugdroid-bg-v3.png",
     },
   };
 }
@@ -49,7 +55,7 @@ const defaultDifficulty = 10;
 const SignOnPage = () => {
   const [selectedDifficulty, setSelectedDifficulty] =
     useState(defaultDifficulty);
-  const [emailInputValue, setEmailInputValue] = useState("");
+  const [email, setEmail] = useState("");
   const [theme, setTheme] = useState<string>();
 
   // sets background to dark color. run only after first render
@@ -84,7 +90,7 @@ const SignOnPage = () => {
     if (advanceFlowInputEmail) {
       const advanceFlowInputEmailInputElement =
         advanceFlowInputEmail as HTMLInputElement;
-      advanceFlowInputEmailInputElement.value = emailInputValue;
+      advanceFlowInputEmailInputElement.value = email;
     }
 
     if (advanceFlowInputDifficulty) {
@@ -99,7 +105,7 @@ const SignOnPage = () => {
         advanceFlowInputTheme as HTMLInputElement;
       advanceFlowInputThemeInputElement.value = theme as string;
     }
-  }, [emailInputValue, selectedDifficulty, theme]);
+  }, [email, selectedDifficulty, theme]);
 
   const clickAdvFlowBtn = () => {
     const advFlowBtn = document.getElementById(
@@ -154,7 +160,7 @@ const SignOnPage = () => {
 
   const handleEmailUpdate = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
-    setEmailInputValue(target.value);
+    setEmail(target.value);
   };
 
   const difficultySelectedFn = (d: number) => {
@@ -193,14 +199,13 @@ const SignOnPage = () => {
           lg={6}
           xl={7}
           className="px-5 py-1 h-100 align-content-center"
+          as={Form}
+          onSubmit={advanceFlow}
         >
-          <Row
-            id="form-nested-main-row"
-            className="h-100 align-content-center row-gap-3"
-          >
+          <Row id="form-row" className="h-100 align-content-center row-gap-3">
             {/* <Row xs={1} className=""> */}
             <Col
-              id="form-title"
+              id="form-title-col"
               xs={12}
               className="d-flex justify-content-center p-0"
             >
@@ -219,20 +224,26 @@ const SignOnPage = () => {
               </Row>
             </Col>
 
-            <Form
-              id="sign-on-form-as-col"
+            <Col id="email-col" xs={12} className="">
+              {/* <Form
+              id="sign-on-form-col"
               as={Col}
-              xs={12}
               className=""
               onSubmit={advanceFlow}
-            >
+            > */}
               <Row id="email-input-row" className="">
-                <Col xs={12} className="">
+                <Col xs={12} className="p-0">
                   <Form.Group controlId="emailInput">
-                    <EmailInputFormGroup updateEmail={handleEmailUpdate} />
+                    <EmailInputFormGroup
+                      updateEmail={handleEmailUpdate}
+                      email={email}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
+            </Col>
+
+            <Col id="difficulty-selector-col">
               <Row id="difficulty-selector-row" className="row-gap-5">
                 <Col id="diff-sel-col" xs={12}>
                   <Form.Group controlId="difficultySelector">
@@ -263,8 +274,10 @@ const SignOnPage = () => {
                     ></ThemeChooser>
                   </Form.Group>
                 </Col>
+              </Row>
 
-                <Col id="form-action-btns-col">
+              <Row id="login-reg-btns-row">
+                <Col id="login-reg-btns-row-col">
                   <Form.Group
                     controlId="submitBtns"
                     id="form-group-action-btns"
@@ -309,7 +322,7 @@ const SignOnPage = () => {
                   </Form.Group>
                 </Col>
               </Row>
-            </Form>
+            </Col>
           </Row>
         </Col>
 
@@ -332,6 +345,7 @@ const SignOnPage = () => {
           </Row>
         </Col>
       </Row>
+
     </Container>
   );
 };
