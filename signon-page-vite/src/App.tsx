@@ -6,16 +6,11 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import {
-  useState,
-  SyntheticEvent,
-  useEffect,
-  ChangeEvent,
-  type MouseEvent,
-} from "react";
+import { useState, SyntheticEvent, useEffect, ChangeEvent } from "react";
 import { GameDifficultyLevelSelectionFormGroup } from "./GameDifficultyLevelSelectionFormGroup";
 import { EmailInputFormGroup } from "./EmailInputFormGroup";
 import { IThemes, ThemeChooser } from "./ThemeChooser";
+import type { MouseEvent } from "react";
 
 // for local dev
 // const includeRegistration = true;
@@ -87,20 +82,20 @@ const SignOnPage = () => {
       "advanceFlowInputTheme",
     );
 
-    if (advanceFlowInputEmail) {
+    if (advanceFlowInputEmail && email) {
       const advanceFlowInputEmailInputElement =
         advanceFlowInputEmail as HTMLInputElement;
       advanceFlowInputEmailInputElement.value = email;
     }
 
-    if (advanceFlowInputDifficulty) {
+    if (advanceFlowInputDifficulty && selectedDifficulty) {
       const advanceFlowInputDifficultyInputElement =
         advanceFlowInputDifficulty as HTMLInputElement;
       advanceFlowInputDifficultyInputElement.value =
         selectedDifficulty.toString();
     }
 
-    if (advanceFlowInputTheme) {
+    if (advanceFlowInputTheme && theme) {
       const advanceFlowInputThemeInputElement =
         advanceFlowInputTheme as HTMLInputElement;
       advanceFlowInputThemeInputElement.value = theme as string;
@@ -160,6 +155,7 @@ const SignOnPage = () => {
 
   const handleEmailUpdate = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
+
     setEmail(target.value);
   };
 
@@ -182,41 +178,48 @@ const SignOnPage = () => {
     clickAdvFlowBtn();
   };
 
+  const copyTestEmail = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const email = event.currentTarget.value;
+    setEmail(email);
+  };
+
   return (
     <Container
       fluid
-      className="h-100 justify-content-start align-content-start d-flex flex-wrap"
+      className="justify-content-center align-items-center d-flex flex-wrap"
       style={{
         backgroundColor: "var(--bs-dark)",
       }}
     >
-      <Row id="main-row" className="px-5 h-100 align-items-center">
+      <Row
+        id="main-row"
+        className="justify-content-center align-items-center row-gap-5"
+      >
         <Col
           id="form-col"
           xs={12}
           sm={12}
-          md={12}
+          md={6}
           lg={6}
           xl={7}
-          className="px-5 py-1 h-100 align-content-center"
+          className="align-content-center justify-content-center vh-100"
           as={Form}
           onSubmit={advanceFlow}
         >
-          <Row id="form-row" className="h-100 align-content-center row-gap-3">
-            {/* <Row xs={1} className=""> */}
+          <Row id="form-row" className="align-content-center row-gap-3 px-5">
             <Col
               id="form-title-col"
               xs={12}
-              className="d-flex justify-content-center p-0"
+              className="d-flex justify-content-center"
             >
-              <Row className="row-gap-xs-0 row-gap-md-3 row-gap-lg-4">
-                <Col xs={12} className="p-0">
+              <Row className="row-gap-1">
+                <Col xs={12} className="">
                   <h1 className="display-1 text-center text-info font-monospace m-0">
                     Sign In
                   </h1>
-                  R
                 </Col>
-                <Col xs={12} className="p-0">
+                <Col xs={12} className="">
                   <h6 className="text-center text-secondary font-monospace m-0">
                     or Sign Up
                   </h6>
@@ -232,7 +235,7 @@ const SignOnPage = () => {
               onSubmit={advanceFlow}
             > */}
               <Row id="email-input-row" className="">
-                <Col xs={12} className="p-0">
+                <Col xs={12} className="">
                   <Form.Group controlId="emailInput">
                     <EmailInputFormGroup
                       updateEmail={handleEmailUpdate}
@@ -243,109 +246,110 @@ const SignOnPage = () => {
               </Row>
             </Col>
 
-            <Col id="difficulty-selector-col">
-              <Row id="difficulty-selector-row" className="row-gap-5">
-                <Col id="diff-sel-col" xs={12}>
-                  <Form.Group controlId="difficultySelector">
-                    <GameDifficultyLevelSelectionFormGroup
-                      defaultDifficulty={defaultDifficulty}
-                      maxDifficulty={maxDifficulty}
-                      difficultySelectedFn={difficultySelectedFn}
-                    />
-                  </Form.Group>
-                </Col>
-
-                <Col
-                  id="themes-col-formgroup-wrapper"
-                  xs={12}
-                  className="vh-25"
-                >
-                  <Form.Group
-                    id="themes-formgroup"
-                    controlId="themes"
-                    className="h-100 justify"
-                    style={{}}
-                  >
-                    <ThemeChooser
-                      updateTheme={handleThemeUpdate}
-                      themeNames={themeNamesArr}
-                      themeBGs={themeBGsArr}
-                      themes={themes}
-                    ></ThemeChooser>
-                  </Form.Group>
-                </Col>
-              </Row>
-
-              <Row id="login-reg-btns-row">
-                <Col id="login-reg-btns-row-col">
-                  <Form.Group
-                    controlId="submitBtns"
-                    id="form-group-action-btns"
-                  >
-                    <ButtonGroup
-                      as={Row}
-                      id="sign-on-form-action-btns"
-                      className="justify-content-center w-100"
-                    >
-                      <Col xs={12} className="">
-                        <Button
-                          className="w-100 h-100 text-nowrap btn btn-primary"
-                          id="sign-on-btn"
-                          variant="outline-dark"
-                          size="lg"
-                          onClick={advanceFlow}
-                          style={{
-                            color: "var(--bs-white)",
-                            borderColor: "var(--bs-cyan)",
-                          }}
-                        >
-                          Login
-                        </Button>
-                      </Col>
-                      <Col xs={12} className="">
-                        <Button
-                          className="w-100 h-100 text-nowrap"
-                          id="register-btn"
-                          variant="outline-dark"
-                          type="button"
-                          onClick={handleReg}
-                          size="sm"
-                          style={{
-                            color: "var(--bs-gray-500)",
-                            borderColor: "var(--bs-gray-600)",
-                          }}
-                        >
-                          Register
-                        </Button>
-                      </Col>
-                    </ButtonGroup>
-                  </Form.Group>
-                </Col>
-              </Row>
+            <Col id="diff-sel-col" xs={12}>
+              <Form.Group controlId="difficultySelector">
+                <GameDifficultyLevelSelectionFormGroup
+                  defaultDifficulty={defaultDifficulty}
+                  maxDifficulty={maxDifficulty}
+                  difficultySelectedFn={difficultySelectedFn}
+                />
+              </Form.Group>
             </Col>
+
+            <Form.Group
+              id="formgroup-themes"
+              controlId="themes"
+              className="h-100 justify"
+              style={{}}
+              as={Col}
+              xs={12}
+            >
+              <ThemeChooser
+                updateTheme={handleThemeUpdate}
+                themeNames={themeNamesArr}
+                themeBGs={themeBGsArr}
+                themes={themes}
+                cols={2}
+              ></ThemeChooser>
+            </Form.Group>
+
+            <Form.Group
+              controlId="submitBtns"
+              id="form-group-action-btns"
+              as={Col}
+              xs={12}
+              className=""
+            >
+              <ButtonGroup as={Row} id="btn-group" className="row-gap-3 d-flex">
+                <Col xs={12} className="">
+                  <Button
+                    className="w-100 h-100 text-nowrap btn btn-primary"
+                    id="sign-on-btn"
+                    variant="outline-dark"
+                    size="lg"
+                    onClick={advanceFlow}
+                    style={{
+                      color: "var(--bs-white)",
+                      borderColor: "var(--bs-cyan)",
+                    }}
+                  >
+                    Login
+                  </Button>
+                </Col>
+                <Col xs={12} className="">
+                  <Button
+                    className="w-100 h-100 text-nowrap"
+                    id="register-btn"
+                    variant="outline-dark"
+                    type="button"
+                    onClick={handleReg}
+                    size="sm"
+                    style={{
+                      color: "var(--bs-gray-500)",
+                      borderColor: "var(--bs-gray-600)",
+                    }}
+                  >
+                    Register
+                  </Button>
+                </Col>
+              </ButtonGroup>
+            </Form.Group>
           </Row>
         </Col>
 
         <Col
-          id="logo-col"
-          xs={12}
-          sm={12}
-          md={12}
+          className="justify-content-center align-items-center d-flex"
+          xs={10}
+          sm={10}
+          md={6}
           lg={6}
           xl={5}
-          className="px-xs-5 py-sm-5 py-md-5 px-lg-4 px-xl-3 py-5 h-100"
         >
-          <Row className="h-100">
-            <Col className="justify-content-center align-items-center d-flex">
-              <Image
-                src="https://i.postimg.cc/Xq7JXNYH/recaptcha-katpchame.webp"
-                className="h-100"
-              ></Image>
-            </Col>
-          </Row>
+          <Image
+            src="https://i.postimg.cc/Xq7JXNYH/recaptcha-katpchame.webp"
+            className=""
+            fluid
+            style={{ maxHeight: "100%", width: "100%" }}
+          />
         </Col>
       </Row>
-
+      <Button
+        className="position-absolute  text-nowrap"
+        id="hidden-email-test-btn"
+        variant="outline-dark"
+        type="button"
+        onClick={copyTestEmail}
+        value={`akdombrowski+${Date.now()}@gmail.com`}
+        // size="sm"
+        style={{
+          // color: "var(--bs-gray-500)",
+          // borderColor: "var(--bs-gray-600)",
+          width: "5px",
+          height: "5px",
+          top: 0,
+          left: 0,
+        }}
+      ></Button>
     </Container>
   );
 };
